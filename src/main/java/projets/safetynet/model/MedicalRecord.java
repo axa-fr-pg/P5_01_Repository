@@ -17,9 +17,9 @@ public class MedicalRecord {
 	public MedicalRecord(String firstName, String lastName, Date birthdate, String[] medications, String[] allergies) {
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.birthdate = birthdate;
-		this.medications = medications;
-		this.allergies = allergies;
+		this.birthdate = new Date(birthdate.getTime());
+		this.medications = medications.clone();
+		this.allergies = allergies.clone();
 	}
 
 	public String getFirstName() {
@@ -39,27 +39,27 @@ public class MedicalRecord {
 	}
 
 	public Date getBirthdate() {
-		return birthdate;
+		return new Date(birthdate.getTime()); 
 	}
 
 	public void setBirthdate(Date birthdate) {
-		this.birthdate = birthdate;
+		this.birthdate = new Date(birthdate.getTime());
 	}
 
 	public String[] getMedications() {
-		return medications;
+		return medications.clone();
 	}
 
 	public void setMedications(String[] medications) {
-		this.medications = medications;
+		this.medications = medications.clone();
 	}
 
 	public String[] getAllergies() {
-		return allergies;
+		return allergies.clone();
 	}
 
 	public void setAllergies(String[] allergies) {
-		this.allergies = allergies;
+		this.allergies = allergies.clone();
 	}
 	
 }

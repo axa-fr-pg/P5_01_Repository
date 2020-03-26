@@ -35,7 +35,7 @@ public class FireStationDao {
 	public FireStation getByAddress(String address) throws FireStationNotFoundException {
 		LogService.logger.debug("getByAddress() " + address);
 		for (FireStation s: stations) {
-			if (s.getAddress() == address) return s;
+			if (s.getAddress().equals(address)) return s;
 		}
 		LogService.logger.error("getByAddress() returns FireStationNotFoundException");
 		throw new FireStationNotFoundException();

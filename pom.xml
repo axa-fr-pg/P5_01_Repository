@@ -120,6 +120,15 @@
 		        <artifactId>maven-surefire-report-plugin</artifactId>
 		        <version>3.0.0-M4</version>
 			</plugin>
+            <plugin>
+	            <groupId>com.github.spotbugs</groupId>
+	            <artifactId>spotbugs-maven-plugin</artifactId>
+	            <version>3.1.8</version>
+		        <configuration>
+			        <threshold>Normal</threshold>		<!-- High|Normal|Low|Exp|Ignore -->
+					<effort>Max</effort>				<!-- Min|Default|Max -->			          
+		        </configuration>	           
+          	</plugin>	    			
 		</plugins>
 	</reporting>
 
