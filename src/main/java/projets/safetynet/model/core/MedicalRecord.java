@@ -57,7 +57,7 @@ public class MedicalRecord {
 		long elapsedTime = now - birthTime;
 		long year = 1000L * 60L * 60L * 24L * 365L;
 		long age = elapsedTime / year;
-		return age; 
+		return age;
 	}
 
 	public String[] getMedications() {
