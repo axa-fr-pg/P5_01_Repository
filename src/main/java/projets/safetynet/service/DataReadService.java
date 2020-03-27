@@ -11,6 +11,7 @@ import projets.safetynet.model.core.FireStation;
 import projets.safetynet.model.core.MedicalRecord;
 import projets.safetynet.model.core.Person;
 import projets.safetynet.model.url.FireStationPersonResponse;
+import projets.safetynet.model.url.FireStationResponse;
 
 public class DataReadService {
 

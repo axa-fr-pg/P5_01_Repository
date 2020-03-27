@@ -39,7 +39,7 @@ public class PersonDao {
 		throw new PersonNotFoundException();
     }
 
-    ArrayList<Person> getAll()
+    public ArrayList<Person> getAll()
     {
 		LogService.logger.debug("getAll() size = " + persons.size());
     	return persons;
