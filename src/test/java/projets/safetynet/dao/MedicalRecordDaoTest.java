@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import projets.safetynet.model.core.MedicalRecord;
 
-public class MedicalRecordTest {
+public class MedicalRecordDaoTest {
 	
 	private MedicalRecord m1;
 	private MedicalRecord m2;
