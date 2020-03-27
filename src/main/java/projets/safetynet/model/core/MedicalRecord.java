@@ -51,6 +51,18 @@ public class MedicalRecord {
 		this.birthdate = new Date(birthdate.getTime());
 	}
 
+<<<<<<< HEAD
+=======
+	public long getAge() {
+		long now = new Date().getTime();
+		long birthTime = birthdate.getTime();
+		long elapsedTime = now - birthTime;
+		long year = 1000L * 60L * 60L * 24L * 365L;
+		long age = elapsedTime / year;
+		return age;
+	}
+
+>>>>>>> refs/heads/feature/10_init_firestation_url_model_and_service
 	public String[] getMedications() {
 		return medications.clone();
 	}
