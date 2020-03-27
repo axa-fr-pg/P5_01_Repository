@@ -6,14 +6,14 @@ public class Person {
 	private String lastName;
 	private String address;
 	private String city;
-	private String zip;
+	private long zip;
 	private String phone;
 	private String email;
 
 	public Person() {
 	}
 	
-	public Person(String firstName, String lastName, String address, String city, String zip, String phone, String email) {
+	public Person(String firstName, String lastName, String address, String city, long zip, String phone, String email) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.address = address;
@@ -55,11 +55,11 @@ public class Person {
 		this.city = city;
 	}
 
-	public String getZip() {
+	public long getZip() {
 		return zip;
 	}
 
-	public void setZip(String zip) {
+	public void setZip(long zip) {
 		this.zip = zip;
 	}
 

@@ -18,33 +18,39 @@ import projets.safetynet.model.Data;
 public class FileService {
 
 	@Autowired
-	PersonDao personDao;
+	private PersonDao personDao;
 	
 	@Autowired
-	FireStationDao fireStationDao;
+	private FireStationDao fireStationDao;
 	
 	@Autowired
-	MedicalRecordDao medicalRecordDao;
+	private MedicalRecordDao medicalRecordDao;
 	
 	@PostConstruct
 	void loadData()
 	{
-		String fileName = "src/main/resources/data.json";
-		Data data = null;
-		LogService.logger.info("loadData() " + fileName);
-		ObjectMapper objectMapper = new ObjectMapper();
-		try {
-			data = objectMapper.readValue(new File(fileName), Data.class);
-			LogService.logger.info("loadData() file read successfully");
-			
-		} catch (Exception e) {
-			LogService.logger.error("loadData() could not read file");
+		Data data = getDataFromFile("src/main/resources/data.json");
+		if (personDao==null || fireStationDao==null || medicalRecordDao==null)
+		{
+			LogService.logger.error("loadData() data objects are not ready");
+			return;
 		}
-		
 		personDao.set(data.getPersons());
 		fireStationDao.set(data.getFirestations());
 		medicalRecordDao.set(data.getMedicalrecords());
-		LogService.logger.info("loadData() stored into data objects");
+		LogService.logger.info("loadData() stored data into DAO");
 	}
 
+	public static Data getDataFromFile(String file) {
+		Data data = null;
+		LogService.logger.info("getDataFromFile() " + file);
+		ObjectMapper objectMapper = new ObjectMapper();
+		try {
+			data = objectMapper.readValue(new File(file), Data.class);
+			LogService.logger.info("getDataFromFile() successful");
+		} catch (Exception e) {
+			LogService.logger.error("getDataFromFile() could not read file : " + e);
+		}
+		return data;
+	}
 }

@@ -20,9 +20,9 @@ public class PersonDaoTest {
 	@BeforeEach
 	private void prepareTests()
 	{
-		p1 = new Person ("firstName1","lastName1","address1","city1","zip1","phone1","email1");
-		p2 = new Person ("firstName2","lastName2","address2","city2","zip2","phone2","email2");
-		p3 = new Person ("firstName3","lastName3","address3","city3","zip3","phone3","email3");
+		p1 = new Person ("firstName1","lastName1","address1","city1",11111,"phone1","email1");
+		p2 = new Person ("firstName2","lastName2","address2","city2",22222,"phone2","email2");
+		p3 = new Person ("firstName3","lastName3","address3","city3",33333,"phone3","email3");
 	}
 	
 	@Test
@@ -93,7 +93,7 @@ public class PersonDaoTest {
 		PersonDao dao = new PersonDao(listGiven);
 		// WHEN
 		Person p4 = new Person (p2.getFirstName(),p2.getLastName(),"address-test-value",
-				"city-test-value", "zip-test-value", "phone-test-value", "email-test-value");
+				"city-test-value", 44444, "phone-test-value", "email-test-value");
 		try {
 			dao.update(p4);
 		} catch (PersonNotFoundException e1) {

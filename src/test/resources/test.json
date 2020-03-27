@@ -1,11 +1,11 @@
 {
     "persons": [
-        { "firstName":"a", "lastName":"b", "address":"c", "city":"d", "zip":"97451", "phone":"1-2-3", "email":"e@yahoo.fr" },
+        { "firstName":"a", "lastName":"b", "address":"c", "city":"d", "zip":"97451", "phone":"1-2-3", "email":"e@yahoo.fr" }
 	], 
     "firestations": [
        { "address":"g", "station":"1" }
 	],
     "medicalrecords": [
-        { "firstName":"a", "lastName":"b", "birthdate":"04/05/66666", "medications":["g:350mg", "h:100mg"], "allergies":["i"] },
+        { "firstName":"a", "lastName":"b", "birthdate":"04/05/66666", "medications":["g:300mg", "h:100mg"], "allergies":["i"] }
         ] 
 }
