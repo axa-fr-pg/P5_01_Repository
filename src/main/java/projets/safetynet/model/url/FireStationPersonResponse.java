@@ -20,7 +20,10 @@ public class FireStationPersonResponse {
 	}
 
 	public FireStationPersonResponse(Person p) {
-		new FireStationPersonResponse(p.getFirstName(), p.getLastName(), p.getAddress(), p.getPhone());
+		this.firstName = p.getFirstName();
+		this.lastName = p.getLastName();
+		this.address = p.getAddress();
+		this.phone = p.getPhone();
 	}
 
 	public String getFirstName() {

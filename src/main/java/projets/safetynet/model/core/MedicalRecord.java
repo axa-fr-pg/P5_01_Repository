@@ -53,7 +53,10 @@ public class MedicalRecord {
 
 	public long getAge() {
 		long now = new Date().getTime();
-		long age = (now - birthdate.getTime()) / (1000 * 60 * 60 * 24 * 365);
+		long birthTime = birthdate.getTime();
+		long elapsedTime = now - birthTime;
+		long year = 1000L * 60L * 60L * 24L * 365L;
+		long age = elapsedTime / year;
 		return age; 
 	}
 

@@ -40,8 +40,7 @@ public class DataReadService {
 				for (MedicalRecord r : records)
 					if (r.getFirstName().equals(p.getFirstName()) && 
 							r.getLastName().equals(p.getLastName()) ){
-						long age = (now - r.getBirthdate().getTime()) /
-								(1000 * 60 * 60 * 24 * 365);
+						long age = r.getAge();
 						if (age < 18) children ++;
 						else adults ++;
 				}

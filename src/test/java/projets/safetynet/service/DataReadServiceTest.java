@@ -76,6 +76,5 @@ public class DataReadServiceTest {
 		assertEquals(5, r.getNumberAdults());
 		assertEquals(1, r.getNumberChildren());
 	}
-	
-	
+
 }
