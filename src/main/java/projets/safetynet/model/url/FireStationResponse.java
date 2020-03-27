@@ -10,7 +10,7 @@ public class FireStationResponse {
 	
 	public FireStationResponse() {
 	}
-	
+
 	public FireStationResponse(ArrayList<FireStationPersonResponse> persons, long numberAdults, long numberChildren) {
 		this.persons = new ArrayList<FireStationPersonResponse>(persons);
 		this.numberAdults = numberAdults;
