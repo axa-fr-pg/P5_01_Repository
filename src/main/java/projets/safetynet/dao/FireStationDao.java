@@ -2,9 +2,12 @@ package projets.safetynet.dao;
 
 import java.util.ArrayList;
 
+import org.springframework.stereotype.Repository;
+
 import projets.safetynet.model.FireStation;
 import projets.safetynet.service.LogService;
 
+@Repository
 public class FireStationDao {
 
 	private ArrayList<FireStation> stations;
@@ -20,6 +23,10 @@ public class FireStationDao {
 		}		
 	}
 
+	public void set(ArrayList<FireStation> stations) {
+		this.stations = new FireStationDao(stations).stations;
+	}
+	
     void save(FireStation s)
     {
 		LogService.logger.debug("save() " + s.getAddress() + " & " + s.getStation());

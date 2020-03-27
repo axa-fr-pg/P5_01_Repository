@@ -2,9 +2,12 @@ package projets.safetynet.dao;
 
 import java.util.ArrayList;
 
+import org.springframework.stereotype.Repository;
+
 import projets.safetynet.model.MedicalRecord;
 import projets.safetynet.service.LogService;
 
+@Repository
 public class MedicalRecordDao {
 
 	private ArrayList<MedicalRecord> records;
@@ -18,6 +21,10 @@ public class MedicalRecordDao {
 		for (MedicalRecord m: records) {
 			save(m);
 		}		
+	}
+	
+	public void set(ArrayList<MedicalRecord> records) {
+		this.records = new MedicalRecordDao(records).records;
 	}
 	
     void save(MedicalRecord m)

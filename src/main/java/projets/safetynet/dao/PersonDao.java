@@ -2,9 +2,12 @@ package projets.safetynet.dao;
 
 import java.util.ArrayList;
 
+import org.springframework.stereotype.Repository;
+
 import projets.safetynet.model.Person;
 import projets.safetynet.service.LogService;
 
+@Repository
 public class PersonDao {
 
 	private ArrayList<Person> persons;
@@ -20,6 +23,11 @@ public class PersonDao {
 		}		
 	}
 
+	public void set(ArrayList<Person> persons)
+	{
+		this.persons = new PersonDao(persons).persons;
+	}
+	
 	Person get(String firstName, String lastName) throws PersonNotFoundException
     {
 		LogService.logger.debug("get() " + firstName + " & " + lastName);
