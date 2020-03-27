@@ -1,4 +1,4 @@
-package projets.safetynet;
+package projets.safetynet.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -19,8 +19,8 @@ public class FileServiceTest {
 		Data data = FileService.getDataFromFile(file);
 		// THEN
 		assertNotNull(data);
-		assertEquals(1, data.getPersons().size());
-		assertEquals(1, data.getFirestations().size());
-		assertEquals(1, data.getMedicalrecords().size());
+		assertEquals(23, data.getPersons().size());
+		assertEquals(13, data.getFirestations().size());
+		assertEquals(23, data.getMedicalrecords().size());
 	}
 }
