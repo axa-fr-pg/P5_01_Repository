@@ -12,7 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import projets.safetynet.dao.FireStationDao;
 import projets.safetynet.dao.MedicalRecordDao;
 import projets.safetynet.dao.PersonDao;
-import projets.safetynet.model.Data;
+import projets.safetynet.model.core.Data;
 
 @Component
 public class FileService {

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.springframework.stereotype.Repository;
 
-import projets.safetynet.model.FireStation;
+import projets.safetynet.model.core.FireStation;
 import projets.safetynet.service.LogService;
 
 @Repository

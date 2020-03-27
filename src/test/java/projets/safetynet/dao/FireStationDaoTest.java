@@ -9,9 +9,7 @@ import java.util.Arrays;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import projets.safetynet.model.FireStation;
-import projets.safetynet.model.FireStation;
-import projets.safetynet.model.FireStation;
+import projets.safetynet.model.core.FireStation;
 
 public class FireStationDaoTest {
 

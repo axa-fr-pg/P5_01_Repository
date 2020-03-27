@@ -11,13 +11,7 @@ import java.util.Arrays;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import projets.safetynet.model.MedicalRecord;
-import projets.safetynet.model.MedicalRecord;
-import projets.safetynet.model.MedicalRecord;
-import projets.safetynet.model.MedicalRecord;
-import projets.safetynet.model.MedicalRecord;
-import projets.safetynet.model.MedicalRecord;
-import projets.safetynet.model.MedicalRecord;
+import projets.safetynet.model.core.MedicalRecord;
 
 public class MedicalRecordTest {
 	

@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 
-import projets.safetynet.model.Data;
+import projets.safetynet.model.core.Data;
 import projets.safetynet.service.FileService;
 
 public class FileServiceTest {

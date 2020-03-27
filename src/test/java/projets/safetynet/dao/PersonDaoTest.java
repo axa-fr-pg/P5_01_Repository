@@ -9,7 +9,7 @@ import java.util.Arrays;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import projets.safetynet.model.Person;
+import projets.safetynet.model.core.Person;
 
 public class PersonDaoTest {
 	

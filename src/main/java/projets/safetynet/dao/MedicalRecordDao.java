@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.springframework.stereotype.Repository;
 
-import projets.safetynet.model.MedicalRecord;
+import projets.safetynet.model.core.MedicalRecord;
 import projets.safetynet.service.LogService;
 
 @Repository
