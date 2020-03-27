@@ -46,7 +46,7 @@ public class DataReadService {
 				}
 			}
 		}
-		
+
 		FireStationResponse response = new FireStationResponse(responsePersons, adults, children);
 		return response;
 	}

@@ -11,7 +11,7 @@ public class MedicalRecordTest {
 	long now = new Date().getTime();
 	long years18ago = 1000L * 60L * 60L * 24L * 365L * 18L;
 	long day1 = 1000L * 60L * 60L * 24L;
-	
+
 	@Test
 	void givenPersonJustBefore18_whenGetAge_returns17()
 	{

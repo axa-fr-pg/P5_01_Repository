@@ -44,7 +44,7 @@ public class DataReadServiceTest {
 	{
 		MockitoAnnotations.initMocks(this);
 	}
-	
+
 	@BeforeAll
 	private static void loadTestFile()
 	{

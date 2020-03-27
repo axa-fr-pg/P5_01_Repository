@@ -57,5 +57,5 @@ public class FireStationPersonResponse {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	
+
 }
