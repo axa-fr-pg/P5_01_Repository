@@ -27,7 +27,7 @@ public class FireStationDao {
 		this.stations = new FireStationDao(stations).stations;
 	}
 	
-    void save(FireStation s)
+    public void save(FireStation s)
     {
 		LogService.logger.debug("save() " + s.getAddress() + " & " + s.getStation());
     	FireStation sNew = new FireStation(s.getAddress(), s.getStation());

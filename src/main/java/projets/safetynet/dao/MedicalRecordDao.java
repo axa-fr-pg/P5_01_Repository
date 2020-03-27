@@ -27,7 +27,7 @@ public class MedicalRecordDao {
 		this.records = new MedicalRecordDao(records).records;
 	}
 	
-    void save(MedicalRecord m)
+    public void save(MedicalRecord m)
     {
 		LogService.logger.debug("save() " + m.getFirstName() + " & " + m.getLastName());
     	MedicalRecord mNew = new MedicalRecord(m.getFirstName(), m.getLastName(), m.getBirthdate(),

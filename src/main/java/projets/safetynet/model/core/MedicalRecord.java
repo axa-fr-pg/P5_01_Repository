@@ -51,6 +51,12 @@ public class MedicalRecord {
 		this.birthdate = new Date(birthdate.getTime());
 	}
 
+	public long getAge() {
+		long now = new Date().getTime();
+		long age = (now - birthdate.getTime()) / (1000 * 60 * 60 * 24 * 365);
+		return age; 
+	}
+
 	public String[] getMedications() {
 		return medications.clone();
 	}

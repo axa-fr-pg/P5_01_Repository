@@ -28,7 +28,7 @@ public class PersonDao {
 		this.persons = new PersonDao(persons).persons;
 	}
 	
-	Person get(String firstName, String lastName) throws PersonNotFoundException
+	public Person get(String firstName, String lastName) throws PersonNotFoundException
     {
 		LogService.logger.debug("get() " + firstName + " & " + lastName);
 		for (Person p: persons) {
@@ -39,13 +39,13 @@ public class PersonDao {
 		throw new PersonNotFoundException();
     }
 
-    ArrayList<Person> getAll()
+    public ArrayList<Person> getAll()
     {
 		LogService.logger.debug("getAll() size = " + persons.size());
     	return persons;
     }
      
-    void save(Person p)
+    public void save(Person p)
     {
 		LogService.logger.debug("save() " + p.getFirstName() + " & " + p.getLastName());
     	Person pNew = new Person(p.getFirstName(), p.getLastName(), p.getAddress(),
@@ -53,7 +53,7 @@ public class PersonDao {
     	persons.add(pNew);
     }
      
-    void update(Person pNew) throws PersonNotFoundException
+    public void update(Person pNew) throws PersonNotFoundException
     {
 		LogService.logger.debug("update() " + pNew.getFirstName() + " & " + pNew.getLastName());
 		for (Person p: persons) {
@@ -71,7 +71,7 @@ public class PersonDao {
     	throw new PersonNotFoundException();
     }
 
-    void delete(Person p) // Does not throw any exception if the person is not found
+    public void delete(Person p) // Does not throw any exception if the person is not found
     {
 		LogService.logger.debug("delete() " + p.getFirstName() + " & " + p.getLastName());
 		persons.removeIf( person -> person.getFirstName().equals(p.getFirstName()) &&
