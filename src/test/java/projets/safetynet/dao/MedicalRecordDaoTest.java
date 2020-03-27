@@ -19,7 +19,7 @@ import projets.safetynet.model.MedicalRecord;
 import projets.safetynet.model.MedicalRecord;
 import projets.safetynet.model.MedicalRecord;
 
-public class MedicalRecordTest {
+public class MedicalRecordDaoTest {
 	
 	private MedicalRecord m1;
 	private MedicalRecord m2;
