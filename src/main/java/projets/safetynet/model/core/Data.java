@@ -9,7 +9,9 @@ public class Data {
 	private ArrayList<MedicalRecord> medicalrecords;
 	
 	public Data() {
-
+		persons = new ArrayList<Person>();
+		firestations = new ArrayList<FireStation>();
+		medicalrecords = new ArrayList<MedicalRecord>();
 	}
 	
 	public Data(ArrayList<Person> persons, ArrayList<FireStation> firestations,	ArrayList<MedicalRecord> medicalrecords) {
