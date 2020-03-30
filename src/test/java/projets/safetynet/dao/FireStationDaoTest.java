@@ -81,7 +81,7 @@ public class FireStationDaoTest {
 	{
 		// GIVEN
 		ArrayList<FireStation> listGiven = new ArrayList<FireStation>(Arrays.asList(s1, s2, s3, s4));
-		FireStationDao dao = new FireStationDao(listGiven);
+		dao.set(listGiven);
 		// WHEN
 		ArrayList<FireStation> listResult = dao.getByStation(s1.getStation());
 		// THEN

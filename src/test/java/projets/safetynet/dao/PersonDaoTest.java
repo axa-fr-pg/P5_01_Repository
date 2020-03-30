@@ -48,7 +48,7 @@ public class PersonDaoTest {
 	{
 		// GIVEN
 		ArrayList<Person> listGiven = new ArrayList<Person>(Arrays.asList(p1, p2, p3));
-		PersonDao dao = new PersonDao(listGiven);
+		dao.set(listGiven);
 		// WHEN
 		ArrayList<Person> listResult = dao.getByAddress(p2.getAddress());
 		// THEN
@@ -62,7 +62,7 @@ public class PersonDaoTest {
 	{
 		// GIVEN
 		ArrayList<Person> listGiven = new ArrayList<Person>(Arrays.asList(p1, p2, p3));
-		PersonDao dao = new PersonDao(listGiven);
+		dao.set(listGiven);
 		// WHEN
 		ArrayList<Person> listResult = dao.getByAddress("non existing address");
 		// THEN

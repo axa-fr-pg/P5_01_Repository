@@ -12,6 +12,7 @@ import projets.safetynet.dao.PersonDao;
 import projets.safetynet.model.core.FireStation;
 import projets.safetynet.model.core.MedicalRecord;
 import projets.safetynet.model.core.Person;
+import projets.safetynet.model.url.ChildAlertResponse;
 import projets.safetynet.model.url.FireStationPersonResponse;
 import projets.safetynet.model.url.FireStationResponse;
 
@@ -39,7 +40,7 @@ public class DataReadService {
 			ArrayList<Person> persons = personDao.getByAddress(s.getAddress());
 			for (Person p : persons) {
 				FireStationPersonResponse responsePerson = new FireStationPersonResponse(p);
-				responsePersons.add(responsePerson);
+				responsePersons.add(responsePerson); 
 
 				MedicalRecord r = null;
 				long age = 0;
@@ -61,5 +62,17 @@ public class DataReadService {
                 + adults + " adults, " + children + " children");
 		return response;
 	}
+
+    public ArrayList<ChildAlertResponse> getChildAlertResponse(String address) {
+        LogService.logger.info("getChildAlertResponse() " + address);
+        ArrayList<ChildAlertResponse> response = new ArrayList<ChildAlertResponse>();
+        ArrayList<Person> allPersons = personDao.getAll();
+        ArrayList<MedicalRecord> records = recordDao.getAll();
+        
+        // TODO
+        
+        LogService.logger.info("getChildAlertResponse() returns " + response.size() + " children");
+        return response;
+}
 
 }
