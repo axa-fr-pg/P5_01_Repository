@@ -1,4 +1,4 @@
-package projets.safetynet.model;
+package projets.safetynet.model.core;
 
 public class FireStation {
 	private String address;

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.springframework.stereotype.Repository;
 
-import projets.safetynet.model.Person;
+import projets.safetynet.model.core.Person;
 import projets.safetynet.service.LogService;
 
 @Repository
@@ -17,15 +17,13 @@ public class PersonDao {
 
 	public PersonDao(ArrayList<Person> persons) {
 		LogService.logger.debug("PersonDao() size = " + persons.size());
-		this.persons = new ArrayList<Person>();
-		for (Person p: persons) {
-			save(p);
-		}		
+		this.persons = (ArrayList<Person>) persons.clone();
 	}
 
 	public void set(ArrayList<Person> persons)
 	{
-		this.persons = new PersonDao(persons).persons;
+		LogService.logger.debug("set() size = " + persons.size());
+		this.persons = (ArrayList<Person>) persons.clone();
 	}
 	
 	Person get(String firstName, String lastName) throws PersonNotFoundException
@@ -39,7 +37,7 @@ public class PersonDao {
 		throw new PersonNotFoundException();
     }
 
-    ArrayList<Person> getAll()
+    public ArrayList<Person> getAll()
     {
 		LogService.logger.debug("getAll() size = " + persons.size());
     	return persons;

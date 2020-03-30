@@ -1,26 +1,29 @@
-package projets.safetynet.model;
+package projets.safetynet.model.url;
 
-public class Person {
+import projets.safetynet.model.core.Person;
+
+public class FireStationPersonResponse {
 	
 	private String firstName;
 	private String lastName;
 	private String address;
-	private String city;
-	private long zip;
 	private String phone;
-	private String email;
-
-	public Person() {
-	}
 	
-	public Person(String firstName, String lastName, String address, String city, long zip, String phone, String email) {
+	public FireStationPersonResponse() {		
+	}
+
+	public FireStationPersonResponse(String firstName, String lastName, String address, String phone) {		
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.address = address;
-		this.city = city;
-		this.zip = zip;
 		this.phone = phone;
-		this.email = email;
+	}
+
+	public FireStationPersonResponse(Person p) {
+		this.firstName = p.getFirstName();
+		this.lastName = p.getLastName();
+		this.address = p.getAddress();
+		this.phone = p.getPhone();
 	}
 
 	public String getFirstName() {
@@ -47,22 +50,6 @@ public class Person {
 		this.address = address;
 	}
 
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public long getZip() {
-		return zip;
-	}
-
-	public void setZip(long zip) {
-		this.zip = zip;
-	}
-
 	public String getPhone() {
 		return phone;
 	}
@@ -71,12 +58,4 @@ public class Person {
 		this.phone = phone;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	
 }

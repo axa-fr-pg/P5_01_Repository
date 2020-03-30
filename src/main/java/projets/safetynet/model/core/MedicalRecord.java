@@ -1,4 +1,4 @@
-package projets.safetynet.model;
+package projets.safetynet.model.core;
 
 import java.util.Date;
 
@@ -17,6 +17,8 @@ public class MedicalRecord {
 	
 	public MedicalRecord() 
 	{	
+		medications = new String[] {};
+		allergies = new String[] {};
 	}
 	
 	public MedicalRecord(String firstName, String lastName, Date birthdate, String[] medications, String[] allergies) {
@@ -49,6 +51,15 @@ public class MedicalRecord {
 
 	public void setBirthdate(Date birthdate) {
 		this.birthdate = new Date(birthdate.getTime());
+	}
+
+	public long getAge() {
+		long now = new Date().getTime();
+		long birthTime = birthdate.getTime();
+		long elapsedTime = now - birthTime;
+		long year = 1000L * 60L * 60L * 24L * 365L;
+		long age = elapsedTime / year;
+		return age;
 	}
 
 	public String[] getMedications() {

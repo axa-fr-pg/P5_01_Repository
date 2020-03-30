@@ -5,18 +5,21 @@ import java.io.File;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import projets.safetynet.dao.FireStationDao;
 import projets.safetynet.dao.MedicalRecordDao;
 import projets.safetynet.dao.PersonDao;
-import projets.safetynet.model.Data;
+import projets.safetynet.model.core.Data;
 
-@Component
+@Service
 public class FileService {
 
+	@Autowired
+	private ObjectMapper objectMapper;
+	
 	@Autowired
 	private PersonDao personDao;
 	
@@ -50,10 +53,9 @@ public class FileService {
     	else return "src/test/resources/test.json";
 	}
 
-	public static Data getDataFromFile(String file) {
+	public Data getDataFromFile(String file) {
 		Data data = null;
 		LogService.logger.info("getDataFromFile() " + file);
-		ObjectMapper objectMapper = new ObjectMapper();
 		try {
 			data = objectMapper.readValue(new File(file), Data.class);
 			LogService.logger.info("getDataFromFile() successful");

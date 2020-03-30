@@ -8,10 +8,16 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
-import projets.safetynet.model.Person;
+import projets.safetynet.model.core.Person;
 
+@SpringBootTest
 public class PersonDaoTest {
+	
+	@Autowired
+	private PersonDao dao;
 	
 	private Person p1;
 	private Person p2;
@@ -30,7 +36,7 @@ public class PersonDaoTest {
 	{
 		// GIVEN
 		ArrayList<Person> listGiven = new ArrayList<Person>(Arrays.asList(p1, p2, p3));
-		PersonDao dao = new PersonDao(listGiven);
+		dao.set(listGiven);
 		// WHEN
 		ArrayList<Person> listResult = dao.getAll();
 		// THEN
@@ -42,7 +48,7 @@ public class PersonDaoTest {
 	{
 		// GIVEN
 		ArrayList<Person> listGiven = new ArrayList<Person>(Arrays.asList(p1, p2, p3));
-		PersonDao dao = new PersonDao(listGiven);
+		dao.set(listGiven);
 		// WHEN
 		Person p = null;
 		try {
@@ -65,7 +71,7 @@ public class PersonDaoTest {
 	{
 		// GIVEN
 		ArrayList<Person> listGiven = new ArrayList<Person>(Arrays.asList(p1, p3));
-		PersonDao dao = new PersonDao(listGiven);
+		dao.set(listGiven);
 		// WHEN & THEN
 		assertThrows(PersonNotFoundException.class, () -> {
 			dao.get(p2.getFirstName(), p2.getLastName());
@@ -77,7 +83,7 @@ public class PersonDaoTest {
 	{
 		// GIVEN
 		ArrayList<Person> listGiven = new ArrayList<Person>(Arrays.asList(p1, p2));
-		PersonDao dao = new PersonDao(listGiven);
+		dao.set(listGiven);
 		// WHEN
 		dao.save(p3);
 		ArrayList<Person> listResult = dao.getAll();
@@ -90,7 +96,7 @@ public class PersonDaoTest {
 	{
 		// GIVEN
 		ArrayList<Person> listGiven = new ArrayList<Person>(Arrays.asList(p1, p2, p3));
-		PersonDao dao = new PersonDao(listGiven);
+		dao.set(listGiven);
 		// WHEN
 		Person p4 = new Person (p2.getFirstName(),p2.getLastName(),"address-test-value",
 				"city-test-value", 44444, "phone-test-value", "email-test-value");
@@ -118,7 +124,7 @@ public class PersonDaoTest {
 	{
 		// GIVEN
 		ArrayList<Person> listGiven = new ArrayList<Person>(Arrays.asList(p1, p3));
-		PersonDao dao = new PersonDao(listGiven);
+		dao.set(listGiven);
 		// WHEN & THEN
 		assertThrows(PersonNotFoundException.class, () -> {
 			dao.update(p2);
@@ -130,7 +136,7 @@ public class PersonDaoTest {
 	{
 		// GIVEN
 		ArrayList<Person> listGiven = new ArrayList<Person>(Arrays.asList(p1, p2, p3));
-		PersonDao dao = new PersonDao(listGiven);
+		dao.set(listGiven);
 		// WHEN
 		dao.delete(p2);
 		ArrayList<Person> listResult = dao.getAll();
