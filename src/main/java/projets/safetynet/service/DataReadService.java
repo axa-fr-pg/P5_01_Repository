@@ -41,7 +41,7 @@ public class DataReadService {
 					if (r.getFirstName().equals(p.getFirstName()) && 
 							r.getLastName().equals(p.getLastName()) ){
 						long age = r.getAge();
-						if (age < 18) children ++;
+						if (age < 19) children ++;
 						else adults ++;
 				}
 			}

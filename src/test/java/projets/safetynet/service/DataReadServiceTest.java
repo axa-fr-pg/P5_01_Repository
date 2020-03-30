@@ -84,10 +84,10 @@ public class DataReadServiceTest {
 		MedicalRecord m1 = new MedicalRecord("f1", "l1", new Date(), new String[]{}, new String[]{});
 		when(adultRecord.getFirstName()).thenReturn("adultfirstname");
 		when(adultRecord.getLastName()).thenReturn("adultlastname");
-		when(adultRecord.getAge()).thenReturn(20L);
+		when(adultRecord.getAge()).thenReturn(19L);
 		when(childRecord.getFirstName()).thenReturn("chilffirstname");
 		when(childRecord.getLastName()).thenReturn("childlastname");
-		when(childRecord.getAge()).thenReturn(17L);
+		when(childRecord.getAge()).thenReturn(18L);
 		MedicalRecord m4 = new MedicalRecord("f4", "l4", new Date(), new String[]{}, new String[]{});
 		MedicalRecord m5 = new MedicalRecord("f5", "f5", new Date(), new String[]{}, new String[]{});
 		data.getMedicalrecords().add(m1);
