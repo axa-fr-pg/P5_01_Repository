@@ -18,7 +18,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.event.annotation.BeforeTestClass;
 import projets.safetynet.dao.FireStationDao;
 import projets.safetynet.dao.MedicalRecordDao;
+import projets.safetynet.dao.MedicalRecordNotFoundException;
 import projets.safetynet.dao.PersonDao;
+import projets.safetynet.dao.PersonNotFoundException;
 import projets.safetynet.model.core.Data;
 import projets.safetynet.model.core.FireStation;
 import projets.safetynet.model.core.MedicalRecord;
@@ -29,7 +31,22 @@ import projets.safetynet.model.url.FireStationResponse;
 @SpringBootTest
 public class DataReadServiceTest {
 
-	private static Data data;
+	private Person p1 = new Person("f1", "l1", "a1", "c1", 11111L, "t1", "e1");
+	private Person p2 = new Person("adultfirstname", "adultlastname", "adultaddress", "c2", 22222L, "adultphone", "e2");
+	private Person p3 = new Person("childfirstname", "childlastname", "childaddress", "c3", 33333L, "childphone", "e3");
+	private Person p4 = new Person("adultfirstname", "l4", "a4", "c4", 44444L, "t4", "e4");
+	private Person p5 = new Person("f5", "childlastname", "a5", "c5", 55555L, "t5", "e5");
+	private FireStation f1 = new FireStation("adultaddress", 12345);
+	private FireStation f2 = new FireStation("a2", 2);
+	private FireStation f3 = new FireStation("a3", 3);
+	private FireStation f4 = new FireStation("childaddress", 12345);
+	private FireStation f5 = new FireStation("a5", 5);
+	private MedicalRecord m1 = new MedicalRecord("f1", "l1", new Date(), new String[]{}, new String[]{});
+	private MedicalRecord m2 = new MedicalRecord("adultfirstname", "adultlastname", new Date(), new String[]{}, new String[]{});
+	private MedicalRecord m3 = new MedicalRecord("childfirstname", "childlastname", new Date(), new String[]{}, new String[]{});
+	private MedicalRecord m4 = new MedicalRecord("adultfirstname", "l4", new Date(), new String[]{}, new String[]{});
+	private MedicalRecord m5 = new MedicalRecord("f5", "childlastname", new Date(), new String[]{}, new String[]{});
+
 	
 	@InjectMocks
 	private DataReadService service;
@@ -55,58 +72,24 @@ public class DataReadServiceTest {
 		MockitoAnnotations.initMocks(this);
 	}
 
-	@BeforeEach
-	private void initTestData()
-	{
-		data = new Data();
-		Person p1 = new Person("f1", "l1", "a1", "c1", 11111L, "t1", "e1");
-		Person p2 = new Person("adultfirstname", "adultlastname", "adultaddress", "c2", 22222L, "adultphone", "e2");
-		Person p3 = new Person("chilffirstname", "childlastname", "childaddress", "c3", 33333L, "childphone", "e3");
-		Person p4 = new Person("adultfirstname", "l4", "a4", "c4", 44444L, "t4", "e4");
-		Person p5 = new Person("f5", "childlastname", "a5", "c5", 55555L, "t5", "e5");
-		data.getPersons().add(p1);
-		data.getPersons().add(p2);
-		data.getPersons().add(p3);
-		data.getPersons().add(p4);
-		data.getPersons().add(p5);
-
-		FireStation f1 = new FireStation("adultaddress", 999);
-		FireStation f2 = new FireStation("a2", 2);
-		FireStation f3 = new FireStation("a3", 3);
-		FireStation f4 = new FireStation("childaddress", 999);
-		FireStation f5 = new FireStation("a5", 5);
-		data.getFirestations().add(f1);
-		data.getFirestations().add(f2);
-		data.getFirestations().add(f3);
-		data.getFirestations().add(f4);
-		data.getFirestations().add(f5);
-		
-		MedicalRecord m1 = new MedicalRecord("f1", "l1", new Date(), new String[]{}, new String[]{});
-		when(adultRecord.getFirstName()).thenReturn("adultfirstname");
-		when(adultRecord.getLastName()).thenReturn("adultlastname");
-		when(adultRecord.getAge()).thenReturn(19L);
-		when(childRecord.getFirstName()).thenReturn("chilffirstname");
-		when(childRecord.getLastName()).thenReturn("childlastname");
-		when(childRecord.getAge()).thenReturn(18L);
-		MedicalRecord m4 = new MedicalRecord("f4", "l4", new Date(), new String[]{}, new String[]{});
-		MedicalRecord m5 = new MedicalRecord("f5", "f5", new Date(), new String[]{}, new String[]{});
-		data.getMedicalrecords().add(m1);
-		data.getMedicalrecords().add(adultRecord);
-		data.getMedicalrecords().add(childRecord);
-		data.getMedicalrecords().add(m4);
-		data.getMedicalrecords().add(m5);
-		
-		when(personDao.getAll()).thenReturn(data.getPersons());
-		when(stationDao.getAll()).thenReturn(data.getFirestations());
-		when(recordDao.getAll()).thenReturn(data.getMedicalrecords());
-	}
-
 	@Test
 	void givenTestJson_getUrlFirestation1_returnsCorrectValues()
 	{
 		// GIVEN
+		when(stationDao.getByStation(12345)).thenReturn(new ArrayList<FireStation> (Arrays.asList(f1, f4)));
+		when(personDao.getByAddress("adultaddress")).thenReturn(new ArrayList<Person> (Arrays.asList(p2)));
+		when(personDao.getByAddress("childaddress")).thenReturn(new ArrayList<Person> (Arrays.asList(p3)));
+		when(adultRecord.getAge()).thenReturn(19L);
+		when(childRecord.getAge()).thenReturn(18L);
+		try {
+			when(recordDao.get("adultfirstname", "adultlastname")).thenReturn(adultRecord);
+			when(recordDao.get("childfirstname", "childlastname")).thenReturn(childRecord);
+		} catch (MedicalRecordNotFoundException e) {
+			e.printStackTrace();
+		}
+
 		// WHEN
-		FireStationResponse r = service.getFireStationResponse(999);
+		FireStationResponse r = service.getFireStationResponse(12345);
 		ArrayList<FireStationPersonResponse> p = r.getPersons();
 		// THEN
 		assertNotNull(r);

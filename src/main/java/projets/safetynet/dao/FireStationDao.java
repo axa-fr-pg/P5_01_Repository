@@ -24,6 +24,7 @@ public class FireStationDao {
 	}
 
 	public void set(ArrayList<FireStation> stations) {
+		LogService.logger.debug("set() size = " + stations.size());
 		this.stations = new FireStationDao(stations).stations;
 	}
 	
@@ -48,13 +49,14 @@ public class FireStationDao {
 		throw new FireStationNotFoundException();
 	}
 
-	public FireStation getByStation(long station) throws FireStationNotFoundException {
+	public ArrayList<FireStation> getByStation(long station) {
 		LogService.logger.debug("getByStation() " + station);
+		ArrayList<FireStation> result = new ArrayList<FireStation>();
 		for (FireStation s: stations) {
-			if (s.getStation() == station) return s;
+			if (s.getStation() == station) result.add(s);
 		}
-		LogService.logger.error("getByStation() returns FireStationNotFoundException");
-		throw new FireStationNotFoundException();
+		LogService.logger.debug("getByStation() size = " + result.size());
+		return result;
 	}
 
 	public void updateByAddress(FireStation sNew) throws FireStationNotFoundException {
@@ -69,22 +71,10 @@ public class FireStationDao {
     	throw new FireStationNotFoundException();
 	}
 
-	public void updateByStation(FireStation sNew) throws FireStationNotFoundException {
-		LogService.logger.debug("updateByStation() " + sNew.getStation());
-		for (FireStation s: stations) {
-			if (s.getStation() == sNew.getStation()) {
-				s.setAddress(sNew.getAddress());
-				return;
-			}
-		}
-		LogService.logger.error("updateByStation() returns FireStationNotFoundException");
-    	throw new FireStationNotFoundException();
-	}
-
 	public void delete(FireStation s) // Does not throw any exception if the station is not found
 	{
 		LogService.logger.debug("delete() " + s.getAddress() + " or " + s.getStation());
-		stations.removeIf( station -> station.getAddress().equals(s.getAddress()) ||
+		stations.removeIf( station -> station.getAddress().equals(s.getAddress()) &&
     			station.getStation() == s.getStation() );
 	}
 	

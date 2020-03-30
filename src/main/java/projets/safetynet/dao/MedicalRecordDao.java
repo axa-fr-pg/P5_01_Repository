@@ -24,6 +24,7 @@ public class MedicalRecordDao {
 	}
 	
 	public void set(ArrayList<MedicalRecord> records) {
+		LogService.logger.debug("set() size = " + records.size());
 		this.records = new MedicalRecordDao(records).records;
 	}
 	

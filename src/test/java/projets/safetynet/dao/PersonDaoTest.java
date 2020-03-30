@@ -21,12 +21,12 @@ public class PersonDaoTest {
 	private void prepareTests()
 	{
 		p1 = new Person ("firstName1","lastName1","address1","city1",11111,"phone1","email1");
-		p2 = new Person ("firstName2","lastName2","address2","city2",22222,"phone2","email2");
-		p3 = new Person ("firstName3","lastName3","address3","city3",33333,"phone3","email3");
+		p2 = new Person ("firstName2","lastName2","COMMON","city2",22222,"phone2","email2");
+		p3 = new Person ("firstName3","lastName3","COMMON","city3",33333,"phone3","email3");
 	}
 	
 	@Test
-	void getAll_returnsCompleteList()
+	void givenTestData_getAll_returnsCompleteList()
 	{
 		// GIVEN
 		ArrayList<Person> listGiven = new ArrayList<Person>(Arrays.asList(p1, p2, p3));
@@ -35,6 +35,32 @@ public class PersonDaoTest {
 		ArrayList<Person> listResult = dao.getAll();
 		// THEN
 		assertEquals(3, listResult.size());
+	}
+	
+	@Test
+	void givenAddressWithTwoPersons_getByAddress_returnsBothPersons()
+	{
+		// GIVEN
+		ArrayList<Person> listGiven = new ArrayList<Person>(Arrays.asList(p1, p2, p3));
+		PersonDao dao = new PersonDao(listGiven);
+		// WHEN
+		ArrayList<Person> listResult = dao.getByAddress(p2.getAddress());
+		// THEN
+		assertEquals(2, listResult.size());
+		assertEquals(p2.getFirstName(), listResult.get(0).getFirstName());
+		assertEquals(p3.getFirstName(), listResult.get(1).getFirstName());
+	}
+	
+	@Test
+	void givenMissingAddress_getByAddress_returnsEmptyList()
+	{
+		// GIVEN
+		ArrayList<Person> listGiven = new ArrayList<Person>(Arrays.asList(p1, p2, p3));
+		PersonDao dao = new PersonDao(listGiven);
+		// WHEN
+		ArrayList<Person> listResult = dao.getByAddress("non existing address");
+		// THEN
+		assertEquals(0, listResult.size());
 	}
 	
 	@Test
