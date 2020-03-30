@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import projets.safetynet.dao.FireStationDao;
 import projets.safetynet.dao.MedicalRecordDao;
+import projets.safetynet.dao.MedicalRecordNotFoundException;
 import projets.safetynet.dao.PersonDao;
 import projets.safetynet.model.core.FireStation;
 import projets.safetynet.model.core.MedicalRecord;
@@ -28,31 +29,36 @@ public class DataReadService {
 
 	public FireStationResponse getFireStationResponse(long station) {
 	
-		LogService.logger.info("getFireStationResponse() " + station);
-		ArrayList<Person> allPersons = personDao.getAll();
-		ArrayList<FireStation> stations = stationDao.getAll();
-		ArrayList<MedicalRecord> records = recordDao.getAll();
-		ArrayList<FireStationPersonResponse> responsePersons = new ArrayList<FireStationPersonResponse>();
+        LogService.logger.info("getFireStationResponse() " + station);
+        ArrayList<FireStationPersonResponse> responsePersons = new ArrayList<FireStationPersonResponse>();
 		long adults = 0;
 		long children = 0;
 
-		for (FireStation s : stations) if (s.getStation() == station) {
-			for (Person p : allPersons) if (p.getAddress().equals(s.getAddress())) {
+		ArrayList<FireStation> stations = stationDao.getByStation(station);
+		for (FireStation s : stations) {
+			ArrayList<Person> persons = personDao.getByAddress(s.getAddress());
+			for (Person p : persons) {
 				FireStationPersonResponse responsePerson = new FireStationPersonResponse(p);
 				responsePersons.add(responsePerson);
-				for (MedicalRecord r : records)
-					if (r.getFirstName().equals(p.getFirstName()) && 
-							r.getLastName().equals(p.getLastName()) ){
-						long age = r.getAge();
-						if (age < 19) children ++;
-						else adults ++;
+
+				MedicalRecord r = null;
+				long age = 0;
+
+				try {
+					r = recordDao.get(p.getFirstName(), p.getLastName());
+					age = r.getAge();
+					if (age < 19) children ++;
+					else adults ++;
+				} catch (MedicalRecordNotFoundException e) {
+				       LogService.logger.error("getFireStationResponse() no MedicalRecord for " 
+				    		   + p.getFirstName() + " " + p.getLastName()); 
 				}
 			}
 		}
 
 		FireStationResponse response = new FireStationResponse(responsePersons, adults, children);
-		LogService.logger.info("getFireStationResponse() returns " + responsePersons.size() + " persons " 
-				+ adults + " adults " + children + " children");
+        LogService.logger.info("getFireStationResponse() returns " + responsePersons.size() + " persons, " 
+                + adults + " adults, " + children + " children");
 		return response;
 	}
 

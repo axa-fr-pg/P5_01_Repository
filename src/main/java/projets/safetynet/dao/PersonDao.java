@@ -43,7 +43,17 @@ public class PersonDao {
     	return persons;
     }
      
-    void save(Person p)
+	public ArrayList<Person> getByAddress(String address) {
+		LogService.logger.debug("getByAddress() " + address);
+		ArrayList<Person> result = new ArrayList<Person>();
+		for (Person p: persons) {
+			if (p.getAddress().equals(address)) result.add(p);
+		}
+		LogService.logger.debug("getByAddress() returns size = " + result.size());
+		return result;
+	}
+
+	public void save(Person p)
     {
 		LogService.logger.debug("save() " + p.getFirstName() + " & " + p.getLastName());
     	Person pNew = new Person(p.getFirstName(), p.getLastName(), p.getAddress(),
@@ -75,4 +85,5 @@ public class PersonDao {
 		persons.removeIf( person -> person.getFirstName().equals(p.getFirstName()) &&
     			person.getLastName().equals(p.getLastName()) );
     }
+
 }
