@@ -30,13 +30,11 @@
         { "address":"234 Binoc Ave", "station":"3" },
         { "address":"444 Gershwin Cir", "station":"1" },
         { "address":"342 Townings Dr", "station":"3" },
-        { "address":"112 Steppes Pl", "station":"3" },
         { "address":"425 Manchester St", "station":"4" },
         { "address":"252 Downing Ct", "station":"2" },
         { "address":"502 33rd St", "station":"1" },
         { "address":"112 Steppes Pl", "station":"4" },
         { "address":"543 E. Rose Dr", "station":"1" },
-        { "address":"342 Townings Dr", "station":"3" },
         { "address":"551 LoneTree Rd", "station":"2" }
 	],
     "medicalrecords": [

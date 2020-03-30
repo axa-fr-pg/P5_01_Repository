@@ -5,7 +5,7 @@ import java.io.File;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -14,7 +14,7 @@ import projets.safetynet.dao.MedicalRecordDao;
 import projets.safetynet.dao.PersonDao;
 import projets.safetynet.model.core.Data;
 
-@Component
+@Service
 public class FileService {
 
 	@Autowired
@@ -41,7 +41,7 @@ public class FileService {
 		LogService.logger.info("loadData() stored data into DAO");
 	}
 
-	public static Data getDataFromFile(String file) {
+	public Data getDataFromFile(String file) {
 		Data data = null;
 		LogService.logger.info("getDataFromFile() " + file);
 		ObjectMapper objectMapper = new ObjectMapper();

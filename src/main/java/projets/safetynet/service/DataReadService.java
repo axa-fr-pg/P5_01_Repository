@@ -3,6 +3,7 @@ package projets.safetynet.service;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import projets.safetynet.dao.FireStationDao;
 import projets.safetynet.dao.MedicalRecordDao;
@@ -13,19 +14,21 @@ import projets.safetynet.model.core.Person;
 import projets.safetynet.model.url.FireStationPersonResponse;
 import projets.safetynet.model.url.FireStationResponse;
 
+@Service
 public class DataReadService {
 
 	@Autowired
-	PersonDao personDao;
+	private PersonDao personDao;
 
 	@Autowired
-	FireStationDao stationDao;
+	private FireStationDao stationDao;
 
 	@Autowired
-	MedicalRecordDao recordDao;
+	private MedicalRecordDao recordDao;
 
 	public FireStationResponse getFireStationResponse(long station) {
 	
+		LogService.logger.info("getFireStationResponse() " + station);
 		ArrayList<Person> allPersons = personDao.getAll();
 		ArrayList<FireStation> stations = stationDao.getAll();
 		ArrayList<MedicalRecord> records = recordDao.getAll();
@@ -48,6 +51,8 @@ public class DataReadService {
 		}
 
 		FireStationResponse response = new FireStationResponse(responsePersons, adults, children);
+		LogService.logger.info("getFireStationResponse() returns " + responsePersons.size() + " persons " 
+				+ adults + " adults " + children + " children");
 		return response;
 	}
 

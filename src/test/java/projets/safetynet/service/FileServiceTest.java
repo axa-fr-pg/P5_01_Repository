@@ -4,23 +4,29 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import projets.safetynet.model.core.Data;
 import projets.safetynet.service.FileService;
 
+@SpringBootTest
 public class FileServiceTest {
 
+	@Autowired
+	private FileService service;
+	
 	@Test
 	void givenTestFile_getDataFromFile_returnsTestData()
 	{
 		// GIVEN
 		String file = "src/test/resources/test.json";
 		// WHEN
-		Data data = FileService.getDataFromFile(file);
+		Data data = service.getDataFromFile(file);
 		// THEN
 		assertNotNull(data);
 		assertEquals(23, data.getPersons().size());
-		assertEquals(13, data.getFirestations().size());
+		assertEquals(11, data.getFirestations().size());
 		assertEquals(23, data.getMedicalrecords().size());
 	}
 }
