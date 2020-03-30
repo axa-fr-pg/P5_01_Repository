@@ -17,14 +17,12 @@ public class FireStationDao {
 
 	public FireStationDao(ArrayList<FireStation> stations) {
 		LogService.logger.debug("FireStationDao() size = " + stations.size());
-		this.stations = new ArrayList<FireStation>();
-		for (FireStation s: stations) {
-			save(s);
-		}		
+		this.stations = (ArrayList<FireStation>) stations.clone();
 	}
 
 	public void set(ArrayList<FireStation> stations) {
-		this.stations = new FireStationDao(stations).stations;
+		LogService.logger.debug("set() size = " + stations.size());
+		this.stations = (ArrayList<FireStation>) stations.clone();
 	}
 	
     void save(FireStation s)

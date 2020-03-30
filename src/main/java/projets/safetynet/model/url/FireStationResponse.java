@@ -9,20 +9,21 @@ public class FireStationResponse {
 	private long numberChildren;
 	
 	public FireStationResponse() {
+		persons = new ArrayList<FireStationPersonResponse>();
 	}
 
 	public FireStationResponse(ArrayList<FireStationPersonResponse> persons, long numberAdults, long numberChildren) {
-		this.persons = new ArrayList<FireStationPersonResponse>(persons);
+		this.persons = (ArrayList<FireStationPersonResponse>) persons.clone();
 		this.numberAdults = numberAdults;
 		this.numberChildren = numberChildren;
 	}
 	
 	public ArrayList<FireStationPersonResponse> getPersons() {
-		return new ArrayList<FireStationPersonResponse>(persons);
+		return (ArrayList<FireStationPersonResponse>) persons.clone();
 	}
 
 	public void setPersons(ArrayList<FireStationPersonResponse> persons) {
-		this.persons = new ArrayList<FireStationPersonResponse>(persons);
+		this.persons = (ArrayList<FireStationPersonResponse>) persons.clone();
 	}
 
 	public long getNumberAdults() {

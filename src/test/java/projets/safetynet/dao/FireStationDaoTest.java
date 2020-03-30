@@ -8,11 +8,17 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import projets.safetynet.model.core.FireStation;
 
+@SpringBootTest
 public class FireStationDaoTest {
 
+	@Autowired
+	private FireStationDao dao;
+	
 	private FireStation s1;
 	private FireStation s2;
 	private FireStation s3;
@@ -30,7 +36,7 @@ public class FireStationDaoTest {
 	{
 		// GIVEN
 		ArrayList<FireStation> listGiven = new ArrayList<FireStation>(Arrays.asList(s1, s2, s3));
-		FireStationDao dao = new FireStationDao(listGiven);
+		dao.set(listGiven);
 		// WHEN
 		ArrayList<FireStation> listResult = dao.getAll();
 		// THEN
@@ -42,7 +48,7 @@ public class FireStationDaoTest {
 	{
 		// GIVEN
 		ArrayList<FireStation> listGiven = new ArrayList<FireStation>(Arrays.asList(s1, s2, s3));
-		FireStationDao dao = new FireStationDao(listGiven);
+		dao.set(listGiven);
 		// WHEN
 		FireStation s = null;
 		try {
@@ -60,7 +66,7 @@ public class FireStationDaoTest {
 	{
 		// GIVEN
 		ArrayList<FireStation> listGiven = new ArrayList<FireStation>(Arrays.asList(s1, s2, s3));
-		FireStationDao dao = new FireStationDao(listGiven);
+		dao.set(listGiven);
 		// WHEN
 		FireStation s = null;
 		try {
@@ -78,7 +84,7 @@ public class FireStationDaoTest {
 	{
 		// GIVEN
 		ArrayList<FireStation> listGiven = new ArrayList<FireStation>(Arrays.asList(s1, s3));
-		FireStationDao dao = new FireStationDao(listGiven);
+		dao.set(listGiven);
 		// WHEN & THEN
 		assertThrows(FireStationNotFoundException.class, () -> {
 			dao.getByAddress(s2.getAddress());
@@ -90,7 +96,7 @@ public class FireStationDaoTest {
 	{
 		// GIVEN
 		ArrayList<FireStation> listGiven = new ArrayList<FireStation>(Arrays.asList(s1, s3));
-		FireStationDao dao = new FireStationDao(listGiven);
+		dao.set(listGiven);
 		// WHEN & THEN
 		assertThrows(FireStationNotFoundException.class, () -> {
 			dao.getByStation(s2.getStation());
@@ -102,7 +108,7 @@ public class FireStationDaoTest {
 	{
 		// GIVEN
 		ArrayList<FireStation> listGiven = new ArrayList<FireStation>(Arrays.asList(s1, s2));
-		FireStationDao dao = new FireStationDao(listGiven);
+		dao.set(listGiven);
 		// WHEN
 		dao.save(s3);
 		ArrayList<FireStation> listResult = dao.getAll();
@@ -115,7 +121,7 @@ public class FireStationDaoTest {
 	{
 		// GIVEN
 		ArrayList<FireStation> listGiven = new ArrayList<FireStation>(Arrays.asList(s1, s2, s3));
-		FireStationDao dao = new FireStationDao(listGiven);
+		dao.set(listGiven);
 		// WHEN
 		FireStation s4 = new FireStation (s2.getAddress(), 99999);
 		try {
@@ -139,7 +145,7 @@ public class FireStationDaoTest {
 	{
 		// GIVEN
 		ArrayList<FireStation> listGiven = new ArrayList<FireStation>(Arrays.asList(s1, s2, s3));
-		FireStationDao dao = new FireStationDao(listGiven);
+		dao.set(listGiven);
 		// WHEN
 		FireStation s4 = new FireStation ("address-test-value", s2.getStation());
 		try {
@@ -163,7 +169,7 @@ public class FireStationDaoTest {
 	{
 		// GIVEN
 		ArrayList<FireStation> listGiven = new ArrayList<FireStation>(Arrays.asList(s1, s3));
-		FireStationDao dao = new FireStationDao(listGiven);
+		dao.set(listGiven);
 		// WHEN & THEN
 		assertThrows(FireStationNotFoundException.class, () -> {
 			dao.updateByAddress(s2);
@@ -175,7 +181,7 @@ public class FireStationDaoTest {
 	{
 		// GIVEN
 		ArrayList<FireStation> listGiven = new ArrayList<FireStation>(Arrays.asList(s1, s3));
-		FireStationDao dao = new FireStationDao(listGiven);
+		dao.set(listGiven);
 		// WHEN & THEN
 		assertThrows(FireStationNotFoundException.class, () -> {
 			dao.updateByStation(s2);
@@ -187,7 +193,7 @@ public class FireStationDaoTest {
 	{
 		// GIVEN
 		ArrayList<FireStation> listGiven = new ArrayList<FireStation>(Arrays.asList(s1, s2, s3));
-		FireStationDao dao = new FireStationDao(listGiven);
+		dao.set(listGiven);
 		// WHEN
 		dao.delete(s2);
 		ArrayList<FireStation> listResult = dao.getAll();

@@ -58,28 +58,19 @@ public class DataReadServiceTest {
 	@BeforeEach
 	private void initTestData()
 	{
-		data = new Data();
 		Person p1 = new Person("f1", "l1", "a1", "c1", 11111L, "t1", "e1");
 		Person p2 = new Person("adultfirstname", "adultlastname", "adultaddress", "c2", 22222L, "adultphone", "e2");
 		Person p3 = new Person("chilffirstname", "childlastname", "childaddress", "c3", 33333L, "childphone", "e3");
 		Person p4 = new Person("adultfirstname", "l4", "a4", "c4", 44444L, "t4", "e4");
 		Person p5 = new Person("f5", "childlastname", "a5", "c5", 55555L, "t5", "e5");
-		data.getPersons().add(p1);
-		data.getPersons().add(p2);
-		data.getPersons().add(p3);
-		data.getPersons().add(p4);
-		data.getPersons().add(p5);
+		ArrayList<Person> persons = new ArrayList<Person>(Arrays.asList(p1, p2, p3, p4, p5));
 
 		FireStation f1 = new FireStation("adultaddress", 999);
 		FireStation f2 = new FireStation("a2", 2);
 		FireStation f3 = new FireStation("a3", 3);
 		FireStation f4 = new FireStation("childaddress", 999);
 		FireStation f5 = new FireStation("a5", 5);
-		data.getFirestations().add(f1);
-		data.getFirestations().add(f2);
-		data.getFirestations().add(f3);
-		data.getFirestations().add(f4);
-		data.getFirestations().add(f5);
+		ArrayList<FireStation> stations = new ArrayList<FireStation>(Arrays.asList(f1, f2, f3, f4, f5));
 		
 		MedicalRecord m1 = new MedicalRecord("f1", "l1", new Date(), new String[]{}, new String[]{});
 		when(adultRecord.getFirstName()).thenReturn("adultfirstname");
@@ -90,11 +81,10 @@ public class DataReadServiceTest {
 		when(childRecord.getAge()).thenReturn(17L);
 		MedicalRecord m4 = new MedicalRecord("f4", "l4", new Date(), new String[]{}, new String[]{});
 		MedicalRecord m5 = new MedicalRecord("f5", "f5", new Date(), new String[]{}, new String[]{});
-		data.getMedicalrecords().add(m1);
-		data.getMedicalrecords().add(adultRecord);
-		data.getMedicalrecords().add(childRecord);
-		data.getMedicalrecords().add(m4);
-		data.getMedicalrecords().add(m5);
+		ArrayList<MedicalRecord> records = new ArrayList<MedicalRecord>( 
+				Arrays.asList(m1, adultRecord, childRecord, m4, m5));
+
+		data = new Data(persons, stations, records);
 		
 		when(personDao.getAll()).thenReturn(data.getPersons());
 		when(stationDao.getAll()).thenReturn(data.getFirestations());
@@ -102,7 +92,7 @@ public class DataReadServiceTest {
 	}
 
 	@Test
-	void givenTestJson_getUrlFirestation1_returnsCorrectValues()
+	void givenTestData_getUrlFirestation1_returnsCorrectValues()
 	{
 		// GIVEN
 		// WHEN

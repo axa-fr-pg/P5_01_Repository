@@ -17,14 +17,12 @@ public class MedicalRecordDao {
 
 	public MedicalRecordDao(ArrayList<MedicalRecord> records) {
 		LogService.logger.debug("MedicalRecordDao() size = " + records.size());
-		this.records = new ArrayList<MedicalRecord>();
-		for (MedicalRecord m: records) {
-			save(m);
-		}		
+		this.records = (ArrayList<MedicalRecord>) records.clone();
 	}
 	
 	public void set(ArrayList<MedicalRecord> records) {
-		this.records = new MedicalRecordDao(records).records;
+		LogService.logger.debug("set() size = " + records.size());
+		this.records = (ArrayList<MedicalRecord>) records.clone();
 	}
 	
     void save(MedicalRecord m)

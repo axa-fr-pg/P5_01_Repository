@@ -15,32 +15,32 @@ public class Data {
 	}
 	
 	public Data(ArrayList<Person> persons, ArrayList<FireStation> firestations,	ArrayList<MedicalRecord> medicalrecords) {
-		this.persons = persons;
-		this.firestations = firestations;
-		this.medicalrecords = medicalrecords;
+		this.persons = (ArrayList<Person>) persons.clone();
+		this.firestations = (ArrayList<FireStation>) firestations.clone();
+		this.medicalrecords = (ArrayList<MedicalRecord>) medicalrecords.clone();
 	}
 	
 	public ArrayList<Person> getPersons() {
-		return persons;
+		return (ArrayList<Person>) persons.clone();
 	}
 	
 	public void setPersons(ArrayList<Person> persons) {
-		this.persons = persons;
+		this.persons = (ArrayList<Person>) persons.clone();
 	}
 	
 	public ArrayList<FireStation> getFirestations() {
-		return firestations;
+		return (ArrayList<FireStation>) firestations.clone();
 	}
 	
 	public void setFirestations(ArrayList<FireStation> firestations) {
-		this.firestations = firestations;
+		this.firestations = (ArrayList<FireStation>) firestations.clone();
 	}
 	
 	public ArrayList<MedicalRecord> getMedicalrecords() {
-		return medicalrecords;
+		return (ArrayList<MedicalRecord>) medicalrecords.clone();
 	}
 	
 	public void setMedicalrecords(ArrayList<MedicalRecord> medicalrecords) {
-		this.medicalrecords = medicalrecords;
+		this.medicalrecords = (ArrayList<MedicalRecord>) medicalrecords.clone();
 	}
 }

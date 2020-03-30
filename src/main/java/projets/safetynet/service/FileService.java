@@ -18,6 +18,9 @@ import projets.safetynet.model.core.Data;
 public class FileService {
 
 	@Autowired
+	private ObjectMapper objectMapper;
+	
+	@Autowired
 	private PersonDao personDao;
 	
 	@Autowired
@@ -44,7 +47,6 @@ public class FileService {
 	public Data getDataFromFile(String file) {
 		Data data = null;
 		LogService.logger.info("getDataFromFile() " + file);
-		ObjectMapper objectMapper = new ObjectMapper();
 		try {
 			data = objectMapper.readValue(new File(file), Data.class);
 			LogService.logger.info("getDataFromFile() successful");

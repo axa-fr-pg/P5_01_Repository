@@ -10,10 +10,16 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import projets.safetynet.model.core.MedicalRecord;
 
+@SpringBootTest
 public class MedicalRecordTest {
+	
+	@Autowired
+	private MedicalRecordDao dao;
 	
 	private MedicalRecord m1;
 	private MedicalRecord m2;
@@ -41,7 +47,7 @@ public class MedicalRecordTest {
 	{
 		// GIVEN
 		ArrayList<MedicalRecord> listGiven = new ArrayList<MedicalRecord>(Arrays.asList(m1, m2, m3));
-		MedicalRecordDao dao = new MedicalRecordDao(listGiven);
+		dao.set(listGiven);
 		// WHEN
 		ArrayList<MedicalRecord> listResult = dao.getAll();
 		// THEN
@@ -53,7 +59,7 @@ public class MedicalRecordTest {
 	{
 		// GIVEN
 		ArrayList<MedicalRecord> listGiven = new ArrayList<MedicalRecord>(Arrays.asList(m1, m2, m3));
-		MedicalRecordDao dao = new MedicalRecordDao(listGiven);
+		dao.set(listGiven);
 		// WHEN
 		MedicalRecord m = null;
 		try {
@@ -74,7 +80,7 @@ public class MedicalRecordTest {
 	{
 		// GIVEN
 		ArrayList<MedicalRecord> listGiven = new ArrayList<MedicalRecord>(Arrays.asList(m1, m3));
-		MedicalRecordDao dao = new MedicalRecordDao(listGiven);
+		dao.set(listGiven);
 		// WHEN & THEN
 		assertThrows(MedicalRecordNotFoundException.class, () -> {
 			dao.get(m2.getFirstName(), m2.getLastName());
@@ -86,7 +92,7 @@ public class MedicalRecordTest {
 	{
 		// GIVEN
 		ArrayList<MedicalRecord> listGiven = new ArrayList<MedicalRecord>(Arrays.asList(m1, m2));
-		MedicalRecordDao dao = new MedicalRecordDao(listGiven);
+		dao.set(listGiven);
 		// WHEN
 		dao.save(m3);
 		ArrayList<MedicalRecord> listResult = dao.getAll();
@@ -99,7 +105,7 @@ public class MedicalRecordTest {
 	{
 		// GIVEN
 		ArrayList<MedicalRecord> listGiven = new ArrayList<MedicalRecord>(Arrays.asList(m1, m2, m3));
-		MedicalRecordDao dao = new MedicalRecordDao(listGiven);
+		dao.set(listGiven);
 		// WHEN
 		String[] medications4 = new String[] {"m4a", "m4b", "m4c", "m4d"};
 		String[] allergies4 = new String[] {"a4a", "a4b", "a4c", "a4d"};
@@ -130,7 +136,7 @@ public class MedicalRecordTest {
 	{
 		// GIVEN
 		ArrayList<MedicalRecord> listGiven = new ArrayList<MedicalRecord>(Arrays.asList(m1, m3));
-		MedicalRecordDao dao = new MedicalRecordDao(listGiven);
+		dao.set(listGiven);
 		// WHEN & THEN
 		assertThrows(MedicalRecordNotFoundException.class, () -> {
 			dao.update(m2);
@@ -142,7 +148,7 @@ public class MedicalRecordTest {
 	{
 		// GIVEN
 		ArrayList<MedicalRecord> listGiven = new ArrayList<MedicalRecord>(Arrays.asList(m1, m2, m3));
-		MedicalRecordDao dao = new MedicalRecordDao(listGiven);
+		dao.set(listGiven);
 		// WHEN
 		dao.delete(m2);
 		ArrayList<MedicalRecord> listResult = dao.getAll();

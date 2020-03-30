@@ -17,15 +17,13 @@ public class PersonDao {
 
 	public PersonDao(ArrayList<Person> persons) {
 		LogService.logger.debug("PersonDao() size = " + persons.size());
-		this.persons = new ArrayList<Person>();
-		for (Person p: persons) {
-			save(p);
-		}		
+		this.persons = (ArrayList<Person>) persons.clone();
 	}
 
 	public void set(ArrayList<Person> persons)
 	{
-		this.persons = new PersonDao(persons).persons;
+		LogService.logger.debug("set() size = " + persons.size());
+		this.persons = (ArrayList<Person>) persons.clone();
 	}
 	
 	Person get(String firstName, String lastName) throws PersonNotFoundException

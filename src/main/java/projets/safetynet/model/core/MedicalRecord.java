@@ -17,6 +17,8 @@ public class MedicalRecord {
 	
 	public MedicalRecord() 
 	{	
+		medications = new String[] {};
+		allergies = new String[] {};
 	}
 	
 	public MedicalRecord(String firstName, String lastName, Date birthdate, String[] medications, String[] allergies) {
