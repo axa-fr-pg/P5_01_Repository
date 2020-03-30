@@ -29,7 +29,7 @@ public class FileService {
 	@PostConstruct
 	void loadData()
 	{
-		Data data = getDataFromFile("src/main/resources/data.json");
+		Data data = getDataFromFile(getJsonFileName());
 		if (personDao==null || fireStationDao==null || medicalRecordDao==null)
 		{
 			LogService.logger.error("loadData() data objects are not ready");
@@ -39,6 +39,15 @@ public class FileService {
 		fireStationDao.set(data.getFirestations());
 		medicalRecordDao.set(data.getMedicalrecords());
 		LogService.logger.info("loadData() stored data into DAO");
+	}
+
+	private String getJsonFileName() {
+    	StackTraceElement[] trace = Thread.currentThread().getStackTrace();
+    	String caller = trace[trace.length-1].getClassName();
+    	if (caller == "projets.safetynet.SafetynetApplication") {
+    		return "src/main/resources/data.json";
+    	}
+    	else return "src/test/resources/test.json";
 	}
 
 	public static Data getDataFromFile(String file) {
