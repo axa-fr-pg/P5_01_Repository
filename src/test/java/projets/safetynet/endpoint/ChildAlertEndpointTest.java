@@ -6,25 +6,22 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.event.annotation.BeforeTestClass;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import projets.safetynet.model.url.ChildAlertResponse;
-import projets.safetynet.model.url.FireStationResponse;
 import projets.safetynet.service.DataReadService;
 
 @SpringBootTest
 public class ChildAlertEndpointTest {
 
-    @InjectMocks
+	@Autowired
     private ChildAlertEndpoint endpoint;
-    
-    @Mock
-    private DataReadService service;
 
+    @MockBean
+    private DataReadService service;
+    
     @Test
     public void givenResponse_whenGetChildAlertResponse_thenReturnsExpectedResponse()
     {

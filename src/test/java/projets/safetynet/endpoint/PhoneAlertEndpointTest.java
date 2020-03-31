@@ -6,19 +6,19 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import projets.safetynet.service.DataReadService;
 
 @SpringBootTest
 public class PhoneAlertEndpointTest {
 
-    @InjectMocks
+    @Autowired
     private PhoneAlertEndpoint endpoint;
 
-    @Mock
+    @MockBean
     private DataReadService service;
 
     @Test

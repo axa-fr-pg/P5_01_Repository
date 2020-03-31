@@ -4,21 +4,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.event.annotation.BeforeTestClass;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import projets.safetynet.model.url.FireStationResponse;
 import projets.safetynet.service.DataReadService;
 
 @SpringBootTest
 public class FireStationEndpointTest {
 
-    @InjectMocks
+    @Autowired
     private FireStationEndpoint endpoint;
 
-    @Mock
+    @MockBean
     private DataReadService service;
 
     @Test

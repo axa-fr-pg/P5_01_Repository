@@ -22,9 +22,6 @@ public class FireStationEndpointIT {
 	private MockMvc mockMvc;
 	
 	@Autowired
-	private FileService service;
-
-	@Autowired
 	private ObjectMapper objectMapper;
 
 	@Test
