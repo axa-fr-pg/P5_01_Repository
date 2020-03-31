@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import projets.safetynet.dao.FireStationDao;
+import projets.safetynet.dao.FireStationNotFoundException;
 import projets.safetynet.dao.MedicalRecordDao;
 import projets.safetynet.dao.MedicalRecordNotFoundException;
 import projets.safetynet.dao.PersonDao;
@@ -13,6 +14,8 @@ import projets.safetynet.model.core.FireStation;
 import projets.safetynet.model.core.MedicalRecord;
 import projets.safetynet.model.core.Person;
 import projets.safetynet.model.url.ChildAlertResponse;
+import projets.safetynet.model.url.FirePersonResponse;
+import projets.safetynet.model.url.FireResponse;
 import projets.safetynet.model.url.FireStationPersonResponse;
 import projets.safetynet.model.url.FireStationResponse;
 
@@ -99,6 +102,33 @@ public class DataReadService {
 		}
         LogService.logger.info("getPhoneAlertResponse() returns " + response.size() + " phone numbers");
 		return response;
+	}
+
+	public FireResponse getFireResponse(String address) {
+        LogService.logger.info("getFireResponse() " + address);
+        FireResponse response = new FireResponse();
+        try {
+            FireStation station = stationDao.getByAddress(address);
+            response.setStation(station.getStation());
+        } catch (FireStationNotFoundException e) {
+	        LogService.logger.error("getFireResponse() throws FireStationNotFoundException");
+	        return null;
+        }
+        ArrayList<FirePersonResponse> inhabitants = new ArrayList<FirePersonResponse>();
+        ArrayList<Person> persons = personDao.getByAddress(address);
+        for (Person p : persons) {
+            try {
+				MedicalRecord m = recordDao.get(p.getFirstName(), p.getLastName());
+				FirePersonResponse i = new FirePersonResponse( p.getFirstName() + " " + p.getLastName(),
+						p.getPhone(), m.getAge(), m.getMedications(), m.getAllergies());
+				inhabitants.add(i);
+			} catch (MedicalRecordNotFoundException e) {
+		        LogService.logger.error("getFireResponse() throws MedicalRecordNotFoundException");
+			}
+        }
+        response.setInhabitants(inhabitants);
+        LogService.logger.info("getFireResponse() returns " + inhabitants.size() + " inhabitants station " + response.getStation());
+        return response;
 	}
 
 }
