@@ -24,7 +24,7 @@ public class PhoneAlertEndpointIT {
 	private ObjectMapper objectMapper;
 
 	@Test
-	public void givenAddress_whenGetPhoneAlertResponse_thenReturnsExpectedResponse() throws Exception {
+	public void givenAddress_whenGetPhoneAlertEndpoint_thenReturnsExpectedResponse() throws Exception {
 		// GIVEN
 		// Test data provided by test.json 
 		// WHEN & THEN

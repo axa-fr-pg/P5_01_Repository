@@ -13,9 +13,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import projets.safetynet.model.url.FireStationPersonResponse;
-import projets.safetynet.model.url.FireStationResponse;
-
 @SpringBootTest
 @AutoConfigureMockMvc
 public class ChildAlertEndPointIT {
@@ -27,10 +24,9 @@ public class ChildAlertEndPointIT {
 	private ObjectMapper objectMapper;
 
 	@Test
-	public void givenAddress_whenGetFireStationResponse_thenReturnsExpectedResponse() throws Exception {
+	public void givenAddress_whenChildAlertEndPoint_thenReturnsExpectedResponse() throws Exception {
 		// GIVEN
-		ArrayList<FireStationPersonResponse> persons = new ArrayList<FireStationPersonResponse>();
-		FireStationResponse expected = new FireStationResponse();
+		// Test data provided by test.json
 		// WHEN & THEN
 		String responseString = mockMvc.perform(get("/childAlert?address=testaddress"))
 				.andReturn().getResponse().getContentAsString();

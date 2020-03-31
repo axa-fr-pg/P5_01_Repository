@@ -25,12 +25,6 @@ public class ChildAlertEndpointTest {
     @Mock
     private DataReadService service;
 
-	@BeforeTestClass
-	private void initMocks()
-	{
-		MockitoAnnotations.initMocks(this);
-	}
-
     @Test
     public void givenResponse_whenGetChildAlertResponse_thenReturnsExpectedResponse()
     {

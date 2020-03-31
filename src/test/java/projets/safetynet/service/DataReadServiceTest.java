@@ -6,22 +6,15 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
-
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.event.annotation.BeforeTestClass;
 import projets.safetynet.dao.FireStationDao;
 import projets.safetynet.dao.MedicalRecordDao;
 import projets.safetynet.dao.MedicalRecordNotFoundException;
 import projets.safetynet.dao.PersonDao;
-import projets.safetynet.dao.PersonNotFoundException;
-import projets.safetynet.model.core.Data;
 import projets.safetynet.model.core.FireStation;
 import projets.safetynet.model.core.MedicalRecord;
 import projets.safetynet.model.core.Person;
@@ -71,12 +64,6 @@ public class DataReadServiceTest {
 	@Mock
 	private MedicalRecordDao recordDao;
 	
-	@BeforeTestClass
-	private void initMocks()
-	{
-		MockitoAnnotations.initMocks(this);
-	}
-
 	@BeforeEach
 	private void initTestData()
 	{
@@ -154,7 +141,6 @@ public class DataReadServiceTest {
 	{
 		// GIVEN
 		// Test data prepared in initTestData
-		StringBuffer sb = new StringBuffer();
 		// WHEN
 		ArrayList<String> r = service.getPhoneAlertResponse(12345);
 		// THEN
