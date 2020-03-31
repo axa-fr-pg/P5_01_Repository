@@ -1,17 +1,20 @@
 package projets.safetynet.model.url;
 
+import java.util.ArrayList;
+
 public class ChildAlertResponse {
 	
 	private String firstName;
 	private String lastName;
 	private long age;
-	String[] household;
+	ArrayList<String> household;
 	
 	public ChildAlertResponse() {
-		household = new String[] {};
+		household = new ArrayList<String>();
+;
 	}
 	
-	public ChildAlertResponse(String firstName, String lastName, long age, String[] household) {
+	public ChildAlertResponse(String firstName, String lastName, long age, ArrayList<String> household) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.age = age;
@@ -42,12 +45,12 @@ public class ChildAlertResponse {
 		this.age = age;
 	}
 
-	public String[] getHousehold() {
-		return household.clone();
+	public ArrayList<String> getHousehold() {
+		return (ArrayList<String>) household.clone();
 	}
 
-	public void setHousehold(String[] household) {
-		this.household = household.clone();
+	public void setHousehold(ArrayList<String> household) {
+		this.household = (ArrayList<String>) household.clone();
 	}
 
 }

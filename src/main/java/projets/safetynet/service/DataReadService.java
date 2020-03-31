@@ -66,11 +66,24 @@ public class DataReadService {
     public ArrayList<ChildAlertResponse> getChildAlertResponse(String address) {
         LogService.logger.info("getChildAlertResponse() " + address);
         ArrayList<ChildAlertResponse> response = new ArrayList<ChildAlertResponse>();
-        ArrayList<Person> allPersons = personDao.getAll();
-        ArrayList<MedicalRecord> records = recordDao.getAll();
-        
-        // TODO
-        
+        ArrayList<Person> persons = personDao.getByAddress(address);
+        for (Person p : persons) {
+            try {
+				MedicalRecord m = recordDao.get(p.getFirstName(), p.getLastName());
+				if (m.getAge() > 18) continue;
+				ArrayList<String> mates = new ArrayList<String>();
+				for (Person x : persons) {
+					if ( (! p.getFirstName().equals(x.getFirstName())) || ((! p.getLastName().equals(x.getLastName()))) )
+					{
+						mates.add(x.getFirstName() + " " + x.getLastName());
+					}
+				}
+				ChildAlertResponse c = new ChildAlertResponse(p.getFirstName(), p.getLastName(), m.getAge(), mates);
+				response.add(c);
+			} catch (MedicalRecordNotFoundException e) {
+		        LogService.logger.error("getChildAlertResponse() throws MedicalRecordNotFoundException");
+			}
+        }
         LogService.logger.info("getChildAlertResponse() returns " + response.size() + " children");
         return response;
 }
