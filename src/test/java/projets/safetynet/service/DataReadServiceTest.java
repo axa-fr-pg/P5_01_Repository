@@ -149,4 +149,20 @@ public class DataReadServiceTest {
 		assertEquals("[f2 l2, f4 l4, f6 l6]", sb2.toString());
 	}
 
+	@Test
+	void givenTestData_getPhoneAlertResponse_returnsCorrectValues()
+	{
+		// GIVEN
+		// Test data prepared in initTestData
+		StringBuffer sb = new StringBuffer();
+		// WHEN
+		ArrayList<String> r = service.getPhoneAlertResponse(12345);
+		// THEN
+		assertNotNull(r);
+		assertEquals(4, r.size());
+		assertEquals("t2", r.get(0));
+		assertEquals("t4", r.get(1));
+		assertEquals("t6", r.get(2));
+		assertEquals("t8", r.get(3));
+	}
 }

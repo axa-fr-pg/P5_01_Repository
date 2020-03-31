@@ -86,6 +86,19 @@ public class DataReadService {
         }
         LogService.logger.info("getChildAlertResponse() returns " + response.size() + " children");
         return response;
-}
+    }
+
+	public ArrayList<String> getPhoneAlertResponse(long station) {
+        LogService.logger.info("getPhoneAlertResponse() " + station);
+        ArrayList<String> response = new ArrayList<String>();
+
+		ArrayList<FireStation> stations = stationDao.getByStation(station);
+		for (FireStation s : stations) {
+			ArrayList<Person> persons = personDao.getByAddress(s.getAddress());
+			for (Person p : persons) response.add(p.getPhone());
+		}
+        LogService.logger.info("getPhoneAlertResponse() returns " + response.size() + " phone numbers");
+		return response;
+	}
 
 }
