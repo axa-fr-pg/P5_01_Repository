@@ -13,26 +13,31 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import projets.safetynet.model.url.FireResponse;
+
 @SpringBootTest
 @AutoConfigureMockMvc
-public class ChildAlertEndPointIT {
+public class FireEndpointIT {
 
 	@Autowired
 	private MockMvc mockMvc;
-
+	
 	@Autowired
 	private ObjectMapper objectMapper;
 
 	@Test
-	public void givenAddress_whenGetChildAlertEndPoint_thenReturnsExpectedResponse() throws Exception {
+	public void givenAddress_whenGetFireEndpoint_thenReturnsExpectedResponse() throws Exception {
 		// GIVEN
-		// Test data provided by test.json
+		// Test data provided by test.json 
 		// WHEN & THEN
-		String responseString = mockMvc.perform(get("/childAlert?address=testaddress"))
+		String responseString = mockMvc.perform(get("/fire?address=testaddress"))
 				.andReturn().getResponse().getContentAsString();
-		ArrayList response = objectMapper.readValue(responseString, ArrayList.class);
+		FireResponse response = objectMapper.readValue(responseString, FireResponse.class);
 		// THEN
-		assertEquals(2, response.size());
+		assertEquals(2, response.getStation());
+		assertEquals(4, response.getInhabitants().size());
+		assertEquals(4, response.getInhabitants().get(0).getMedications().length);
+		assertEquals(3, response.getInhabitants().get(0).getAllergies().length);
 	}
 
 }
