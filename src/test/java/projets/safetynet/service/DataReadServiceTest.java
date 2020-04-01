@@ -26,6 +26,7 @@ import projets.safetynet.model.url.FirePersonResponse;
 import projets.safetynet.model.url.FireResponse;
 import projets.safetynet.model.url.FireStationPersonResponse;
 import projets.safetynet.model.url.FireStationResponse;
+import projets.safetynet.model.url.FloodAddressResponse;
 
 @SpringBootTest
 public class DataReadServiceTest {
@@ -48,16 +49,21 @@ public class DataReadServiceTest {
 	private String[] m2 = new String[] {"m2a", "m2b"};
 	private String[] m3 = new String[] {"m3a", "m3b", "m3c"};
 	private String[] m4 = new String[] {"m4a", "m4b", "m4c", "m4d"};
+	private String[] m5 = new String[] {};
 	private String[] a1 = new String[] {"a1a", "a1b"};
 	private String[] a2 = new String[] {"a2a", "a2b", "a2c"};
 	private String[] a3 = new String[] {"a3a", "a3b", "a3c", "a3d"};
 	private String[] a4 = new String[] {"a4a", "a4b", "a4c", "a4d", "a4d"};
+	private String[] a5 = new String[] {};
 	
 	@Mock
 	private MedicalRecord adultRecord1;
 
 	@Mock
 	private MedicalRecord adultRecord2;
+
+	@Mock
+	private MedicalRecord adultRecord3;
 
 	@Mock
 	private MedicalRecord childRecord1;
@@ -82,11 +88,16 @@ public class DataReadServiceTest {
 	{
 		when(personDao.getByAddress("familyaddress")).thenReturn(new ArrayList<Person> (Arrays.asList(p2, p4, p6, p8)));
 		when(personDao.getByAddress("a1")).thenReturn(new ArrayList<Person> (Arrays.asList(p2, p4)));
+		when(personDao.getByAddress("a2")).thenReturn(new ArrayList<Person> (Arrays.asList(p7)));
 		when(personDao.getByAddress("a4")).thenReturn(new ArrayList<Person> (Arrays.asList(p6, p8)));
 
-		when(stationDao.getByStation(12345)).thenReturn(new ArrayList<FireStation> (Arrays.asList(f1, f4)));
+		when(stationDao.getByStation(1234)).thenReturn(new ArrayList<FireStation> (Arrays.asList(f1, f4)));
+		when(stationDao.getByStation(6789)).thenReturn(new ArrayList<FireStation> (Arrays.asList(f2)));
 		try {
 			when(stationDao.getByAddress("familyaddress")).thenReturn(f3);
+			when(stationDao.getByAddress("a1")).thenReturn(f1);
+			when(stationDao.getByAddress("a2")).thenReturn(f2);
+			when(stationDao.getByAddress("a4")).thenReturn(f4);
 		} catch (FireStationNotFoundException e1) {
 			e1.printStackTrace();
 		}
@@ -95,19 +106,23 @@ public class DataReadServiceTest {
 		when(childRecord1.getAge()).thenReturn(18L);
 		when(adultRecord2.getAge()).thenReturn(60L);
 		when(childRecord2.getAge()).thenReturn(15L);
+		when(adultRecord3.getAge()).thenReturn(70L);
 		when(adultRecord1.getMedications()).thenReturn(m1);
 		when(childRecord1.getMedications()).thenReturn(m2);
 		when(adultRecord2.getMedications()).thenReturn(m3);
 		when(childRecord2.getMedications()).thenReturn(m4);
+		when(adultRecord3.getMedications()).thenReturn(m5);
 		when(adultRecord1.getAllergies()).thenReturn(a1);
 		when(childRecord1.getAllergies()).thenReturn(a2);
 		when(adultRecord2.getAllergies()).thenReturn(a3);
 		when(childRecord2.getAllergies()).thenReturn(a4);
+		when(adultRecord3.getAllergies()).thenReturn(a5);
 		
 		try {
 			when(recordDao.get("f2", "l2")).thenReturn(adultRecord1);
 			when(recordDao.get("f4", "l4")).thenReturn(childRecord1);
 			when(recordDao.get("f6", "l6")).thenReturn(adultRecord2);
+			when(recordDao.get("f7", "l7")).thenReturn(adultRecord3);
 			when(recordDao.get("f8", "l8")).thenReturn(childRecord2);
 		} catch (MedicalRecordNotFoundException e) {
 			e.printStackTrace();
@@ -120,7 +135,7 @@ public class DataReadServiceTest {
 		// GIVEN
 		// Test data prepared in initTestData
 		// WHEN
-		FireStationResponse r = service.getFireStationResponse(12345);
+		FireStationResponse r = service.getFireStationResponse(1234);
 		ArrayList<FireStationPersonResponse> p = r.getPersons();
 		// THEN
 		assertNotNull(r);
@@ -169,7 +184,7 @@ public class DataReadServiceTest {
 		// GIVEN
 		// Test data prepared in initTestData
 		// WHEN
-		ArrayList<String> r = service.getPhoneAlertResponse(12345);
+		ArrayList<String> r = service.getPhoneAlertResponse(1234);
 		// THEN
 		assertNotNull(r);
 		assertEquals(4, r.size());
@@ -211,6 +226,24 @@ public class DataReadServiceTest {
 		assertEquals("a2a", k.getAllergies()[0]);
 		assertEquals("a2b", k.getAllergies()[1]);
 		assertEquals("a2c", k.getAllergies()[2]);
+	}
+
+	@Test
+	void givenTestData_getFloodByStationResponse_returnsCorrectValues()
+	{
+		// GIVEN
+		ArrayList<Long> stations = new ArrayList<Long>(Arrays.asList(1234L, 6789L));
+		// WHEN
+		ArrayList<FloodAddressResponse> r = service.getFloodByStationResponse(stations);
+		// THEN
+		assertNotNull(r);
+		assertEquals(3, r.size());
+		assertEquals("a1", r.get(0).getAddress());
+		assertEquals(2, r.get(0).getInhabitants().size());
+		assertEquals("a4", r.get(1).getAddress());
+		assertEquals(2, r.get(1).getInhabitants().size());
+		assertEquals("a2", r.get(2).getAddress());
+		assertEquals(1, r.get(2).getInhabitants().size());
 	}
 
 }

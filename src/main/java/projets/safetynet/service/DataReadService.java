@@ -18,6 +18,7 @@ import projets.safetynet.model.url.FirePersonResponse;
 import projets.safetynet.model.url.FireResponse;
 import projets.safetynet.model.url.FireStationPersonResponse;
 import projets.safetynet.model.url.FireStationResponse;
+import projets.safetynet.model.url.FloodAddressResponse;
 
 @Service
 public class DataReadService {
@@ -128,6 +129,21 @@ public class DataReadService {
         }
         response.setInhabitants(inhabitants);
         LogService.logger.info("getFireResponse() returns " + inhabitants.size() + " inhabitants station " + response.getStation());
+        return response;
+	}
+
+	public ArrayList<FloodAddressResponse> getFloodByStationResponse(ArrayList<Long> stations) {
+        LogService.logger.info("getFloodByStationResponse() " + stations.size() + " stations");
+        ArrayList<FloodAddressResponse> response = new ArrayList<FloodAddressResponse>();
+		for (long s : stations) {
+			ArrayList<FireStation> stationMapList = stationDao.getByStation(s);
+			for (FireStation f : stationMapList) {
+				FireResponse fireResponse = getFireResponse(f.getAddress());
+				FloodAddressResponse floodAddress = new FloodAddressResponse(f.getAddress(), fireResponse.getInhabitants());
+				response.add(floodAddress);
+			}
+		}
+        LogService.logger.info("getFloodByStationResponse() returns " + response.size() + " addresses");
         return response;
 	}
 
