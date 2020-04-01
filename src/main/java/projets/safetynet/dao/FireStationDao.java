@@ -75,4 +75,10 @@ public class FireStationDao {
     			station.getStation() == s.getStation() );
 	}
 	
+	public void deleteByStation(long station) // Does not throw any exception if the station is not found
+	{
+		LogService.logger.debug("deleteByStation() " + station);
+		stations.removeIf( s -> s.getStation() == station );
+	}
+	
 }
