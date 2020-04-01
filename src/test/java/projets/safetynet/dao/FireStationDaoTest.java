@@ -19,20 +19,17 @@ public class FireStationDaoTest {
 	@Autowired
 	private FireStationDao dao;
 	
-	private FireStation s1;
-	private FireStation s2;
-	private FireStation s3;
-	private FireStation s4;
+	private FireStation s1 = new FireStation ("address1", 12345);;
+	private FireStation s2 = new FireStation ("address2", 2);;
+	private FireStation s3 = new FireStation ("address3", 12345);;
+	private FireStation s4 = new FireStation ("address4", 4);
 	
 	@BeforeEach
 	private void prepareTests()
 	{
-		s1 = new FireStation ("address1", 12345);
-		s2 = new FireStation ("COMMON", 2);
-		s3 = new FireStation ("address3", 12345);
-		s4 = new FireStation ("COMMON", 4);
+		dao.set(new ArrayList<FireStation>());
 	}
-	
+
 	@Test
 	void getAll_returnsCompleteList()
 	{
@@ -43,8 +40,14 @@ public class FireStationDaoTest {
 		ArrayList<FireStation> listResult = dao.getAll();
 		// THEN
 		assertEquals(3, listResult.size());
+		assertEquals("address1", listResult.get(0).getAddress());
+		assertEquals(12345, listResult.get(0).getStation());
+		assertEquals("address2", listResult.get(1).getAddress());
+		assertEquals(2, listResult.get(1).getStation());
+		assertEquals("address3", listResult.get(2).getAddress());
+		assertEquals(12345, listResult.get(2).getStation());
 	}
-	
+
 	@Test
 	void givenExistingS2_getByAddressS2_returnsS2()
 	{
@@ -59,8 +62,8 @@ public class FireStationDaoTest {
 			e.printStackTrace();
 		}
 		// THEN
-		assertEquals(s2.getAddress(), s.getAddress());
-		assertEquals(s2.getStation(), s.getStation());
+		assertEquals("address2", s.getAddress());
+		assertEquals(2, s.getStation());
 	}
 
 	@Test
@@ -71,7 +74,7 @@ public class FireStationDaoTest {
 		dao.set(listGiven);
 		// WHEN & THEN
 		assertThrows(FireStationNotFoundException.class, () -> {
-			dao.getByAddress(s2.getAddress());
+			dao.getByAddress("does not exist");
 		});
 	}
 
@@ -83,13 +86,13 @@ public class FireStationDaoTest {
 		ArrayList<FireStation> listGiven = new ArrayList<FireStation>(Arrays.asList(s1, s2, s3, s4));
 		dao.set(listGiven);
 		// WHEN
-		ArrayList<FireStation> listResult = dao.getByStation(s1.getStation());
+		ArrayList<FireStation> listResult = dao.getByStation(12345);
 		// THEN
 		assertEquals(2, listResult.size());
-		assertEquals(s1.getAddress(), listResult.get(0).getAddress());
-		assertEquals(s1.getStation(), listResult.get(0).getStation());
-		assertEquals(s3.getAddress(), listResult.get(1).getAddress());
-		assertEquals(s3.getStation(), listResult.get(1).getStation());
+		assertEquals("address1", listResult.get(0).getAddress());
+		assertEquals(12345, listResult.get(0).getStation());
+		assertEquals("address3", listResult.get(1).getAddress());
+		assertEquals(12345, listResult.get(1).getStation());
 	}
 
 	@Test
@@ -99,7 +102,7 @@ public class FireStationDaoTest {
 		ArrayList<FireStation> listGiven = new ArrayList<FireStation>(Arrays.asList(s1, s3));
 		dao.set(listGiven);
 		// WHEN
-		ArrayList<FireStation> listResult = dao.getByStation(s2.getStation());
+		ArrayList<FireStation> listResult = dao.getByStation(2);
 		// THEN
 		assertEquals(0, listResult.size());
 	}
@@ -108,23 +111,24 @@ public class FireStationDaoTest {
 	void givenNewS3_saveS3_addsS3()
 	{
 		// GIVEN
-		ArrayList<FireStation> listGiven = new ArrayList<FireStation>(Arrays.asList(s1, s2));
-		dao.set(listGiven);
+		// Empty list
 		// WHEN
-		dao.save(s3);
+		dao.save(s1);
 		ArrayList<FireStation> listResult = dao.getAll();
 		// THEN
-		assertEquals(3, listResult.size());
+		assertEquals(1, listResult.size());
+		assertEquals("address1", listResult.get(0).getAddress());
+		assertEquals(12345, listResult.get(0).getStation());
 	}
 
 	@Test
-	void givenExistingS2_updateByAddressS2_changesS2()
+	void givenExistingS3_updateByAddressS3_changesS2()
 	{
 		// GIVEN
-		ArrayList<FireStation> listGiven = new ArrayList<FireStation>(Arrays.asList(s1, s2, s3));
+		ArrayList<FireStation> listGiven = new ArrayList<FireStation>(Arrays.asList(s1, s2, s3, s4));
 		dao.set(listGiven);
 		// WHEN
-		FireStation newValueStation = new FireStation (s2.getAddress(), 99999);
+		FireStation newValueStation = new FireStation ("address3", 99999);
 		try {
 			dao.updateByAddress(newValueStation);
 		} catch (FireStationNotFoundException e) {
@@ -132,21 +136,20 @@ public class FireStationDaoTest {
 		}
 		FireStation checkValueStation = null;
 		try {
-			checkValueStation = dao.getByAddress(s2.getAddress());
+			checkValueStation = dao.getByAddress("address3");
 		} catch (FireStationNotFoundException e) {
 			e.printStackTrace();
 		}
 		// THEN
-		assertEquals(newValueStation.getAddress(), checkValueStation.getAddress());
-		assertEquals(newValueStation.getStation(), checkValueStation.getStation());
+		assertEquals("address3", checkValueStation.getAddress());
+		assertEquals(99999, checkValueStation.getStation());
 	}
 
 	@Test
 	void givenMissingS2_updateByAddressS2_throwsFireStationNotFoundException()
 	{
 		// GIVEN
-		ArrayList<FireStation> listGiven = new ArrayList<FireStation>(Arrays.asList(s1, s3));
-		dao.set(listGiven);
+		// Empty list
 		// WHEN & THEN
 		assertThrows(FireStationNotFoundException.class, () -> {
 			dao.updateByAddress(s2);
@@ -164,5 +167,24 @@ public class FireStationDaoTest {
 		ArrayList<FireStation> listResult = dao.getAll();
 		// THEN
 		assertEquals(3, listResult.size());
+		assertEquals("address1", listResult.get(0).getAddress());
+		assertEquals("address3", listResult.get(1).getAddress());
+		assertEquals("address4", listResult.get(2).getAddress());
+	}
+	
+	@Test
+	void givenStation12345_deleteByStation_suppressesTwoStations()
+	{
+		// GIVEN
+		ArrayList<FireStation> listGiven = new ArrayList<FireStation>(Arrays.asList(s1, s2, s3, s4));
+		dao.set(listGiven);
+		// WHEN
+		dao.deleteByStation(12345);
+		ArrayList<FireStation> listResult = dao.getAll();
+		// THEN
+		assertEquals(2, listResult.size());
+		assertEquals("address2", listResult.get(0).getAddress());
+		assertEquals("address4", listResult.get(1).getAddress());
 	}	
+
 }
