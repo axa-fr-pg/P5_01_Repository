@@ -147,7 +147,7 @@ public class PersonDaoTest {
 		Person p = null;
 		try {
 			p = dao.get(p2.getFirstName(), p2.getLastName());
-		} catch (PersonNotFoundException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		// THEN
@@ -171,13 +171,29 @@ public class PersonDaoTest {
 		});
 	}
 
-@Test
-	void saveP1_addsP1()
+	@Test
+	void givenDuplicateP2_getP2_throwsMultiplePersonWithSameNameException()
+	{
+		// GIVEN
+		ArrayList<Person> listGiven = new ArrayList<Person>(Arrays.asList(p2, p2));
+		dao.set(listGiven);
+		// WHEN & THEN
+		assertThrows(MultiplePersonWithSameNameException.class, () -> {
+			dao.get("firstName2", "lastName2");
+		});
+	}
+
+	@Test
+	void givenNewP1_saveP1_addsP1()
 	{
 		// GIVEN
 		// Empty list
 		// WHEN
-		dao.save(p1);
+		try {
+			dao.save(p1);
+		} catch (MultiplePersonWithSameNameException e) {
+			e.printStackTrace();
+		}
 		ArrayList<Person> listResult = dao.getAll();
 		// THEN
 		assertEquals(1, listResult.size());
@@ -188,6 +204,30 @@ public class PersonDaoTest {
 		assertEquals(11111, listResult.get(0).getZip());
 		assertEquals("phone1", listResult.get(0).getPhone());
 		assertEquals("email1", listResult.get(0).getEmail());
+	}
+
+	@Test
+	void givenExistingPersonsWithSameName_saveP1_throwsMultiplePersonWithSameNameException()
+	{
+		// GIVEN
+		ArrayList<Person> listGiven = new ArrayList<Person>(Arrays.asList(p2));
+		dao.set(listGiven);
+		// WHEN
+		assertThrows(MultiplePersonWithSameNameException.class, () -> {
+			dao.save(p2);
+		});
+	}
+
+	@Test
+	void givenTwoExistingPersonsWithSameName_saveP1_throwsMultiplePersonWithSameNameException()
+	{
+		// GIVEN
+		ArrayList<Person> listGiven = new ArrayList<Person>(Arrays.asList(p2, p2));
+		dao.set(listGiven);
+		// WHEN
+		assertThrows(MultiplePersonWithSameNameException.class, () -> {
+			dao.save(p2);
+		});
 	}
 
 	@Test
@@ -206,7 +246,7 @@ public class PersonDaoTest {
 		Person p = null;
 		try {
 			p = dao.get("firstName2","lastName2");
-		} catch (PersonNotFoundException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		// THEN

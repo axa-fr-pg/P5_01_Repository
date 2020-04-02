@@ -26,15 +26,28 @@ public class PersonDao {
 		this.persons = (ArrayList<Person>) persons.clone();
 	}
 	
-	public Person get(String firstName, String lastName) throws PersonNotFoundException
+	public Person get(String firstName, String lastName) throws PersonNotFoundException, MultiplePersonWithSameNameException
     {
 		LogService.logger.debug("get() " + firstName + " & " + lastName);
+		Person result = null;
+		int count = 0;
 		for (Person p: persons) {
-			if (p.getFirstName().equals(firstName) &&
-					p.getLastName().equals(lastName)) return p;
+			if (p.getFirstName().equals(firstName) && p.getLastName().equals(lastName)) {
+				result = p;
+				count ++;
+			}
 		}
-		LogService.logger.error("get() returns PersonNotFoundException");
-		throw new PersonNotFoundException();
+		switch (count) {
+		case 0:
+			LogService.logger.error("get() returns PersonNotFoundException");
+			throw new PersonNotFoundException();
+		case 1 :
+			LogService.logger.debug("get()successful");
+			return result;
+		default :
+			LogService.logger.error("get() returns MultiplePersonWithSameNameException");
+			throw new MultiplePersonWithSameNameException();
+		}
     }
 
     public ArrayList<Person> getAll()
@@ -53,14 +66,21 @@ public class PersonDao {
 		return result;
 	}
 
-	public void save(Person p)
+	public void save(Person p) throws MultiplePersonWithSameNameException
     {
-		LogService.logger.debug("save() " + p.getFirstName() + " & " + p.getLastName());
-    	Person pNew = new Person(p.getFirstName(), p.getLastName(), p.getAddress(),
-    			p.getCity(), p.getZip(), p.getPhone(), p.getEmail());
-    	persons.add(pNew);
+		LogService.logger.debug("save() " + p.getFirstName() + " " + p.getLastName());
+		try {
+			get(p.getFirstName(), p.getLastName());
+		} catch (PersonNotFoundException e) {
+	    	Person pNew = new Person(p.getFirstName(), p.getLastName(), p.getAddress(),
+	    			p.getCity(), p.getZip(), p.getPhone(), p.getEmail());
+	    	persons.add(pNew);
+	    	return;
+		}
+		LogService.logger.error("save() returns MultiplePersonWithSameNameException");
+		throw new MultiplePersonWithSameNameException();
     }
- 
+
     void update(Person pNew) throws PersonNotFoundException
     {
 		LogService.logger.debug("update() " + pNew.getFirstName() + " & " + pNew.getLastName());
