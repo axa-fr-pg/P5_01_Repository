@@ -81,7 +81,7 @@ public class PersonDao {
 		throw new MultiplePersonWithSameNameException();
     }
 
-    void update(Person pNew) throws PersonNotFoundException
+    public Person update(Person pNew) throws PersonNotFoundException
     {
 		LogService.logger.debug("update() " + pNew.getFirstName() + " & " + pNew.getLastName());
 		for (Person p: persons) {
@@ -92,7 +92,7 @@ public class PersonDao {
 				p.setZip(pNew.getZip());
 				p.setPhone(pNew.getPhone());
 				p.setEmail(pNew.getEmail());
-				return;
+				return p;
 			}
 		}
 		LogService.logger.error("update() returns PersonNotFoundException");
