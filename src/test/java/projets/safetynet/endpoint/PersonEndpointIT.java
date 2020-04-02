@@ -1,10 +1,7 @@
 package projets.safetynet.endpoint;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,23 +19,16 @@ import projets.safetynet.model.core.Person;
 @AutoConfigureMockMvc
 public class PersonEndpointIT {
 
-//	String p1 = "{ \"firstName\":\"f1\", \"lastName\":\"l1\", \"address\":\"a1\", \"city\":\"c1\","
-//			+ " \"zip\":\"11111\", \"phone\":\"t1\", \"email\":\"e1\" }"; 
-	private Person p1 = new Person("f1", "l1", "a1", "c1", 11111L, "t1", "e1");
-	
 	@Autowired
 	private MockMvc mockMvc;
 	
 	@Autowired
 	private ObjectMapper objectMapper;
 
+	private Person p1 = new Person("f1", "l1", "a1", "c1", 11111L, "t1", "e1");
+	
 	@Test
-	public void givenPerson_whenPostPersonEndpoint_thenReturnsStatusCreated() throws Exception {
-
-		
-		// https://www.briansdevblog.com/2017/05/rest-endpoint-testing-with-mockmvc/
-		// https://howtodoinjava.com/spring-boot2/testing/spring-boot-mockmvc-example/
-		
+	public void givenPerson_whenPostPersonEndpoint_thenReturnsStatusCreated() throws Exception {	
 		// GIVEN
 		String j1 = objectMapper.writeValueAsString(p1);
 		// WHEN & THEN
@@ -49,6 +39,22 @@ public class PersonEndpointIT {
 		          .content(j1)
 		          .accept(MediaType.APPLICATION_JSON))
 		          .andExpect(status().isCreated())
+		          .andExpect(jsonPath("$.firstName").value("f1")) 
+		          .andExpect(jsonPath("$.lastName").value("l1"));
+	}
+
+	@Test
+	public void givenPerson_whenPutPersonEndpoint_thenReturnsStatusOk() throws Exception {	
+		// GIVEN
+		String j1 = objectMapper.writeValueAsString(p1);
+		// WHEN & THEN
+		
+		mockMvc.perform(MockMvcRequestBuilders
+				  .put("/person")
+				  .contentType(MediaType.APPLICATION_JSON)
+		          .content(j1)
+		          .accept(MediaType.APPLICATION_JSON))
+		          .andExpect(status().isOk())
 		          .andExpect(jsonPath("$.firstName").value("f1")) 
 		          .andExpect(jsonPath("$.lastName").value("l1"));
 	}
