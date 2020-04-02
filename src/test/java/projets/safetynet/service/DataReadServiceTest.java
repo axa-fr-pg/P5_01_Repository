@@ -96,7 +96,7 @@ public class DataReadServiceTest {
 		when(personDao.getByCity("city")).thenReturn(new ArrayList<Person> (Arrays.asList(p1, p3, p5)));
 		try {
 			when(personDao.get("f4", "l4")).thenReturn(p4);
-		} catch (PersonNotFoundException e2) {
+		} catch (Exception e2) {
 			e2.printStackTrace();
 		}
 

@@ -9,6 +9,7 @@ import projets.safetynet.dao.FireStationDao;
 import projets.safetynet.dao.FireStationNotFoundException;
 import projets.safetynet.dao.MedicalRecordDao;
 import projets.safetynet.dao.MedicalRecordNotFoundException;
+import projets.safetynet.dao.MultiplePersonWithSameNameException;
 import projets.safetynet.dao.PersonDao;
 import projets.safetynet.dao.PersonNotFoundException;
 import projets.safetynet.model.core.FireStation;
@@ -158,6 +159,8 @@ public class DataReadService {
 			response.setEmail(p.getEmail());
 		} catch (PersonNotFoundException e) {
 	        LogService.logger.error("getPersonInfoResponse() throws PersonNotFoundException");
+		} catch (MultiplePersonWithSameNameException e) {
+	        LogService.logger.error("getPersonInfoResponse() throws MultiplePersonWithSameNameException");
 		}
 		try {
 			MedicalRecord r = recordDao.get(firstName, lastName);
