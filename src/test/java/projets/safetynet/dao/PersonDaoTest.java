@@ -1,6 +1,7 @@
 package projets.safetynet.dao;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
@@ -188,14 +189,16 @@ public class PersonDaoTest {
 	{
 		// GIVEN
 		// Empty list
+		Person pSaved = null;
 		// WHEN
 		try {
-			dao.save(p1);
+			pSaved = dao.save(p1);
 		} catch (MultiplePersonWithSameNameException e) {
 			e.printStackTrace();
 		}
 		ArrayList<Person> listResult = dao.getAll();
 		// THEN
+		assertNotNull(pSaved);
 		assertEquals(1, listResult.size());
 		assertEquals("firstName1", listResult.get(0).getFirstName());
 		assertEquals("lastName1", listResult.get(0).getLastName());

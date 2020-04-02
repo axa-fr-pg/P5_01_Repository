@@ -66,7 +66,7 @@ public class PersonDao {
 		return result;
 	}
 
-	public void save(Person p) throws MultiplePersonWithSameNameException
+	public Person save(Person p) throws MultiplePersonWithSameNameException
     {
 		LogService.logger.debug("save() " + p.getFirstName() + " " + p.getLastName());
 		try {
@@ -75,7 +75,7 @@ public class PersonDao {
 	    	Person pNew = new Person(p.getFirstName(), p.getLastName(), p.getAddress(),
 	    			p.getCity(), p.getZip(), p.getPhone(), p.getEmail());
 	    	persons.add(pNew);
-	    	return;
+	    	return pNew;
 		}
 		LogService.logger.error("save() returns MultiplePersonWithSameNameException");
 		throw new MultiplePersonWithSameNameException();

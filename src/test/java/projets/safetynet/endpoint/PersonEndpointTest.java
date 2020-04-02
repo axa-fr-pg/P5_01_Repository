@@ -3,18 +3,14 @@ package projets.safetynet.endpoint;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.ResponseEntity;
 
 import projets.safetynet.model.core.Person;
-import projets.safetynet.model.url.FloodAddressResponse;
 import projets.safetynet.service.DataCreateService;
-import projets.safetynet.service.DataReadService;
 
 @SpringBootTest
 public class PersonEndpointTest {
@@ -30,9 +26,10 @@ public class PersonEndpointTest {
     {
     	// GIVEN
 		Person pNew = new Person();
+    	when(service.postPersonRequest(pNew)).thenReturn(pNew);
     	// WHEN
-		Person pPosted = endpoint.postPersonRequest(pNew);
+    	ResponseEntity<Person> response = endpoint.postPersonRequest(pNew);
     	// THEN
-    //	assertEquals(expected, response);
+    	assertEquals(pNew, response.getBody());
     }
 }

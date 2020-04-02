@@ -32,7 +32,7 @@ public class DataCreateServiceTest {
 	private void initTestData()
 	{
 		try {
-			when(personDao.get("f1", "l1")).thenReturn(p1);
+			when(personDao.save(p1)).thenReturn(p1);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
