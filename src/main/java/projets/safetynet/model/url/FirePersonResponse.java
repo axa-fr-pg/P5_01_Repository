@@ -46,19 +46,19 @@ public class FirePersonResponse {
 	}
 
 	public String[] getMedications() {
-		return medications;
+		return medications.clone();
 	}
 
 	public void setMedications(String[] medications) {
-		this.medications = medications;
+		this.medications = medications.clone();
 	}
 
 	public String[] getAllergies() {
-		return allergies;
+		return allergies.clone();
 	}
 
 	public void setAllergies(String[] allergies) {
-		this.allergies = allergies;
+		this.allergies = allergies.clone();
 	}
 	
 }

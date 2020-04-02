@@ -148,7 +148,7 @@ public class DataReadService {
         return response;
 	}
 
-	PersonInfoResponse getPersonInfoResponse(String firstName, String lastName) {
+	public PersonInfoResponse getPersonInfoResponse(String firstName, String lastName) {
         LogService.logger.info("getPersonInfoResponse() " + firstName + " " + lastName);
         PersonInfoResponse response = new PersonInfoResponse(firstName + " " + lastName, "", 0, "",
         		new String[] {}, new String[] {});
