@@ -60,7 +60,7 @@ public class PersonDao {
     			p.getCity(), p.getZip(), p.getPhone(), p.getEmail());
     	persons.add(pNew);
     }
-     
+ 
     void update(Person pNew) throws PersonNotFoundException
     {
 		LogService.logger.debug("update() " + pNew.getFirstName() + " & " + pNew.getLastName());
