@@ -10,6 +10,7 @@ import projets.safetynet.dao.FireStationNotFoundException;
 import projets.safetynet.dao.MedicalRecordDao;
 import projets.safetynet.dao.MedicalRecordNotFoundException;
 import projets.safetynet.dao.PersonDao;
+import projets.safetynet.dao.PersonNotFoundException;
 import projets.safetynet.model.core.FireStation;
 import projets.safetynet.model.core.MedicalRecord;
 import projets.safetynet.model.core.Person;
@@ -19,6 +20,7 @@ import projets.safetynet.model.url.FireResponse;
 import projets.safetynet.model.url.FireStationPersonResponse;
 import projets.safetynet.model.url.FireStationResponse;
 import projets.safetynet.model.url.FloodAddressResponse;
+import projets.safetynet.model.url.PersonInfoResponse;
 
 @Service
 public class DataReadService {
@@ -55,8 +57,7 @@ public class DataReadService {
 					if (age < 19) children ++;
 					else adults ++;
 				} catch (MedicalRecordNotFoundException e) {
-				       LogService.logger.error("getFireStationResponse() no MedicalRecord for " 
-				    		   + p.getFirstName() + " " + p.getLastName()); 
+				       LogService.logger.error("getFireStationResponse() throws MedicalRecordNotFoundException"); 
 				}
 			}
 		}
@@ -147,4 +148,26 @@ public class DataReadService {
         return response;
 	}
 
+	PersonInfoResponse getPersonInfoResponse(String firstName, String lastName) {
+        LogService.logger.info("getPersonInfoResponse() " + firstName + " " + lastName);
+        PersonInfoResponse response = new PersonInfoResponse(firstName + " " + lastName, "", 0, "",
+        		new String[] {}, new String[] {});
+		try {
+			Person p = personDao.get(firstName, lastName);
+			response.setAddress(p.getAddress());
+			response.setEmail(p.getEmail());
+		} catch (PersonNotFoundException e) {
+	        LogService.logger.error("getPersonInfoResponse() throws PersonNotFoundException");
+		}
+		try {
+			MedicalRecord r = recordDao.get(firstName, lastName);
+			response.setAge(r.getAge());
+			response.setMedications(r.getMedications());
+			response.setAllergies(r.getAllergies());
+		} catch (MedicalRecordNotFoundException e) {
+		       LogService.logger.error("getPersonInfoResponse() throws MedicalRecordNotFoundException"); 
+		}
+        LogService.logger.info("getPersonInfoResponse() successful");
+		return response;
+	}
 }

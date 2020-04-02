@@ -2,6 +2,7 @@ package projets.safetynet.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ import projets.safetynet.dao.FireStationNotFoundException;
 import projets.safetynet.dao.MedicalRecordDao;
 import projets.safetynet.dao.MedicalRecordNotFoundException;
 import projets.safetynet.dao.PersonDao;
+import projets.safetynet.dao.PersonNotFoundException;
 import projets.safetynet.model.core.FireStation;
 import projets.safetynet.model.core.MedicalRecord;
 import projets.safetynet.model.core.Person;
@@ -27,6 +29,7 @@ import projets.safetynet.model.url.FireResponse;
 import projets.safetynet.model.url.FireStationPersonResponse;
 import projets.safetynet.model.url.FireStationResponse;
 import projets.safetynet.model.url.FloodAddressResponse;
+import projets.safetynet.model.url.PersonInfoResponse;
 
 @SpringBootTest
 public class DataReadServiceTest {
@@ -90,6 +93,11 @@ public class DataReadServiceTest {
 		when(personDao.getByAddress("a1")).thenReturn(new ArrayList<Person> (Arrays.asList(p2, p4)));
 		when(personDao.getByAddress("a2")).thenReturn(new ArrayList<Person> (Arrays.asList(p7)));
 		when(personDao.getByAddress("a4")).thenReturn(new ArrayList<Person> (Arrays.asList(p6, p8)));
+		try {
+			when(personDao.get("f4", "l4")).thenReturn(p4);
+		} catch (PersonNotFoundException e2) {
+			e2.printStackTrace();
+		}
 
 		when(stationDao.getByStation(1234)).thenReturn(new ArrayList<FireStation> (Arrays.asList(f1, f4)));
 		when(stationDao.getByStation(6789)).thenReturn(new ArrayList<FireStation> (Arrays.asList(f2)));
@@ -210,22 +218,14 @@ public class DataReadServiceTest {
 		assertEquals("f2 l2", i.getName());
 		assertEquals("t2", i.getPhone());
 		assertEquals(55, i.getAge());
-		assertEquals(1, i.getMedications().length);
-		assertEquals("m1a", i.getMedications()[0]);
-		assertEquals(2, i.getAllergies().length);
-		assertEquals("a1a", i.getAllergies()[0]);
-		assertEquals("a1b", i.getAllergies()[1]);
+		assertTrue(Arrays.equals(m1, i.getMedications()));
+		assertTrue(Arrays.equals(a1, i.getAllergies()));
 		FirePersonResponse k = persons.get(1);
 		assertEquals("f4 l4", k.getName());
 		assertEquals("t4", k.getPhone());
 		assertEquals(18, k.getAge());
-		assertEquals(2, k.getMedications().length);
-		assertEquals("m2a", k.getMedications()[0]);
-		assertEquals("m2b", k.getMedications()[1]);
-		assertEquals(3, k.getAllergies().length);
-		assertEquals("a2a", k.getAllergies()[0]);
-		assertEquals("a2b", k.getAllergies()[1]);
-		assertEquals("a2c", k.getAllergies()[2]);
+		assertTrue(Arrays.equals(m2, k.getMedications()));
+		assertTrue(Arrays.equals(a2, k.getAllergies()));
 	}
 
 	@Test
@@ -244,6 +244,22 @@ public class DataReadServiceTest {
 		assertEquals(2, r.get(1).getInhabitants().size());
 		assertEquals("a2", r.get(2).getAddress());
 		assertEquals(1, r.get(2).getInhabitants().size());
+	}
+
+	@Test
+	void givenTestData_getPersonInfoResponse_returnsCorrectValues()
+	{
+		// GIVEN
+		// Test data prepared in initTestData
+		// WHEN
+		PersonInfoResponse r = service.getPersonInfoResponse("f4", "l4");
+		// THEN
+		assertEquals("f4 l4", r.getName());
+		assertEquals("a4", r.getAddress());
+		assertEquals(18, r.getAge());
+		assertEquals("e4", r.getEmail());
+		assertTrue(Arrays.equals(m2, r.getMedications()));
+		assertTrue(Arrays.equals(a2, r.getAllergies()));
 	}
 
 }

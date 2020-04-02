@@ -26,7 +26,7 @@ public class PersonDao {
 		this.persons = (ArrayList<Person>) persons.clone();
 	}
 	
-	Person get(String firstName, String lastName) throws PersonNotFoundException
+	public Person get(String firstName, String lastName) throws PersonNotFoundException
     {
 		LogService.logger.debug("get() " + firstName + " & " + lastName);
 		for (Person p: persons) {
