@@ -20,18 +20,18 @@ import projets.safetynet.service.DataReadService;
 public class PersonEndpointTest {
 
     @Autowired
-    private FloodEndpoint endpoint;
+    private PersonEndpoint endpoint;
 
     @MockBean
     private DataCreateService service;
 
     @Test
-    public void givenResponse_whenPostPersonRequest_thenReturnsCreated()
+    public void givenNewPerson_whenPostPersonRequest_thenPersonIsCreated()
     {
     	// GIVEN
-		Person p = new Person();
+		Person pNew = new Person();
     	// WHEN
-    //	ArrayList<FloodAddressResponse> response = endpoint.postPersonRequest(p);
+		Person pPosted = endpoint.postPersonRequest(pNew);
     	// THEN
     //	assertEquals(expected, response);
     }
