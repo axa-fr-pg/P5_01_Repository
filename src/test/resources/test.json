@@ -18,11 +18,11 @@
         { "firstName":"Jamie", "lastName":"PPP", "address":"502 33rd St", "city":"Culver", "zip":"53451", "phone":"241-234-3442", "email":"jpeter@email.com" },
         { "firstName":"Ron", "lastName":"PPP", "address":"112 Steppes Pl", "city":"Culver", "zip":"53451", "phone":"241-234-2222", "email":"jpeter@email.com" },
         { "firstName":"Allison", "lastName":"AAAA", "address":"112 Steppes Pl", "city":"Culver", "zip":"53451", "phone":"241-234-5222", "email":"aly@imail.com" },
-        { "firstName":"Brian", "lastName":"SSSSSSSSS", "address":"543 E. Rose Dr", "city":"Culver", "zip":"53451", "phone":"241-234-3324", "email":"bstel@email.com" },
-        { "firstName":"Shawna", "lastName":"SSSSSSSSS", "address":"543 E. Rose Dr", "city":"Culver", "zip":"53451", "phone":"241-234-3324", "email":"ssanw@email.com" },
-        { "firstName":"Kendrik", "lastName":"SSSSSSSSS", "address":"543 E. Rose Dr", "city":"Culver", "zip":"53451", "phone":"241-234-3324", "email":"bstel@email.com" },
-        { "firstName":"Clive", "lastName":"FFF", "address":"342 Townings Dr", "city":"Culver", "zip":"53451", "phone":"241-234-4341", "email":"clivfd@ymail.com" },
-        { "firstName":"Eric", "lastName":"GGGGGG", "address":"551 LoneTree Rd", "city":"Culver", "zip":"53451", "phone":"241-234-3452", "email":"gramps@email.com" }
+        { "firstName":"Brian", "lastName":"SSSSSSSSS", "address":"543 E. Rose Dr", "city":"TestCity", "zip":"12345", "phone":"241-234-3324", "email":"bstel@email.com" },
+        { "firstName":"Shawna", "lastName":"SSSSSSSSS", "address":"543 E. Rose Dr", "city":"TestCity", "zip":"12345", "phone":"241-234-3324", "email":"ssanw@email.com" },
+        { "firstName":"Kendrik", "lastName":"SSSSSSSSS", "address":"543 E. Rose Dr", "city":"TestCity", "zip":"12345", "phone":"241-234-3324", "email":"bste2@email.com" },
+        { "firstName":"Clive", "lastName":"FFF", "address":"342 Townings Dr", "city":"TestCity", "zip":"12345", "phone":"241-234-4341", "email":"clivfd@ymail.com" },
+        { "firstName":"Eric", "lastName":"GGGGGG", "address":"551 LoneTree Rd", "city":"TestCity", "zip":"12345", "phone":"241-234-3452", "email":"gramps@email.com" }
 	], 
     "firestations": [
 	{ "address":"1505 Culver St", "station":"3" },
