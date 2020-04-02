@@ -93,6 +93,7 @@ public class DataReadServiceTest {
 		when(personDao.getByAddress("a1")).thenReturn(new ArrayList<Person> (Arrays.asList(p2, p4)));
 		when(personDao.getByAddress("a2")).thenReturn(new ArrayList<Person> (Arrays.asList(p7)));
 		when(personDao.getByAddress("a4")).thenReturn(new ArrayList<Person> (Arrays.asList(p6, p8)));
+		when(personDao.getByCity("city")).thenReturn(new ArrayList<Person> (Arrays.asList(p1, p3, p5)));
 		try {
 			when(personDao.get("f4", "l4")).thenReturn(p4);
 		} catch (PersonNotFoundException e2) {
@@ -260,6 +261,20 @@ public class DataReadServiceTest {
 		assertEquals("e4", r.getEmail());
 		assertTrue(Arrays.equals(m2, r.getMedications()));
 		assertTrue(Arrays.equals(a2, r.getAllergies()));
+	}
+
+	@Test
+	void givenTestData_getCommunityEmailResponse_returnsCorrectValues()
+	{
+		// GIVEN
+		// Test data prepared in initTestData
+		// WHEN
+		ArrayList<String> r = service.getCommunityEmailResponse("city");
+		// THEN
+		assertEquals(3, r.size());
+		assertEquals("e1", r.get(0));
+		assertEquals("e3", r.get(1));
+		assertEquals("e5", r.get(2));
 	}
 
 }

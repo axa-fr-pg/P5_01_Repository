@@ -86,4 +86,14 @@ public class PersonDao {
     			person.getLastName().equals(p.getLastName()) );
     }
 
+	public ArrayList<Person> getByCity(String city) {
+		LogService.logger.debug("getByCity() " + city);
+		ArrayList<Person> result = new ArrayList<Person>();
+		for (Person p: persons) {
+			if (p.getCity().equals(city)) result.add(p);
+		}
+		LogService.logger.debug("getByCity() returns size = " + result.size());
+		return result;
+	}
+
 }

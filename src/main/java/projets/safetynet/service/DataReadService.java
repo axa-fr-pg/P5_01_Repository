@@ -170,4 +170,17 @@ public class DataReadService {
         LogService.logger.info("getPersonInfoResponse() successful");
 		return response;
 	}
+	
+    public ArrayList<String> getCommunityEmailResponse(String city) {
+        LogService.logger.info("getCommunityEmailResponse() " + city);
+        ArrayList<String> response = new ArrayList<String>();
+        ArrayList<Person> persons = personDao.getByCity(city);
+        for (Person p : persons) {
+        	response.add(p.getEmail());
+        }
+        LogService.logger.info("getCommunityEmailResponse() returns " + response.size() + " emails");
+        return response;
+    }
+
+
 }

@@ -15,14 +15,15 @@ import projets.safetynet.model.core.Person;
 
 @SpringBootTest
 public class PersonDaoTest {
-	
+
 	@Autowired
 	private PersonDao dao;
-	
+
 	private Person p1 = new Person ("firstName1","lastName1","address1","city1",11111,"phone1","email1");
 	private Person p2 = new Person ("firstName2","lastName2","address2","city2",22222,"phone2","email2");
 	private Person p3 = new Person ("firstName3","lastName3","address3","city3",33333,"phone3","email3");
-	
+	private Person p4 = new Person ("fffffffff4","llllllll4","address2","city1",12345,"ppppp4","eeeee4");
+
 	@BeforeEach
 	private void prepareTests()
 	{
@@ -66,8 +67,7 @@ public class PersonDaoTest {
 	void givenAddressWithTwoPersons_getByAddress_returnsBothPersons()
 	{
 		// GIVEN
-		Person p9 = new Person ("f","l","address2","c",99999,"p","e");
-		ArrayList<Person> listGiven = new ArrayList<Person>(Arrays.asList(p1, p2, p3, p9));
+		ArrayList<Person> listGiven = new ArrayList<Person>(Arrays.asList(p1, p2, p3, p4));
 		dao.set(listGiven);
 		// WHEN
 		ArrayList<Person> listResult = dao.getByAddress("address2");
@@ -80,27 +80,63 @@ public class PersonDaoTest {
 		assertEquals(22222, listResult.get(0).getZip());
 		assertEquals("phone2", listResult.get(0).getPhone());
 		assertEquals("email2", listResult.get(0).getEmail());
-		assertEquals("f", listResult.get(1).getFirstName());
-		assertEquals("l", listResult.get(1).getLastName());
+		assertEquals("fffffffff4", listResult.get(1).getFirstName());
+		assertEquals("llllllll4", listResult.get(1).getLastName());
 		assertEquals("address2", listResult.get(1).getAddress());
-		assertEquals("c", listResult.get(1).getCity());
-		assertEquals(99999, listResult.get(1).getZip());
-		assertEquals("p", listResult.get(1).getPhone());
-		assertEquals("e", listResult.get(1).getEmail());
+		assertEquals("city1", listResult.get(1).getCity());
+		assertEquals(12345, listResult.get(1).getZip());
+		assertEquals("ppppp4", listResult.get(1).getPhone());
+		assertEquals("eeeee4", listResult.get(1).getEmail());
 	}
-	
+
 	@Test
 	void givenMissingAddress_getByAddress_returnsEmptyList()
 	{
 		// GIVEN
-		ArrayList<Person> listGiven = new ArrayList<Person>(Arrays.asList(p1, p2, p3));
-		dao.set(listGiven);
+		// Empty list
 		// WHEN
 		ArrayList<Person> listResult = dao.getByAddress("non existing address");
 		// THEN
 		assertEquals(0, listResult.size());
 	}
 	
+	@Test
+	void givenCityWithTwoPersons_getByCity_returnsBothPersons()
+	{
+		// GIVEN
+		ArrayList<Person> listGiven = new ArrayList<Person>(Arrays.asList(p1, p2, p3, p4));
+		dao.set(listGiven);
+		// WHEN
+		ArrayList<Person> listResult = dao.getByCity("city1");
+		// THEN
+		assertEquals(2, listResult.size());
+		assertEquals("firstName1", listResult.get(0).getFirstName());
+		assertEquals("lastName1", listResult.get(0).getLastName());
+		assertEquals("address1", listResult.get(0).getAddress());
+		assertEquals("city1", listResult.get(0).getCity());
+		assertEquals(11111, listResult.get(0).getZip());
+		assertEquals("phone1", listResult.get(0).getPhone());
+		assertEquals("email1", listResult.get(0).getEmail());
+		assertEquals("fffffffff4", listResult.get(1).getFirstName());
+		assertEquals("llllllll4", listResult.get(1).getLastName());
+		assertEquals("address2", listResult.get(1).getAddress());
+		assertEquals("city1", listResult.get(1).getCity());
+		assertEquals(12345, listResult.get(1).getZip());
+		assertEquals("ppppp4", listResult.get(1).getPhone());
+		assertEquals("eeeee4", listResult.get(1).getEmail());
+	}
+
+	@Test
+	void givenNoPerson_getByCity_returnsEmptyList()
+	{
+		// GIVEN
+		// Empty list
+		// WHEN
+		ArrayList<Person> listResult = dao.getByCity("non existing city");
+		// THEN
+		assertEquals(0, listResult.size());
+	}
+
 	@Test
 	void givenExistingP2_getP2_returnsP2()
 	{
