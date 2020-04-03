@@ -24,12 +24,18 @@ public class FireStationDao {
 		LogService.logger.debug("set() size = " + stations.size());
 		this.stations = (ArrayList<FireStation>) stations.clone();
 	}
-	
-    void save(FireStation s)
+
+    public FireStation save(FireStation s) throws MultipleFireStationWithSameNameException
     {
 		LogService.logger.debug("save() " + s.getAddress() + " & " + s.getStation());
+		if (stations.contains(s)) {
+			LogService.logger.error("save() returns MultipleFireStationWithSameNameException");
+			throw new MultipleFireStationWithSameNameException();
+		}
     	FireStation sNew = new FireStation(s.getAddress(), s.getStation());
     	stations.add(sNew);
+		LogService.logger.debug("save() successful" );
+		return sNew;
     }
 
 	public ArrayList<FireStation> getAll() {

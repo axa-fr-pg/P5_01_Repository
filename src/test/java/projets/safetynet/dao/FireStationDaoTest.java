@@ -112,8 +112,13 @@ public class FireStationDaoTest {
 	{
 		// GIVEN
 		// Empty list
+		FireStation s = null;
 		// WHEN
-		dao.save(s1);
+		try {
+			s = dao.save(s1);
+		} catch (MultipleFireStationWithSameNameException e) {
+			e.printStackTrace();
+		}
 		ArrayList<FireStation> listResult = dao.getAll();
 		// THEN
 		assertEquals(1, listResult.size());
@@ -121,6 +126,30 @@ public class FireStationDaoTest {
 		assertEquals(12345, listResult.get(0).getStation());
 	}
 
+	@Test
+	void givenExistingMappingWithSameName_saveS2_throwsMultipleFireStationWithSameNameException()
+	{
+		// GIVEN
+		ArrayList<FireStation> listGiven = new ArrayList<FireStation>(Arrays.asList(s2));
+		dao.set(listGiven);
+		// WHEN
+		assertThrows(MultipleFireStationWithSameNameException.class, () -> {
+			dao.save(s2);
+		});
+	}
+
+	@Test
+	void givenTwoExistingMappingWithSameName_saveS2_throwsMultipleFireStationWithSameNameException()
+	{
+		// GIVEN
+		ArrayList<FireStation> listGiven = new ArrayList<FireStation>(Arrays.asList(s2, s2));
+		dao.set(listGiven);
+		// WHEN
+		assertThrows(MultipleFireStationWithSameNameException.class, () -> {
+			dao.save(s2);
+		});
+	}
+	
 	@Test
 	void givenExistingS3_updateByAddressS3_changesS2()
 	{
