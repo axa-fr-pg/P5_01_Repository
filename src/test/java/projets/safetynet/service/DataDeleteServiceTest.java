@@ -11,6 +11,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import projets.safetynet.dao.PersonDao;
 import projets.safetynet.model.core.Person;
+import projets.safetynet.model.url.PersonRequest;
 
 @SpringBootTest
 public class DataDeleteServiceTest {
@@ -27,7 +28,7 @@ public class DataDeleteServiceTest {
 	private void initTestData()
 	{
 		try {
-			when(personDao.delete(p1)).thenReturn(true);
+			when(personDao.delete("f1", "l1")).thenReturn(true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -38,8 +39,9 @@ public class DataDeleteServiceTest {
 	{
 		// GIVEN
 		// Test data prepared in initTestData
+		PersonRequest request = new PersonRequest("f1", "l1");
 		// WHEN
-		boolean response = service.deletePersonRequest(p1);
+		boolean response = service.deletePersonRequest(request);
 		// THEN
 		assertEquals(true, response);
 	}

@@ -10,7 +10,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.ResponseEntity;
 
 import projets.safetynet.model.core.Person;
+import projets.safetynet.model.url.PersonRequest;
 import projets.safetynet.service.DataCreateService;
+import projets.safetynet.service.DataDeleteService;
 import projets.safetynet.service.DataUpdateService;
 
 @SpringBootTest
@@ -24,6 +26,9 @@ public class PersonEndpointTest {
 
     @MockBean
     private DataUpdateService updateService;
+
+    @MockBean
+    private DataDeleteService deleteService;
 
     @Test
     public void givenNewPerson_whenPostPersonRequest_thenPersonIsCreated()
@@ -47,6 +52,18 @@ public class PersonEndpointTest {
     	ResponseEntity<Person> response = endpoint.putPersonRequest(pExpected);
     	// THEN
     	assertEquals(pExpected, response.getBody());
+    }
+
+    @Test
+    public void givenNewPerson_whenDeletePersonRequest_thenPersonIsDeleted()
+    {
+		PersonRequest r = new PersonRequest();
+    	// GIVEN
+    	when(deleteService.deletePersonRequest(r)).thenReturn(true);
+    	// WHEN
+    	ResponseEntity<Boolean> response = endpoint.deletePersonRequest(r);
+    	// THEN
+    	assertEquals(true, response.getBody());
     }
 
 }

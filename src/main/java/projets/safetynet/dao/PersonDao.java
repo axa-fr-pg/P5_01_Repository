@@ -42,7 +42,7 @@ public class PersonDao {
 			LogService.logger.error("get() returns PersonNotFoundException");
 			throw new PersonNotFoundException();
 		case 1 :
-			LogService.logger.debug("get()successful");
+			LogService.logger.debug("get() successful");
 			return result;
 		default :
 			LogService.logger.error("get() returns MultiplePersonWithSameNameException");
@@ -75,6 +75,7 @@ public class PersonDao {
 	    	Person pNew = new Person(p.getFirstName(), p.getLastName(), p.getAddress(),
 	    			p.getCity(), p.getZip(), p.getPhone(), p.getEmail());
 	    	persons.add(pNew);
+			LogService.logger.debug("save() successful");
 	    	return pNew;
 		}
 		LogService.logger.error("save() returns MultiplePersonWithSameNameException");
@@ -99,18 +100,18 @@ public class PersonDao {
     	throw new PersonNotFoundException();
     }
 
-    public boolean delete(Person p) throws PersonNotFoundException
+    public boolean delete(String firstName, String lastName) throws PersonNotFoundException
     {
-		LogService.logger.debug("delete() " + p.getFirstName() + " & " + p.getLastName());
+		LogService.logger.debug("delete() " + firstName + " & " + lastName);
 		try {
-			Person exists = get(p.getFirstName(), p.getLastName());
+			Person exists = get(firstName, lastName);
 		} catch (MultiplePersonWithSameNameException e) {
 			LogService.logger.debug("delete() will remove all duplicates");
 		}
-		persons.removeIf( person -> person.getFirstName().equals(p.getFirstName()) &&
-    			person.getLastName().equals(p.getLastName()) );
+		persons.removeIf( person -> person.getFirstName().equals(firstName) &&
+    			person.getLastName().equals(lastName) );
 		LogService.logger.debug("delete() successful");
-		return false;
+		return true;
     }
 
 	public ArrayList<Person> getByCity(String city) {

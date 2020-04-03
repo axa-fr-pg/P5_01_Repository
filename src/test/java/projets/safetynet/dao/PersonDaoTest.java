@@ -279,27 +279,29 @@ public class PersonDaoTest {
 		// GIVEN
 		ArrayList<Person> listGiven = new ArrayList<Person>(Arrays.asList(p1, p2, p3));
 		dao.set(listGiven);
+		boolean result = false;
 		// WHEN
 		try {
-			dao.delete(p2);
+			result = dao.delete("firstName2", "lastName2");
 		} catch (PersonNotFoundException e) {
 			e.printStackTrace();
 		}
 		ArrayList<Person> listResult = dao.getAll();
 		// THEN
+		assertEquals(true, result);
 		assertEquals(2, listResult.size());
 		assertEquals("firstName1", listResult.get(0).getFirstName());
 		assertEquals("firstName3", listResult.get(1).getFirstName());
 	}
 
 	@Test
-	void givenMissingP2_deleteP2_throwsPersonNotFoundException()
+	void givenMissingPerson_delete_throwsPersonNotFoundException()
 	{
 		// GIVEN
 		// Empty list
 		// WHEN & THEN
 		assertThrows(PersonNotFoundException.class, () -> {
-			dao.delete(p2);
+			dao.delete("does not", "exist");
 		});
 	}
 

@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -40,7 +41,8 @@ public class PersonEndpointIT {
 		          .accept(MediaType.APPLICATION_JSON))
 		          .andExpect(status().isCreated())
 		          .andExpect(jsonPath("$.firstName").value("f1")) 
-		          .andExpect(jsonPath("$.lastName").value("l1"));
+		          .andExpect(jsonPath("$.lastName").value("l1"))
+		          .andDo(MockMvcResultHandlers.print());
 	}
 
 	@Test
@@ -50,13 +52,28 @@ public class PersonEndpointIT {
 		// WHEN & THEN
 		
 		mockMvc.perform(MockMvcRequestBuilders
-				  .put("/person")
-				  .contentType(MediaType.APPLICATION_JSON)
-		          .content(j1)
-		          .accept(MediaType.APPLICATION_JSON))
-		          .andExpect(status().isOk())
-		          .andExpect(jsonPath("$.firstName").value("f1")) 
-		          .andExpect(jsonPath("$.lastName").value("l1"));
+				.put("/person")
+				.contentType(MediaType.APPLICATION_JSON)
+		        .content(j1)
+		        .accept(MediaType.APPLICATION_JSON))
+		        .andExpect(status().isOk())
+		        .andExpect(jsonPath("$.firstName").value("f1")) 
+		        .andExpect(jsonPath("$.lastName").value("l1"))
+				.andDo(MockMvcResultHandlers.print());
 	}
 
+	@Test
+	public void givenPerson_whenDeletePersonEndpoint_thenReturnsStatusAccepted() throws Exception {	
+		// GIVEN
+		String j1 = objectMapper.writeValueAsString(p1);
+		// WHEN & THEN
+		
+		mockMvc.perform(MockMvcRequestBuilders
+				.delete("/person")
+				.contentType(MediaType.APPLICATION_JSON)
+		        .content(j1)
+		        .accept(MediaType.APPLICATION_JSON))
+		        .andExpect(status().isAccepted())
+        		.andDo(MockMvcResultHandlers.print());
+	}
 }

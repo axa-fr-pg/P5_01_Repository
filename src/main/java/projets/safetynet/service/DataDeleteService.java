@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 import projets.safetynet.dao.PersonDao;
 import projets.safetynet.dao.PersonNotFoundException;
-import projets.safetynet.model.core.Person;
+import projets.safetynet.model.url.PersonRequest;
 
 @Service
 public class DataDeleteService {
@@ -13,10 +13,10 @@ public class DataDeleteService {
 	@Autowired
 	private PersonDao personDao;
 
-	public boolean deletePersonRequest(Person p) {
-        LogService.logger.info("deletePersonRequest() " + p.getFirstName() + " " + p.getLastName());
+	public boolean deletePersonRequest(PersonRequest request) {
+        LogService.logger.info("deletePersonRequest() " + request.getFirstName() + " " + request.getLastName());
 		try {
-			boolean result = personDao.delete(p);
+			boolean result = personDao.delete(request.getFirstName(), request.getLastName());
 	        LogService.logger.info("deletePersonRequest() successful");
 			return result;
 		} catch (PersonNotFoundException e) {
