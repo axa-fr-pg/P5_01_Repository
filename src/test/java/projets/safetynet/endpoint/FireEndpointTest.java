@@ -3,8 +3,6 @@ package projets.safetynet.endpoint;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-import java.util.ArrayList;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,18 +18,18 @@ public class FireEndpointTest {
     private FireEndpoint endpoint;
 
     @MockBean
-    private DataReadService service;
+    private DataReadService readService;
 
     @Test
     public void givenResponse_whenGetFireResponse_thenReturnsExpectedResponse()
     {
     	// GIVEN
     	FireResponse expected = new FireResponse();
-    	when(service.getFireResponse("12345")).thenReturn(expected);
+    	when(readService.getFireResponse("test address")).thenReturn(expected);
     	// WHEN
-    	FireResponse response = endpoint.getFireResponse("12345");
+    	FireResponse response = endpoint.getFireResponse("test address");
     	// THEN
     	assertEquals(expected, response);
     }
-	
+
 }

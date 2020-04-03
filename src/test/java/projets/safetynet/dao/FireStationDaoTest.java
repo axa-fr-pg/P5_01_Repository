@@ -116,7 +116,7 @@ public class FireStationDaoTest {
 		// WHEN
 		try {
 			s = dao.save(s1);
-		} catch (MultipleFireStationWithSameNameException e) {
+		} catch (MultipleFireStationWithSameValuesException e) {
 			e.printStackTrace();
 		}
 		ArrayList<FireStation> listResult = dao.getAll();
@@ -127,25 +127,25 @@ public class FireStationDaoTest {
 	}
 
 	@Test
-	void givenExistingMappingWithSameName_saveS2_throwsMultipleFireStationWithSameNameException()
+	void givenExistingMappingWithSameValues_saveS2_throwsMultipleFireStationWithSameValuesException()
 	{
 		// GIVEN
 		ArrayList<FireStation> listGiven = new ArrayList<FireStation>(Arrays.asList(s2));
 		dao.set(listGiven);
 		// WHEN
-		assertThrows(MultipleFireStationWithSameNameException.class, () -> {
+		assertThrows(MultipleFireStationWithSameValuesException.class, () -> {
 			dao.save(s2);
 		});
 	}
 
 	@Test
-	void givenTwoExistingMappingWithSameName_saveS2_throwsMultipleFireStationWithSameNameException()
+	void givenTwoExistingMappingWithSameValues_saveS2_throwsMultipleFireStationWithSameValuesException()
 	{
 		// GIVEN
 		ArrayList<FireStation> listGiven = new ArrayList<FireStation>(Arrays.asList(s2, s2));
 		dao.set(listGiven);
 		// WHEN
-		assertThrows(MultipleFireStationWithSameNameException.class, () -> {
+		assertThrows(MultipleFireStationWithSameValuesException.class, () -> {
 			dao.save(s2);
 		});
 	}

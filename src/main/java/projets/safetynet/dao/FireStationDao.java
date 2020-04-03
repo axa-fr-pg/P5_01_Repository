@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.springframework.stereotype.Repository;
 
 import projets.safetynet.model.core.FireStation;
+import projets.safetynet.model.core.Person;
 import projets.safetynet.service.LogService;
 
 @Repository
@@ -25,17 +26,44 @@ public class FireStationDao {
 		this.stations = (ArrayList<FireStation>) stations.clone();
 	}
 
-    public FireStation save(FireStation s) throws MultipleFireStationWithSameNameException
+	public FireStation get(String address, long station) throws 
+		FireStationNotFoundException, MultipleFireStationWithSameValuesException
+    {
+		LogService.logger.debug("get() " + address + " & " + station);
+		FireStation result = null;
+		int count = 0;
+		for (FireStation s: stations) {
+			if (s.getAddress().equals(address) && s.getStation() == station) {
+				result = s;
+				count ++;
+			}
+		}
+		switch (count) {
+		case 0:
+			LogService.logger.error("get() returns FireStationNotFoundException");
+			throw new FireStationNotFoundException();
+		case 1 :
+			LogService.logger.debug("get() successful");
+			return result;
+		default :
+			LogService.logger.error("get() returns MultipleFireStationWithSameValuesException");
+			throw new MultipleFireStationWithSameValuesException();
+		}
+    }
+
+    public FireStation save(FireStation s) throws MultipleFireStationWithSameValuesException
     {
 		LogService.logger.debug("save() " + s.getAddress() + " & " + s.getStation());
-		if (stations.contains(s)) {
-			LogService.logger.error("save() returns MultipleFireStationWithSameNameException");
-			throw new MultipleFireStationWithSameNameException();
+		try {
+			get(s.getAddress(), s.getStation());
+		} catch (FireStationNotFoundException e) {
+	    	FireStation sNew = new FireStation(s.getAddress(), s.getStation());
+	    	stations.add(sNew);
+			LogService.logger.debug("save() successful");
+	    	return sNew;
 		}
-    	FireStation sNew = new FireStation(s.getAddress(), s.getStation());
-    	stations.add(sNew);
-		LogService.logger.debug("save() successful" );
-		return sNew;
+		LogService.logger.error("save() returns MultipleFireStationWithSameValuesException");
+		throw new MultipleFireStationWithSameValuesException();
     }
 
 	public ArrayList<FireStation> getAll() {

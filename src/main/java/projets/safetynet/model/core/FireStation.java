@@ -1,7 +1,11 @@
 package projets.safetynet.model.core;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class FireStation {
 	private String address;
+	
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
 	private long station;
 	
 	public FireStation() {

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import projets.safetynet.dao.FireStationDao;
-import projets.safetynet.dao.MultipleFireStationWithSameNameException;
+import projets.safetynet.dao.MultipleFireStationWithSameValuesException;
 import projets.safetynet.dao.MultiplePersonWithSameNameException;
 import projets.safetynet.dao.PersonDao;
 import projets.safetynet.dao.PersonNotFoundException;
@@ -38,8 +38,8 @@ public class DataCreateService {
 			FireStation sSaved = stationDao.save(sNew);
 	        LogService.logger.info("postFireStationRequest() successful");
 			return sSaved;
-		} catch (MultipleFireStationWithSameNameException e) {
-	        LogService.logger.error("postFireStationRequest() throws MultipleFireStationWithSameNameException");
+		} catch (MultipleFireStationWithSameValuesException e) {
+	        LogService.logger.error("postFireStationRequest() throws MultipleFireStationWithSameValuesException");
 	        return null;
 		}
 	}
