@@ -104,7 +104,7 @@ public class PersonDao {
     {
 		LogService.logger.debug("delete() " + firstName + " & " + lastName);
 		try {
-			Person exists = get(firstName, lastName);
+			get(firstName, lastName);
 		} catch (MultiplePersonWithSameNameException e) {
 			LogService.logger.debug("delete() will remove all duplicates");
 		}

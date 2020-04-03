@@ -151,21 +151,16 @@ public class FireStationDaoTest {
 	}
 	
 	@Test
-	void givenExistingS3_updateByAddressS3_changesS2()
+	void givenExistingS3_updateByAddressS3_changesS3()
 	{
 		// GIVEN
+		FireStation checkValueStation = null;
 		ArrayList<FireStation> listGiven = new ArrayList<FireStation>(Arrays.asList(s1, s2, s3, s4));
 		dao.set(listGiven);
 		// WHEN
 		FireStation newValueStation = new FireStation ("address3", 99999);
 		try {
-			dao.updateByAddress(newValueStation);
-		} catch (FireStationNotFoundException e) {
-			e.printStackTrace();
-		}
-		FireStation checkValueStation = null;
-		try {
-			checkValueStation = dao.getByAddress("address3");
+			checkValueStation = dao.updateByAddress(newValueStation);
 		} catch (FireStationNotFoundException e) {
 			e.printStackTrace();
 		}

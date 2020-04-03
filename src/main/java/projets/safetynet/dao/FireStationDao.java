@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import org.springframework.stereotype.Repository;
 
 import projets.safetynet.model.core.FireStation;
-import projets.safetynet.model.core.Person;
 import projets.safetynet.service.LogService;
 
 @Repository
@@ -90,12 +89,12 @@ public class FireStationDao {
 		return result;
 	}
 
-	public void updateByAddress(FireStation sNew) throws FireStationNotFoundException {
+	public FireStation updateByAddress(FireStation sNew) throws FireStationNotFoundException {
 		LogService.logger.debug("updateByAddress() " + sNew.getAddress());
 		for (FireStation s: stations) {
 			if (s.getAddress().equals(sNew.getAddress())) {
 				s.setStation(sNew.getStation());
-				return;
+				return sNew;
 			}
 		}
 		LogService.logger.error("updateByAddress() returns FireStationNotFoundException");

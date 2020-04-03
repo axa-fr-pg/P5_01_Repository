@@ -3,8 +3,11 @@ package projets.safetynet.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import projets.safetynet.dao.FireStationDao;
+import projets.safetynet.dao.FireStationNotFoundException;
 import projets.safetynet.dao.PersonDao;
 import projets.safetynet.dao.PersonNotFoundException;
+import projets.safetynet.model.core.FireStation;
 import projets.safetynet.model.core.Person;
 
 @Service
@@ -12,6 +15,9 @@ public class DataUpdateService {
 
 	@Autowired
 	private PersonDao personDao;
+
+	@Autowired
+	private FireStationDao stationDao;
 
 	public Person putPersonRequest(Person pExpected) {
         LogService.logger.info("putPersonRequest() " + pExpected.getFirstName() + " " + pExpected.getLastName());
@@ -21,6 +27,18 @@ public class DataUpdateService {
 			return pChanged;
 		} catch (PersonNotFoundException e) {
 	        LogService.logger.error("putPersonRequest() throws PersonNotFoundException");
+	        return null;
+		}
+	}
+
+	public FireStation putFireStationRequest(FireStation sExpected) {
+        LogService.logger.info("putFireStationRequest() " + sExpected.getAddress() + " " + sExpected.getStation());
+		try {
+			FireStation sChanged = stationDao.updateByAddress(sExpected);
+	        LogService.logger.info("putFireStationRequest() successful");
+			return sChanged;
+		} catch (FireStationNotFoundException e) {
+	        LogService.logger.error("putFireStationRequest() throws FireStationNotFoundException");
 	        return null;
 		}
 	}
