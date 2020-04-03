@@ -99,11 +99,18 @@ public class PersonDao {
     	throw new PersonNotFoundException();
     }
 
-    void delete(Person p) // Does not throw any exception if the person is not found
+    public boolean delete(Person p) throws PersonNotFoundException
     {
 		LogService.logger.debug("delete() " + p.getFirstName() + " & " + p.getLastName());
+		try {
+			Person exists = get(p.getFirstName(), p.getLastName());
+		} catch (MultiplePersonWithSameNameException e) {
+			LogService.logger.debug("delete() will remove all duplicates");
+		}
 		persons.removeIf( person -> person.getFirstName().equals(p.getFirstName()) &&
     			person.getLastName().equals(p.getLastName()) );
+		LogService.logger.debug("delete() successful");
+		return false;
     }
 
 	public ArrayList<Person> getByCity(String city) {
