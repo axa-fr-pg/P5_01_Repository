@@ -139,7 +139,7 @@ public class DataReadServiceTest {
 	}
 	
 	@Test
-	void givenTestData_getUrlFirestation1_returnsCorrectValues()
+	void givenTestData_getFirestationResponse_returnsCorrectValues()
 	{
 		// GIVEN
 		// Test data prepared in initTestData
