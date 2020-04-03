@@ -9,12 +9,16 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.ResponseEntity;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+
 import projets.safetynet.model.core.FireStation;
 import projets.safetynet.model.url.FireStationResponse;
 import projets.safetynet.service.DataCreateService;
 import projets.safetynet.service.DataDeleteService;
 import projets.safetynet.service.DataReadService;
 import projets.safetynet.service.DataUpdateService;
+import projets.safetynet.service.InvalidDeleteFireStationRequestException;
 
 @SpringBootTest
 public class FireStationEndpointTest {
@@ -59,7 +63,7 @@ public class FireStationEndpointTest {
     }
 
     @Test
-    public void givenNewFireStation_whenPutFireStationRequest_thenFireStationIsUpdated()
+    public void givenExistingFireStation_whenPutFireStationRequest_thenFireStationIsUpdated()
     {
     	// GIVEN
 		FireStation sNew = new FireStation();
@@ -68,6 +72,17 @@ public class FireStationEndpointTest {
     	ResponseEntity<FireStation> response = endpoint.putFireStationRequest(sNew);
     	// THEN
     	assertEquals(sNew, response.getBody());
+    }
+
+    @Test
+    public void givenExistingFireStation_whenDeleteFireStationRequest_thenFireStationIsDeleted() throws Exception
+    {
+    	// GIVEN
+    	when(deleteService.deleteFireStationRequest("any request")).thenReturn(true);
+    	// WHEN
+    	ResponseEntity<Boolean> response = endpoint.deleteFireStationRequest("any request");
+    	// THEN
+    	assertEquals(true, response.getBody());
     }
 
 }

@@ -43,7 +43,7 @@ public class PersonEndpointTest {
     }
 
     @Test
-    public void givenNewPerson_whenPutPersonRequest_thenPersonIsUpdated()
+    public void givenExistingPerson_whenPutPersonRequest_thenPersonIsUpdated()
     {
 		Person pExpected = new Person();
     	// GIVEN
@@ -55,7 +55,7 @@ public class PersonEndpointTest {
     }
 
     @Test
-    public void givenNewPerson_whenDeletePersonRequest_thenPersonIsDeleted()
+    public void givenExistingPerson_whenDeletePersonRequest_thenPersonIsDeleted()
     {
 		PersonRequest r = new PersonRequest();
     	// GIVEN

@@ -17,9 +17,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import projets.safetynet.model.core.FireStation;
-import projets.safetynet.model.core.Person;
 import projets.safetynet.model.url.FireStationResponse;
-import projets.safetynet.service.FileService;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -76,6 +74,21 @@ public class FireStationEndpointIT {
 		          .andExpect(status().isOk())
 		          .andExpect(jsonPath("$.address").value("a1")) 
 		          .andExpect(jsonPath("$.station").value(1))
+		          .andDo(MockMvcResultHandlers.print());
+	}
+
+	@Test
+	public void givenFireStation_whenDeleteFireStationEndpoint_thenReturnsStatusAccepted() throws Exception {	
+		// GIVEN
+		String j1 = objectMapper.writeValueAsString(s1);
+		// WHEN & THEN
+		
+		mockMvc.perform(MockMvcRequestBuilders
+				  .delete("/firestation")
+				  .contentType(MediaType.APPLICATION_JSON)
+		          .content(j1)
+		          .accept(MediaType.APPLICATION_JSON))
+		          .andExpect(status().isAccepted())
 		          .andDo(MockMvcResultHandlers.print());
 	}
 
