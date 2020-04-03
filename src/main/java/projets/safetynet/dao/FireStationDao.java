@@ -39,13 +39,13 @@ public class FireStationDao {
 		}
 		switch (count) {
 		case 0:
-			LogService.logger.error("get() returns FireStationNotFoundException");
+			LogService.logger.error("get() throws FireStationNotFoundException");
 			throw new FireStationNotFoundException();
 		case 1 :
 			LogService.logger.debug("get() successful");
 			return result;
 		default :
-			LogService.logger.error("get() returns MultipleFireStationWithSameValuesException");
+			LogService.logger.error("get() throws MultipleFireStationWithSameValuesException");
 			throw new MultipleFireStationWithSameValuesException();
 		}
     }
@@ -101,17 +101,28 @@ public class FireStationDao {
     	throw new FireStationNotFoundException();
 	}
 
-	public void delete(FireStation s) // Does not throw any exception if the station is not found
+	public boolean delete(String address, long station)
 	{
-		LogService.logger.debug("delete() " + s.getAddress() + " or " + s.getStation());
-		stations.removeIf( station -> station.getAddress().equals(s.getAddress()) &&
-    			station.getStation() == s.getStation() );
+		LogService.logger.debug("delete() " + address + " & " + station);
+		boolean result = stations.removeIf( s -> s.getAddress().equals(address)
+				&& s.getStation() == station );
+		LogService.logger.debug("delete() " + result);
+		return result;
 	}
 	
-	public void deleteByStation(long station) // Does not throw any exception if the station is not found
+	public boolean deleteByStation(long station)
 	{
 		LogService.logger.debug("deleteByStation() " + station);
-		stations.removeIf( s -> s.getStation() == station );
+		boolean result = stations.removeIf( s -> s.getStation() == station );
+		LogService.logger.debug("deleteByStation() "+result);
+		return result;
+	}
+
+	public boolean deleteByAddress(String address) {
+		LogService.logger.debug("deleteByAddress() " + address);
+		boolean result = stations.removeIf( s -> s.getAddress().equals(address) );
+		LogService.logger.debug("deleteByAddress() "+result);
+		return result;
 	}
 	
 }

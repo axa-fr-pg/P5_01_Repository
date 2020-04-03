@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import projets.safetynet.model.core.FireStation;
+import projets.safetynet.model.core.Person;
 
 @SpringBootTest
 public class FireStationDaoTest {
@@ -23,6 +24,10 @@ public class FireStationDaoTest {
 	private FireStation s2 = new FireStation ("address2", 2);;
 	private FireStation s3 = new FireStation ("address3", 12345);;
 	private FireStation s4 = new FireStation ("address4", 4);
+	private FireStation s5 = new FireStation ("COMMON", 5);
+	private FireStation s6 = new FireStation ("address6", 6);
+	private FireStation s7 = new FireStation ("COMMON", 7);
+	private FireStation s8 = new FireStation ("address8", 8);
 	
 	@BeforeEach
 	private void prepareTests()
@@ -181,15 +186,16 @@ public class FireStationDaoTest {
 	}
 
 	@Test
-	void givenS2_deleteS2_suppressesS2()
+	void givenS2_deleteS2_returnsTrue()
 	{
 		// GIVEN
 		ArrayList<FireStation> listGiven = new ArrayList<FireStation>(Arrays.asList(s1, s2, s3, s4));
 		dao.set(listGiven);
 		// WHEN
-		dao.delete(s2);
+		boolean result = dao.delete("address2", 2);
 		ArrayList<FireStation> listResult = dao.getAll();
 		// THEN
+		assertEquals(true, result);
 		assertEquals(3, listResult.size());
 		assertEquals("address1", listResult.get(0).getAddress());
 		assertEquals("address3", listResult.get(1).getAddress());
@@ -197,18 +203,75 @@ public class FireStationDaoTest {
 	}
 	
 	@Test
-	void givenStation12345_deleteByStation_suppressesTwoStations()
+	void givenMissingFireStation_delete_returnsFalse()
+	{
+		// GIVEN
+		// Empty list
+		// WHEN
+		boolean result = dao.delete("does not exist", -1);
+		ArrayList<FireStation> listResult = dao.getAll();
+		// THEN
+		assertEquals(false, result);
+		assertEquals(0, listResult.size());
+	}
+	
+	@Test
+	void givenStation12345_deleteByStation_returnsTrue()
 	{
 		// GIVEN
 		ArrayList<FireStation> listGiven = new ArrayList<FireStation>(Arrays.asList(s1, s2, s3, s4));
 		dao.set(listGiven);
 		// WHEN
-		dao.deleteByStation(12345);
+		boolean result = dao.deleteByStation(12345);
 		ArrayList<FireStation> listResult = dao.getAll();
 		// THEN
+		assertEquals(true, result);
 		assertEquals(2, listResult.size());
 		assertEquals("address2", listResult.get(0).getAddress());
 		assertEquals("address4", listResult.get(1).getAddress());
+	}	
+
+	@Test
+	void givenMissingFireStation_deleteByStation_returnsFalse()
+	{
+		// GIVEN
+		// Empty list
+		// WHEN
+		boolean result = dao.deleteByStation(-1);
+		ArrayList<FireStation> listResult = dao.getAll();
+		// THEN
+		assertEquals(false, result);
+		assertEquals(0, listResult.size());
+	}	
+
+	@Test
+	void givenCommonAddress_deleteByAddress_returnsTrue()
+	{
+		// GIVEN
+		ArrayList<FireStation> listGiven = new ArrayList<FireStation>(Arrays.asList(s4, s5, s6, s7, s8));
+		dao.set(listGiven);
+		// WHEN
+		boolean result = dao.deleteByAddress("COMMON");
+		ArrayList<FireStation> listResult = dao.getAll();
+		// THEN
+		assertEquals(true, result);
+		assertEquals(3, listResult.size());
+		assertEquals("address4", listResult.get(0).getAddress());
+		assertEquals("address6", listResult.get(1).getAddress());
+		assertEquals("address8", listResult.get(2).getAddress());
+	}	
+
+	@Test
+	void givenMissingFireStation_deleteByAddress_returnsFalse()
+	{
+		// GIVEN
+		// Empty list
+		// WHEN
+		boolean result = dao.deleteByAddress("does not exist");
+		ArrayList<FireStation> listResult = dao.getAll();
+		// THEN
+		assertEquals(false, result);
+		assertEquals(0, listResult.size());
 	}	
 
 }
