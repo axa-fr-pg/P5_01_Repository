@@ -62,4 +62,21 @@ public class FireStationEndpointIT {
 		          .andDo(MockMvcResultHandlers.print());
 	}
 
+	@Test
+	public void givenFireStation_whenPutFireStationEndpoint_thenReturnsStatusOk() throws Exception {	
+		// GIVEN
+		String j1 = objectMapper.writeValueAsString(s1);
+		// WHEN & THEN
+		
+		mockMvc.perform(MockMvcRequestBuilders
+				  .put("/firestation")
+				  .contentType(MediaType.APPLICATION_JSON)
+		          .content(j1)
+		          .accept(MediaType.APPLICATION_JSON))
+		          .andExpect(status().isOk())
+		          .andExpect(jsonPath("$.address").value("a1")) 
+		          .andExpect(jsonPath("$.station").value(1))
+		          .andDo(MockMvcResultHandlers.print());
+	}
+
 }

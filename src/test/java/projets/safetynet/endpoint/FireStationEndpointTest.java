@@ -10,10 +10,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.ResponseEntity;
 
 import projets.safetynet.model.core.FireStation;
-import projets.safetynet.model.core.Person;
 import projets.safetynet.model.url.FireStationResponse;
 import projets.safetynet.service.DataCreateService;
+import projets.safetynet.service.DataDeleteService;
 import projets.safetynet.service.DataReadService;
+import projets.safetynet.service.DataUpdateService;
 
 @SpringBootTest
 public class FireStationEndpointTest {
@@ -26,6 +27,12 @@ public class FireStationEndpointTest {
 
     @MockBean
     private DataCreateService createService;
+
+    @MockBean
+    private DataUpdateService updateService;
+
+    @MockBean
+    private DataDeleteService deleteService;
 
     @Test
     public void givenResponse_whenGetFireStationResponse_thenReturnsExpectedResponse()
@@ -47,6 +54,18 @@ public class FireStationEndpointTest {
     	when(createService.postFireStationRequest(sNew)).thenReturn(sNew);
     	// WHEN
     	ResponseEntity<FireStation> response = endpoint.postFireStationRequest(sNew);
+    	// THEN
+    	assertEquals(sNew, response.getBody());
+    }
+
+    @Test
+    public void givenNewFireStation_whenPutFireStationRequest_thenFireStationIsUpdated()
+    {
+    	// GIVEN
+		FireStation sNew = new FireStation();
+    	when(updateService.putFireStationRequest(sNew)).thenReturn(sNew);
+    	// WHEN
+    	ResponseEntity<FireStation> response = endpoint.putFireStationRequest(sNew);
     	// THEN
     	assertEquals(sNew, response.getBody());
     }
