@@ -69,4 +69,19 @@ public class MedicalRecordEndpointIT {
 				.andDo(MockMvcResultHandlers.print());
 	}
 
+	@Test
+	public void givenMedicalRecord_whenDeleteMedicalRecordEndpoint_thenReturnsStatusAccepted() throws Exception {	
+		// GIVEN
+		String j1 = objectMapper.writeValueAsString(m1);
+		// WHEN & THEN
+		
+		mockMvc.perform(MockMvcRequestBuilders
+				.delete("/medicalRecord")
+				.contentType(MediaType.APPLICATION_JSON)
+		        .content(j1)
+		        .accept(MediaType.APPLICATION_JSON))
+		        .andExpect(status().isAccepted())
+        		.andDo(MockMvcResultHandlers.print());
+	}
+
 }

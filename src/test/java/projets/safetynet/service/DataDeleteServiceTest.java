@@ -119,4 +119,16 @@ public class DataDeleteServiceTest {
 		});
 	}
 
+	@Test
+	void givenExistingM1_deleteMedicalRecordRequest_returnsTrue()
+	{
+		// GIVEN
+		// Test data prepared in initTestData
+		PersonRequest request = new PersonRequest("f1", "l1");
+		// WHEN
+		boolean response = service.deleteMedicalRecordRequest(request);
+		// THEN
+		assertEquals(true, response);
+	}
+
 }

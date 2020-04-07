@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 
 import projets.safetynet.model.core.MedicalRecord;
 import projets.safetynet.model.core.Person;
+import projets.safetynet.model.url.PersonRequest;
 import projets.safetynet.service.DataCreateService;
 import projets.safetynet.service.DataDeleteService;
 import projets.safetynet.service.DataUpdateService;
@@ -54,5 +55,16 @@ public class MedicalRecordEndpointTest {
     	assertEquals(mExpected, response.getBody());
     }
 
+    @Test
+    public void givenExistingMedicalRecord_whenDeleteMedicalRecordRequest_thenMedicalRecordIsDeleted()
+    {
+		PersonRequest r = new PersonRequest();
+    	// GIVEN
+    	when(deleteService.deleteMedicalRecordRequest(r)).thenReturn(true);
+    	// WHEN
+    	ResponseEntity<Boolean> response = endpoint.deleteMedicalRecordRequest(r);
+    	// THEN
+    	assertEquals(true, response.getBody());
+    }
 
 }

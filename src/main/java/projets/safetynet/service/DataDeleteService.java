@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import projets.safetynet.dao.FireStationDao;
+import projets.safetynet.dao.MedicalRecordDao;
 import projets.safetynet.dao.PersonDao;
 import projets.safetynet.dao.PersonNotFoundException;
 import projets.safetynet.model.core.FireStation;
@@ -22,6 +23,9 @@ public class DataDeleteService {
 
 	@Autowired
 	private FireStationDao stationDao;
+
+	@Autowired
+	private MedicalRecordDao recordDao;
 
 	@Autowired
 	private ObjectMapper objectMapper;
@@ -51,6 +55,12 @@ public class DataDeleteService {
 		}
         LogService.logger.error("deleteFireStationRequest() throws InvalidDeleteFireStationRequestException");
        	throw new InvalidDeleteFireStationRequestException();
+	}
+
+	public boolean deleteMedicalRecordRequest(PersonRequest request) {
+        LogService.logger.info("deleteMedicalRecordRequest() " + request.getFirstName() + " " + request.getLastName());
+		boolean result = recordDao.delete(request.getFirstName(), request.getLastName());
+		return result;
 	}
 
 }
