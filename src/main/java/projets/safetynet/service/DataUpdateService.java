@@ -5,9 +5,12 @@ import org.springframework.stereotype.Service;
 
 import projets.safetynet.dao.FireStationDao;
 import projets.safetynet.dao.FireStationNotFoundException;
+import projets.safetynet.dao.MedicalRecordDao;
+import projets.safetynet.dao.MedicalRecordNotFoundException;
 import projets.safetynet.dao.PersonDao;
 import projets.safetynet.dao.PersonNotFoundException;
 import projets.safetynet.model.core.FireStation;
+import projets.safetynet.model.core.MedicalRecord;
 import projets.safetynet.model.core.Person;
 
 @Service
@@ -18,6 +21,9 @@ public class DataUpdateService {
 
 	@Autowired
 	private FireStationDao stationDao;
+
+	@Autowired
+	private MedicalRecordDao recordDao;
 
 	public Person putPersonRequest(Person pExpected) {
         LogService.logger.info("putPersonRequest() " + pExpected.getFirstName() + " " + pExpected.getLastName());
@@ -39,6 +45,18 @@ public class DataUpdateService {
 			return sChanged;
 		} catch (FireStationNotFoundException e) {
 	        LogService.logger.error("putFireStationRequest() throws FireStationNotFoundException");
+	        return null;
+		}
+	}
+
+	public MedicalRecord putMedicalRecordRequest(MedicalRecord mExpected) {
+        LogService.logger.info("putMedicalRecordRequest() " + mExpected.getFirstName() + " " + mExpected.getLastName());
+		try {
+			MedicalRecord mChanged = recordDao.update(mExpected);
+	        LogService.logger.info("putMedicalRecordRequest() successful");
+			return mChanged;
+		} catch (MedicalRecordNotFoundException e) {
+	        LogService.logger.error("putMedicalRecordRequest() throws MedicalRecordNotFoundException");
 	        return null;
 		}
 	}

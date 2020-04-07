@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import org.springframework.stereotype.Repository;
 
 import projets.safetynet.model.core.MedicalRecord;
-import projets.safetynet.model.core.Person;
 import projets.safetynet.service.LogService;
 
 @Repository
@@ -59,14 +58,14 @@ public class MedicalRecordDao {
 		throw new MedicalRecordNotFoundException();
 	}
 
-	public void update(MedicalRecord mNew) throws MedicalRecordNotFoundException {
+	public MedicalRecord update(MedicalRecord mNew) throws MedicalRecordNotFoundException {
 		LogService.logger.debug("update() " + mNew.getFirstName() + " & " + mNew.getLastName());
 		for (MedicalRecord m: records) {
 			if (m.getFirstName().equals(mNew.getFirstName()) && m.getLastName().equals(mNew.getLastName())) {
 				m.setBirthdate(mNew.getBirthdate());
 				m.setMedications(mNew.getMedications().clone());
 				m.setAllergies(mNew.getAllergies().clone());
-				return;
+				return mNew;
 			}
 		}
 		LogService.logger.error("update() returns MedicalRecordNotFoundException");
