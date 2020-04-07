@@ -12,6 +12,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import projets.safetynet.model.url.ChildAlertResponse;
 import projets.safetynet.service.DataReadService;
+import projets.safetynet.service.ServerDataCorruptedException;
 
 @SpringBootTest
 public class ChildAlertEndpointTest {
@@ -23,7 +24,7 @@ public class ChildAlertEndpointTest {
     private DataReadService service;
     
     @Test
-    public void givenResponse_whenGetChildAlertResponse_thenReturnsExpectedResponse()
+    public void givenResponse_whenGetChildAlertResponse_thenReturnsExpectedResponse() throws ServerDataCorruptedException
     {
     	// GIVEN
     	ArrayList<ChildAlertResponse> expected = new ArrayList<ChildAlertResponse>();

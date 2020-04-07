@@ -10,8 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import projets.safetynet.dao.PersonNotFoundException;
 import projets.safetynet.model.url.PersonInfoResponse;
 import projets.safetynet.service.DataReadService;
+import projets.safetynet.service.ServerDataCorruptedException;
 
 @SpringBootTest
 public class PersonInfoEndpointTest {
@@ -23,7 +25,7 @@ public class PersonInfoEndpointTest {
     private DataReadService service;
 
     @Test
-    public void givenResponse_whenGetPersonInfoResponse_thenReturnsExpectedResponse()
+    public void givenResponse_whenGetPersonInfoResponse_thenReturnsExpectedResponse() throws Exception
     {
     	// GIVEN
     	ArrayList<PersonInfoResponse> expected = new ArrayList<PersonInfoResponse>();

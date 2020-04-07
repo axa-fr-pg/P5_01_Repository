@@ -9,10 +9,14 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import projets.safetynet.dao.FireStationDao;
+import projets.safetynet.dao.FireStationNotFoundException;
 import projets.safetynet.dao.MedicalRecordDao;
+import projets.safetynet.dao.MedicalRecordNotFoundException;
+import projets.safetynet.dao.MultipleFireStationWithSameValuesException;
+import projets.safetynet.dao.MultipleMedicalRecordWithSameNameException;
+import projets.safetynet.dao.MultiplePersonWithSameNameException;
 import projets.safetynet.dao.PersonDao;
 import projets.safetynet.dao.PersonNotFoundException;
-import projets.safetynet.model.core.FireStation;
 import projets.safetynet.model.url.PersonRequest;
 
 @Service
@@ -30,14 +34,20 @@ public class DataDeleteService {
 	@Autowired
 	private ObjectMapper objectMapper;
 
-	public boolean deletePersonRequest(PersonRequest request) {
+	public boolean deletePersonRequest(PersonRequest request) throws PersonNotFoundException, ServerDataCorruptedException {
         LogService.logger.debug("deletePersonRequest() " + request.getFirstName() + " " + request.getLastName());
-		boolean result = personDao.delete(request.getFirstName(), request.getLastName());
+		boolean result;
+		try {
+			result = personDao.delete(request.getFirstName(), request.getLastName());
+		} catch (MultiplePersonWithSameNameException e) {
+			LogService.logger.error("deletePersonRequest() throws ServerDataCorruptedException");
+			throw new ServerDataCorruptedException();
+		}
 		return result;
 	}
 
 	public boolean deleteFireStationRequest(String request) throws JsonMappingException,
-			JsonProcessingException, InvalidDeleteFireStationRequestException 
+			JsonProcessingException, InvalidDeleteFireStationRequestException, FireStationNotFoundException, ServerDataCorruptedException 
 	{
         LogService.logger.debug("deleteFireStationRequest() " + request);
         JsonNode givenValues = objectMapper.readTree(request);
@@ -47,7 +57,12 @@ public class DataDeleteService {
         	String address = givenAddress.asText();
         	if (givenStation == null) return stationDao.deleteByAddress(address);
         	long station = givenStation.asLong();
-        	return stationDao.delete(address, station);
+        	try {
+				return stationDao.delete(address, station);
+			} catch (MultipleFireStationWithSameValuesException e) {
+				LogService.logger.error("deleteFireStationRequest() throws ServerDataCorruptedException");
+				throw new ServerDataCorruptedException();
+			}
         }
 		if (givenStation != null) {
 			long station = givenStation.asLong();
@@ -57,9 +72,16 @@ public class DataDeleteService {
        	throw new InvalidDeleteFireStationRequestException();
 	}
 
-	public boolean deleteMedicalRecordRequest(PersonRequest request) {
+	public boolean deleteMedicalRecordRequest(PersonRequest request) 
+			throws MedicalRecordNotFoundException, ServerDataCorruptedException {
         LogService.logger.debug("deleteMedicalRecordRequest() " + request.getFirstName() + " " + request.getLastName());
-		boolean result = recordDao.delete(request.getFirstName(), request.getLastName());
+		boolean result;
+		try {
+			result = recordDao.delete(request.getFirstName(), request.getLastName());
+		} catch (MultipleMedicalRecordWithSameNameException e) {
+			LogService.logger.error("deleteMedicalRecordRequest() throws ServerDataCorruptedException");
+			throw new ServerDataCorruptedException();
+		}
 		return result;
 	}
 

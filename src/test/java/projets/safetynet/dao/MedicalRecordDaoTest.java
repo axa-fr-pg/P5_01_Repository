@@ -17,7 +17,7 @@ import projets.safetynet.model.core.MedicalRecord;
 import projets.safetynet.model.core.Person;
 
 @SpringBootTest
-public class MedicalRecordTest {
+public class MedicalRecordDaoTest {
 	
 	@Autowired
 	private MedicalRecordDao dao;
@@ -69,18 +69,14 @@ public class MedicalRecordTest {
 	}
 
 	@Test
-	void givenExistingM2_getM2_returnsM2()
+	void givenExistingM2_getM2_returnsM2() throws Exception
 	{
 		// GIVEN
 		ArrayList<MedicalRecord> listGiven = new ArrayList<MedicalRecord>(Arrays.asList(m1, m2, m3));
 		dao.set(listGiven);
 		// WHEN
 		MedicalRecord m = null;
-		try {
-			m = dao.get("firstName2", "lastName2");
-		} catch (MedicalRecordNotFoundException e) {
-			e.printStackTrace();
-		}
+		m = dao.get("firstName2", "lastName2");
 		// THEN
 		assertEquals("firstName2", m.getFirstName());
 		assertEquals("lastName2", m.getLastName());
@@ -101,16 +97,12 @@ public class MedicalRecordTest {
 	}
 	
 	@Test
-	void saveM2_addsM2()
+	void saveM2_addsM2() throws Exception
 	{
 		// GIVEN
 		// Empty list
 		// WHEN
-		try {
-			dao.save(m2);
-		} catch (MultipleMedicalRecordWithSameNameException e) {
-			e.printStackTrace();
-		}
+		dao.save(m2);
 		ArrayList<MedicalRecord> listResult = dao.getAll();
 		// THEN
 		assertEquals(1, listResult.size());
@@ -122,7 +114,20 @@ public class MedicalRecordTest {
 	}
 	
 	@Test
-	void updateM2_changesM2()
+	void givenExistingRecordWithSameName_saveM1_throwsDuplicateMedicalRecordCreationException()
+	{
+		// GIVEN
+		ArrayList<MedicalRecord> listGiven = new ArrayList<MedicalRecord>(Arrays.asList(m2));
+		dao.set(listGiven);
+		// WHEN
+		assertThrows(DuplicateMedicalRecordCreationException.class, () -> {
+			dao.save(m2);
+		});
+	}
+
+
+	@Test
+	void updateM2_changesM2() throws Exception
 	{
 		// GIVEN
 		ArrayList<MedicalRecord> listGiven = new ArrayList<MedicalRecord>(Arrays.asList(m1, m2, m3));
@@ -132,17 +137,9 @@ public class MedicalRecordTest {
 		String[] a2New = new String[] {"a4a", "a4b", "a4c", "a4d"};
 		Date d2New = Date.valueOf("4004-04-04");
 		MedicalRecord record2New = new MedicalRecord ("firstName2","lastName2",d2New, m2New, a2New);
-		try {
-			dao.update(record2New);
-		} catch (MedicalRecordNotFoundException e) {
-			e.printStackTrace();
-		}
+		dao.update(record2New);
 		MedicalRecord m = null;
-		try {
-			m = dao.get("firstName2","lastName2");
-		} catch (MedicalRecordNotFoundException e) {
-			e.printStackTrace();
-		}
+		m = dao.get("firstName2","lastName2");
 		// THEN
 		assertEquals("firstName2", m.getFirstName());
 		assertEquals("lastName2", m.getLastName());
@@ -163,7 +160,7 @@ public class MedicalRecordTest {
 	}
 
 	@Test
-	void givenM2_deleteM2_returnsTrue()
+	void givenM2_deleteM2_returnsTrue() throws Exception
 	{
 		// GIVEN
 		ArrayList<MedicalRecord> listGiven = new ArrayList<MedicalRecord>(Arrays.asList(m1, m2, m3));
@@ -179,16 +176,14 @@ public class MedicalRecordTest {
 	}
 
 	@Test
-	void givenMissingMedicalRecord_delete_returnsFalse()
+	void givenMissingMedicalRecord_delete_throwsMedicalRecordNotFoundException()
 	{
 		// GIVEN
 		// Empty list
 		// WHEN
-		boolean result = dao.delete("does not", "exist");
-		ArrayList<MedicalRecord> listResult = dao.getAll();
-		// THEN
-		assertEquals(false, result);
-		assertEquals(0, listResult.size());
+		assertThrows(MedicalRecordNotFoundException.class, () -> {
+			dao.delete("does not", "exist");
+		});
 	}
 	
 }

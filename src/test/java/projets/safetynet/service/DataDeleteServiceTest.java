@@ -16,7 +16,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import projets.safetynet.dao.FireStationDao;
 import projets.safetynet.dao.MedicalRecordDao;
+import projets.safetynet.dao.MedicalRecordNotFoundException;
+import projets.safetynet.dao.MultiplePersonWithSameNameException;
 import projets.safetynet.dao.PersonDao;
+import projets.safetynet.dao.PersonNotFoundException;
 import projets.safetynet.model.core.FireStation;
 import projets.safetynet.model.core.MedicalRecord;
 import projets.safetynet.model.core.Person;
@@ -58,7 +61,7 @@ public class DataDeleteServiceTest {
 }
 
 	@Test
-	void givenExistingP1_deletePersonRequest_returnsTrue()
+	void givenExistingP1_deletePersonRequest_returnsTrue() throws Exception
 	{
 		// GIVEN
 		// Test data prepared in initTestData
@@ -120,7 +123,7 @@ public class DataDeleteServiceTest {
 	}
 
 	@Test
-	void givenExistingM1_deleteMedicalRecordRequest_returnsTrue()
+	void givenExistingM1_deleteMedicalRecordRequest_returnsTrue() throws Exception
 	{
 		// GIVEN
 		// Test data prepared in initTestData

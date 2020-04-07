@@ -113,7 +113,7 @@ public class FireStationDaoTest {
 	}
 
 	@Test
-	void givenNewS3_saveS3_addsS3()
+	void givenNewS3_saveS3_addsS3() throws Exception
 	{
 		// GIVEN
 		// Empty list
@@ -132,13 +132,13 @@ public class FireStationDaoTest {
 	}
 
 	@Test
-	void givenExistingMappingWithSameValues_saveS2_throwsMultipleFireStationWithSameValuesException()
+	void givenExistingMappingWithSameValues_saveS2_throwsDuplicateFireStationCreationException()
 	{
 		// GIVEN
 		ArrayList<FireStation> listGiven = new ArrayList<FireStation>(Arrays.asList(s2));
 		dao.set(listGiven);
 		// WHEN
-		assertThrows(MultipleFireStationWithSameValuesException.class, () -> {
+		assertThrows(DuplicateFireStationCreationException.class, () -> {
 			dao.save(s2);
 		});
 	}
@@ -186,7 +186,7 @@ public class FireStationDaoTest {
 	}
 
 	@Test
-	void givenS2_deleteS2_returnsTrue()
+	void givenS2_deleteS2_returnsTrue() throws Exception
 	{
 		// GIVEN
 		ArrayList<FireStation> listGiven = new ArrayList<FireStation>(Arrays.asList(s1, s2, s3, s4));
@@ -203,16 +203,14 @@ public class FireStationDaoTest {
 	}
 	
 	@Test
-	void givenMissingFireStation_delete_returnsFalse()
+	void givenMissingFireStation_delete_throwsFireStationNotFoundException()
 	{
 		// GIVEN
 		// Empty list
 		// WHEN
-		boolean result = dao.delete("does not exist", -1);
-		ArrayList<FireStation> listResult = dao.getAll();
-		// THEN
-		assertEquals(false, result);
-		assertEquals(0, listResult.size());
+		assertThrows(FireStationNotFoundException.class, () -> {
+			dao.delete("does not exist", -1);
+		});
 	}
 	
 	@Test

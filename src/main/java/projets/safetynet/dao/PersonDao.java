@@ -86,7 +86,7 @@ public class PersonDao {
 		return result;
 	}
 
-	public Person save(Person p) throws MultiplePersonWithSameNameException
+	public Person save(Person p) throws DuplicatePersonCreationException, MultiplePersonWithSameNameException
     {
 		LogService.logger.debug("save() " + p.getFirstName() + " & " + p.getLastName());
 		try {
@@ -98,8 +98,8 @@ public class PersonDao {
 			LogService.logger.debug("save() successful");
 	    	return pNew;
 		}
-		LogService.logger.error("save() returns MultiplePersonWithSameNameException");
-		throw new MultiplePersonWithSameNameException();
+		LogService.logger.error("save() returns DuplicatePersonCreationException");
+		throw new DuplicatePersonCreationException();
     }
 
     public Person update(Person pNew) throws PersonNotFoundException
@@ -120,9 +120,10 @@ public class PersonDao {
     	throw new PersonNotFoundException();
     }
 
-    public boolean delete(String firstName, String lastName)
+    public boolean delete(String firstName, String lastName) throws PersonNotFoundException, MultiplePersonWithSameNameException
     {
 		LogService.logger.debug("delete() " + firstName + " & " + lastName);
+		get(firstName, lastName);
 		boolean result = persons.removeIf( person -> person.getFirstName().equals(firstName) &&
     			person.getLastName().equals(lastName) );
 		LogService.logger.debug("delete() "+result);

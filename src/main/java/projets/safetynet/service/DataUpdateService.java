@@ -25,40 +25,25 @@ public class DataUpdateService {
 	@Autowired
 	private MedicalRecordDao recordDao;
 
-	public Person putPersonRequest(Person pExpected) {
+	public Person putPersonRequest(Person pExpected) throws PersonNotFoundException {
         LogService.logger.debug("putPersonRequest() " + pExpected.getFirstName() + " " + pExpected.getLastName());
-		try {
-			Person pChanged = personDao.update(pExpected);
-	        LogService.logger.debug("putPersonRequest() successful");
-			return pChanged;
-		} catch (PersonNotFoundException e) {
-	        LogService.logger.error("putPersonRequest() throws PersonNotFoundException");
-	        return null;
-		}
+		Person pChanged = personDao.update(pExpected);
+        LogService.logger.debug("putPersonRequest() successful");
+		return pChanged;
 	}
 
-	public FireStation putFireStationRequest(FireStation sExpected) {
+	public FireStation putFireStationRequest(FireStation sExpected) throws FireStationNotFoundException {
         LogService.logger.debug("putFireStationRequest() " + sExpected.getAddress() + " " + sExpected.getStation());
-		try {
-			FireStation sChanged = stationDao.updateByAddress(sExpected);
-	        LogService.logger.debug("putFireStationRequest() successful");
-			return sChanged;
-		} catch (FireStationNotFoundException e) {
-	        LogService.logger.error("putFireStationRequest() throws FireStationNotFoundException");
-	        return null;
-		}
+		FireStation sChanged = stationDao.updateByAddress(sExpected);
+        LogService.logger.debug("putFireStationRequest() successful");
+		return sChanged;
 	}
 
-	public MedicalRecord putMedicalRecordRequest(MedicalRecord mExpected) {
+	public MedicalRecord putMedicalRecordRequest(MedicalRecord mExpected) throws MedicalRecordNotFoundException {
         LogService.logger.debug("putMedicalRecordRequest() " + mExpected.getFirstName() + " " + mExpected.getLastName());
-		try {
-			MedicalRecord mChanged = recordDao.update(mExpected);
-	        LogService.logger.debug("putMedicalRecordRequest() successful");
-			return mChanged;
-		} catch (MedicalRecordNotFoundException e) {
-	        LogService.logger.error("putMedicalRecordRequest() throws MedicalRecordNotFoundException");
-	        return null;
-		}
+		MedicalRecord mChanged = recordDao.update(mExpected);
+        LogService.logger.debug("putMedicalRecordRequest() successful");
+		return mChanged;
 	}
 
 }

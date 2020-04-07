@@ -1,6 +1,7 @@
 package projets.safetynet.service;
 
 import java.io.File;
+import java.io.IOException;
 
 import javax.annotation.PostConstruct;
 
@@ -30,7 +31,7 @@ public class FileService {
 	private MedicalRecordDao medicalRecordDao;
 	
 	@PostConstruct
-	void loadData()
+	public void loadData() throws ServerDataCorruptedException
 	{
 		Data data = getDataFromFile(getJsonFileName());
 		if (personDao==null || fireStationDao==null || medicalRecordDao==null)
@@ -53,14 +54,15 @@ public class FileService {
     	else return "src/test/resources/test.json";
 	}
 
-	public Data getDataFromFile(String file) {
+	public Data getDataFromFile(String file) throws ServerDataCorruptedException {
 		Data data = null;
 		LogService.logger.info("getDataFromFile() " + file);
 		try {
 			data = objectMapper.readValue(new File(file), Data.class);
 			LogService.logger.debug("getDataFromFile() successful");
-		} catch (Exception e) {
-			LogService.logger.error("getDataFromFile() could not read file : " + e);
+		} catch (IOException e) {
+			LogService.logger.error("getDataFromFile() throws ServerDataCorruptedException");
+			throw new ServerDataCorruptedException();
 		}
 		return data;
 	}

@@ -53,7 +53,7 @@ public class DataCreateServiceTest {
 	}
 
 	@Test
-	void givenNewP1_postPersonRequest_savesP1()
+	void givenNewP1_postPersonRequest_savesP1() throws Exception
 	{
 		// GIVEN
 		// Test data prepared in initTestData
@@ -65,7 +65,7 @@ public class DataCreateServiceTest {
 	}
 
 	@Test
-	void givenNewS1_postFireStationRequest_savesS1()
+	void givenNewS1_postFireStationRequest_savesS1() throws Exception
 	{
 		// GIVEN
 		// Test data prepared in initTestData
@@ -77,7 +77,7 @@ public class DataCreateServiceTest {
 	}
 
 	@Test
-	void givenNewM1_postMedicalRecordRequest_savesM1()
+	void givenNewM1_postMedicalRecordRequest_savesM1() throws Exception
 	{
 		// GIVEN
 		// Test data prepared in initTestData

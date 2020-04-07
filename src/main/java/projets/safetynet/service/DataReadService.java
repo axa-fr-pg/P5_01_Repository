@@ -9,6 +9,7 @@ import projets.safetynet.dao.FireStationDao;
 import projets.safetynet.dao.FireStationNotFoundException;
 import projets.safetynet.dao.MedicalRecordDao;
 import projets.safetynet.dao.MedicalRecordNotFoundException;
+import projets.safetynet.dao.MultipleMedicalRecordWithSameNameException;
 import projets.safetynet.dao.MultiplePersonWithSameNameException;
 import projets.safetynet.dao.PersonDao;
 import projets.safetynet.dao.PersonNotFoundException;
@@ -35,7 +36,7 @@ public class DataReadService {
 	@Autowired
 	private MedicalRecordDao recordDao;
 
-	public FireStationResponse getFireStationResponse(long station) {
+	public FireStationResponse getFireStationResponse(long station) throws ServerDataCorruptedException {
 	
         LogService.logger.debug("getFireStationResponse() " + station);
         ArrayList<FireStationPersonResponse> responsePersons = new ArrayList<FireStationPersonResponse>();
@@ -57,8 +58,9 @@ public class DataReadService {
 					age = r.getAge();
 					if (age < 19) children ++;
 					else adults ++;
-				} catch (MedicalRecordNotFoundException e) {
-				       LogService.logger.error("getFireStationResponse() throws MedicalRecordNotFoundException"); 
+				} catch (MedicalRecordNotFoundException | MultipleMedicalRecordWithSameNameException e ) {
+				       LogService.logger.error("getFireStationResponse() throws ServerDataCorruptedException"); 
+				       throw new ServerDataCorruptedException();
 				}
 			}
 		}
@@ -69,7 +71,7 @@ public class DataReadService {
 		return response;
 	}
 
-    public ArrayList<ChildAlertResponse> getChildAlertResponse(String address) {
+    public ArrayList<ChildAlertResponse> getChildAlertResponse(String address) throws ServerDataCorruptedException {
         LogService.logger.debug("getChildAlertResponse() " + address);
         ArrayList<ChildAlertResponse> response = new ArrayList<ChildAlertResponse>();
         ArrayList<Person> persons = personDao.getByAddress(address);
@@ -86,8 +88,9 @@ public class DataReadService {
 				}
 				ChildAlertResponse c = new ChildAlertResponse(p.getFirstName(), p.getLastName(), m.getAge(), mates);
 				response.add(c);
-			} catch (MedicalRecordNotFoundException e) {
-		        LogService.logger.error("getChildAlertResponse() throws MedicalRecordNotFoundException");
+			} catch (MedicalRecordNotFoundException | MultipleMedicalRecordWithSameNameException e) {
+		        LogService.logger.error("getChildAlertResponse() throws ServerDataCorruptedException");
+		        throw new ServerDataCorruptedException();
 			}
         }
         LogService.logger.debug("getChildAlertResponse() returns " + response.size() + " children");
@@ -107,16 +110,11 @@ public class DataReadService {
 		return response;
 	}
 
-	public FireResponse getFireResponse(String address) {
+	public FireResponse getFireResponse(String address) throws FireStationNotFoundException, ServerDataCorruptedException {
         LogService.logger.debug("getFireResponse() " + address);
         FireResponse response = new FireResponse();
-        try {
-            FireStation station = stationDao.getByAddress(address);
-            response.setStation(station.getStation());
-        } catch (FireStationNotFoundException e) {
-	        LogService.logger.error("getFireResponse() throws FireStationNotFoundException");
-	        return null;
-        }
+        FireStation station = stationDao.getByAddress(address);
+        response.setStation(station.getStation());
         ArrayList<FirePersonResponse> inhabitants = new ArrayList<FirePersonResponse>();
         ArrayList<Person> persons = personDao.getByAddress(address);
         for (Person p : persons) {
@@ -125,8 +123,9 @@ public class DataReadService {
 				FirePersonResponse i = new FirePersonResponse( p.getFirstName() + " " + p.getLastName(),
 						p.getPhone(), m.getAge(), m.getMedications(), m.getAllergies());
 				inhabitants.add(i);
-			} catch (MedicalRecordNotFoundException e) {
-		        LogService.logger.error("getFireResponse() throws MedicalRecordNotFoundException");
+			} catch (MedicalRecordNotFoundException | MultipleMedicalRecordWithSameNameException e) {
+		        LogService.logger.error("getFireResponse() throws ServerDataCorruptedException");
+		        throw new ServerDataCorruptedException();
 			}
         }
         response.setInhabitants(inhabitants);
@@ -134,7 +133,7 @@ public class DataReadService {
         return response;
 	}
 
-	public ArrayList<FloodAddressResponse> getFloodByStationResponse(ArrayList<Long> stations) {
+	public ArrayList<FloodAddressResponse> getFloodByStationResponse(ArrayList<Long> stations) throws FireStationNotFoundException, ServerDataCorruptedException {
         LogService.logger.debug("getFloodByStationResponse() " + stations.size() + " stations");
         ArrayList<FloodAddressResponse> response = new ArrayList<FloodAddressResponse>();
 		for (long s : stations) {
@@ -149,7 +148,7 @@ public class DataReadService {
         return response;
 	}
 
-	public ArrayList<PersonInfoResponse> getPersonInfoResponse(String firstName, String lastName) {
+	public ArrayList<PersonInfoResponse> getPersonInfoResponse(String firstName, String lastName) throws PersonNotFoundException, ServerDataCorruptedException {
 		
 		LogService.logger.debug("getPersonInfoResponse() FirstName=" + firstName + " LastName=" + lastName);
         ArrayList<Person> persons = null;
@@ -164,10 +163,9 @@ public class DataReadService {
 				persons = new ArrayList<Person>();
 				Person p = personDao.get(firstName, lastName);
 				persons.add(p);
-			} catch (PersonNotFoundException e) {
-		        LogService.logger.error("getPersonInfoResponse() throws PersonNotFoundException");
 			} catch (MultiplePersonWithSameNameException e) {
-		        LogService.logger.error("getPersonInfoResponse() throws MultiplePersonWithSameNameException");
+		        LogService.logger.error("getPersonInfoResponse() throws ServerDataCorruptedException");
+		        throw new ServerDataCorruptedException();
 			}
 		}
 		
@@ -179,8 +177,9 @@ public class DataReadService {
         		PersonInfoResponse rp = new PersonInfoResponse(p.getFirstName() + " " + p.getLastName(),
         				p.getAddress(), r.getAge(), p.getEmail(), r.getMedications(), r.getAllergies());
                 responsePersons.add(rp);
-    		} catch (MedicalRecordNotFoundException e) {
-    		       LogService.logger.error("getPersonInfoResponse() throws MedicalRecordNotFoundException"); 
+    		} catch (MedicalRecordNotFoundException | MultipleMedicalRecordWithSameNameException e) {
+    		       LogService.logger.error("getPersonInfoResponse() throws ServerDataCorruptedException");
+    		       throw new ServerDataCorruptedException();
     		}
         }
         LogService.logger.debug("getPersonInfoResponse() successful");

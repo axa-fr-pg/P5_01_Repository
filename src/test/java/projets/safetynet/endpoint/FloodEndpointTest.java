@@ -11,9 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import projets.safetynet.dao.FireStationNotFoundException;
 import projets.safetynet.model.url.FireResponse;
 import projets.safetynet.model.url.FloodAddressResponse;
 import projets.safetynet.service.DataReadService;
+import projets.safetynet.service.ServerDataCorruptedException;
 
 @SpringBootTest
 public class FloodEndpointTest {
@@ -25,7 +27,7 @@ public class FloodEndpointTest {
     private DataReadService service;
 
     @Test
-    public void givenResponse_whenGetFloodByStationResponse_thenReturnsExpectedResponse()
+    public void givenResponse_whenGetFloodByStationResponse_thenReturnsExpectedResponse() throws Exception
     {
     	// GIVEN
 		ArrayList<Long> stations = new ArrayList<Long>(Arrays.asList(1L, 2L, 3L, 4L, 5L));

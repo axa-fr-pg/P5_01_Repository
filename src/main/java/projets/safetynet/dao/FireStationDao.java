@@ -50,7 +50,8 @@ public class FireStationDao {
 		}
     }
 
-    public FireStation save(FireStation s) throws MultipleFireStationWithSameValuesException
+    public FireStation save(FireStation s) throws MultipleFireStationWithSameValuesException,
+    	DuplicateFireStationCreationException
     {
 		LogService.logger.debug("save() " + s.getAddress() + " & " + s.getStation());
 		try {
@@ -61,8 +62,8 @@ public class FireStationDao {
 			LogService.logger.debug("save() successful");
 	    	return sNew;
 		}
-		LogService.logger.error("save() returns MultipleFireStationWithSameValuesException");
-		throw new MultipleFireStationWithSameValuesException();
+		LogService.logger.error("save() returns DuplicateFireStationCreationException");
+		throw new DuplicateFireStationCreationException();
     }
 
 	public ArrayList<FireStation> getAll() {
@@ -101,9 +102,10 @@ public class FireStationDao {
     	throw new FireStationNotFoundException();
 	}
 
-	public boolean delete(String address, long station)
+	public boolean delete(String address, long station) throws FireStationNotFoundException, MultipleFireStationWithSameValuesException
 	{
 		LogService.logger.debug("delete() " + address + " & " + station);
+		get(address, station);
 		boolean result = stations.removeIf( s -> s.getAddress().equals(address)
 				&& s.getStation() == station );
 		LogService.logger.debug("delete() " + result);

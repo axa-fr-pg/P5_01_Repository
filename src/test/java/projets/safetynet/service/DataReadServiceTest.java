@@ -18,6 +18,7 @@ import projets.safetynet.dao.FireStationDao;
 import projets.safetynet.dao.FireStationNotFoundException;
 import projets.safetynet.dao.MedicalRecordDao;
 import projets.safetynet.dao.MedicalRecordNotFoundException;
+import projets.safetynet.dao.MultipleMedicalRecordWithSameNameException;
 import projets.safetynet.dao.PersonDao;
 import projets.safetynet.dao.PersonNotFoundException;
 import projets.safetynet.model.core.FireStation;
@@ -90,7 +91,7 @@ public class DataReadServiceTest {
 	private MedicalRecordDao recordDao;
 
 	@BeforeEach
-	private void initTestData()
+	private void initTestData() throws Exception
 	{
 		when(personDao.getByAddress("familyaddress")).thenReturn(new ArrayList<Person> (Arrays.asList(p2, p4, p6, p8)));
 		when(personDao.getByAddress("a1")).thenReturn(new ArrayList<Person> (Arrays.asList(p2, p4)));
@@ -132,23 +133,19 @@ public class DataReadServiceTest {
 		when(childRecord2.getAllergies()).thenReturn(a4);
 		when(adultRecord3.getAllergies()).thenReturn(a5);
 		
-		try {
-			when(recordDao.get("f2", "l2")).thenReturn(adultRecord1);
-			when(recordDao.get("f4", "l4")).thenReturn(childRecord1);
-			when(recordDao.get("f6", "l6")).thenReturn(adultRecord2);
-			when(recordDao.get("f7", "l7")).thenReturn(adultRecord3);
-			when(recordDao.get("f8", "l8")).thenReturn(childRecord2);
-			when(recordDao.get("firstname", "l11")).thenReturn(adultRecord1);
-			when(recordDao.get("f12", "lastname")).thenReturn(adultRecord2);
-			when(recordDao.get("firstname", "l13")).thenReturn(adultRecord3);
-			when(recordDao.get("f14", "lastname")).thenReturn(childRecord1);
-		} catch (MedicalRecordNotFoundException e) {
-			e.printStackTrace();
-		}
+		when(recordDao.get("f2", "l2")).thenReturn(adultRecord1);
+		when(recordDao.get("f4", "l4")).thenReturn(childRecord1);
+		when(recordDao.get("f6", "l6")).thenReturn(adultRecord2);
+		when(recordDao.get("f7", "l7")).thenReturn(adultRecord3);
+		when(recordDao.get("f8", "l8")).thenReturn(childRecord2);
+		when(recordDao.get("firstname", "l11")).thenReturn(adultRecord1);
+		when(recordDao.get("f12", "lastname")).thenReturn(adultRecord2);
+		when(recordDao.get("firstname", "l13")).thenReturn(adultRecord3);
+		when(recordDao.get("f14", "lastname")).thenReturn(childRecord1);
 	}
 	
 	@Test
-	void givenTestData_getFirestationResponse_returnsCorrectValues()
+	void givenTestData_getFirestationResponse_returnsCorrectValues() throws Exception
 	{
 		// GIVEN
 		// Test data prepared in initTestData
@@ -171,7 +168,7 @@ public class DataReadServiceTest {
 	}
 
 	@Test
-	void givenTestData_getChildAlertResponse_returnsCorrectValues()
+	void givenTestData_getChildAlertResponse_returnsCorrectValues() throws Exception
 	{
 		// GIVEN
 		// Test data prepared in initTestData
@@ -213,7 +210,7 @@ public class DataReadServiceTest {
 	}
 
 	@Test
-	void givenTestData_getFireResponse_returnsCorrectValues()
+	void givenTestData_getFireResponse_returnsCorrectValues() throws Exception
 	{
 		// GIVEN
 		// Test data prepared in initTestData
@@ -239,7 +236,7 @@ public class DataReadServiceTest {
 	}
 
 	@Test
-	void givenTestData_getFloodByStationResponse_returnsCorrectValues()
+	void givenTestData_getFloodByStationResponse_returnsCorrectValues() throws Exception
 	{
 		// GIVEN
 		ArrayList<Long> stations = new ArrayList<Long>(Arrays.asList(1234L, 6789L));
@@ -257,7 +254,7 @@ public class DataReadServiceTest {
 	}
 
 	@Test
-	void givenFirstNameAndLastName_getPersonInfoResponse_returnsTheRightPerson()
+	void givenFirstNameAndLastName_getPersonInfoResponse_returnsTheRightPerson() throws Exception
 	{
 		// GIVEN
 		// Test data prepared in initTestData
@@ -275,7 +272,7 @@ public class DataReadServiceTest {
 	}
 
 	@Test
-	void givenLastName_getPersonInfoResponse_returnsCorrectPersons()
+	void givenLastName_getPersonInfoResponse_returnsCorrectPersons() throws Exception
 	{
 		// GIVEN
 		// Test data prepared in initTestData
@@ -299,7 +296,7 @@ public class DataReadServiceTest {
 	}
 
 	@Test
-	void givenFirstName_getPersonInfoResponse_returnsCorrectPersons() 
+	void givenFirstName_getPersonInfoResponse_returnsCorrectPersons() throws Exception 
 	{
 		// GIVEN
 		// Test data prepared in initTestData

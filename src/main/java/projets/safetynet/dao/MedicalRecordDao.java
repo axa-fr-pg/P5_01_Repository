@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.springframework.stereotype.Repository;
 
 import projets.safetynet.model.core.MedicalRecord;
+import projets.safetynet.model.core.Person;
 import projets.safetynet.service.LogService;
 
 @Repository
@@ -25,7 +26,8 @@ public class MedicalRecordDao {
 		this.records = (ArrayList<MedicalRecord>) records.clone();
 	}
 	
-    public MedicalRecord save(MedicalRecord m) throws MultipleMedicalRecordWithSameNameException
+    public MedicalRecord save(MedicalRecord m) throws MultipleMedicalRecordWithSameNameException,
+    	DuplicateMedicalRecordCreationException
     {
 		LogService.logger.debug("save() " + m.getFirstName() + " & " + m.getLastName());
 		try {
@@ -37,8 +39,8 @@ public class MedicalRecordDao {
 			LogService.logger.debug("save() successful");
 	    	return mNew;
 		}
-		LogService.logger.error("save() returns MultipleMedicalRecordWithSameNameException");
-		throw new MultipleMedicalRecordWithSameNameException();
+		LogService.logger.error("save() returns DuplicateMedicalRecordCreationException");
+		throw new DuplicateMedicalRecordCreationException();
 
     }
 
@@ -47,15 +49,29 @@ public class MedicalRecordDao {
     	return records;
 	}
 
-	public MedicalRecord get(String firstName, String lastName) throws MedicalRecordNotFoundException 
+	public MedicalRecord get(String firstName, String lastName) throws 
+		MedicalRecordNotFoundException, MultipleMedicalRecordWithSameNameException 
 	{
 		LogService.logger.debug("get() " + firstName + " & " + lastName);
+		MedicalRecord result = null;
+		int count = 0;
 		for (MedicalRecord m: records) {
-			if (m.getFirstName().equals(firstName) &&
-					m.getLastName().equals(lastName)) return m;
+			if (m.getFirstName().equals(firstName) && m.getLastName().equals(lastName)) {
+				result = m;
+				count ++;
+			}
 		}
-		LogService.logger.error("get() returns MedicalRecordNotFoundException");
-		throw new MedicalRecordNotFoundException();
+		switch (count) {
+		case 0:
+			LogService.logger.error("get() returns MedicalRecordNotFoundException");
+			throw new MedicalRecordNotFoundException();
+		case 1 :
+			LogService.logger.debug("get() successful");
+			return result;
+		default :
+			LogService.logger.error("get() returns MultipleMedicalRecordWithSameNameException");
+			throw new MultipleMedicalRecordWithSameNameException();
+		}
 	}
 
 	public MedicalRecord update(MedicalRecord mNew) throws MedicalRecordNotFoundException {
@@ -72,8 +88,10 @@ public class MedicalRecordDao {
     	throw new MedicalRecordNotFoundException();
 	}
 
-	public boolean delete(String firstName, String lastName) {
+	public boolean delete(String firstName, String lastName) throws MedicalRecordNotFoundException,
+		MultipleMedicalRecordWithSameNameException {
 		LogService.logger.debug("delete() " + firstName + " & " + lastName);
+		get(firstName, lastName);
 		boolean result = records.removeIf( record -> record.getFirstName().equals(firstName) &&
 				record.getLastName().equals(lastName) );
 		LogService.logger.debug("delete() "+result);

@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import projets.safetynet.model.core.FireStation;
 import projets.safetynet.model.core.MedicalRecord;
 import projets.safetynet.model.core.Person;
+import projets.safetynet.model.url.PersonRequest;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -34,6 +35,7 @@ public class MedicalRecordEndpointIT {
 	String[] allergies1 = new String[] {"allergy 1 a", "allergy 1 b", "allergy 1 c", "allergy 1 d"};
 	Date date1 = Date.valueOf("1001-01-01");
 	private MedicalRecord m1 = new MedicalRecord ("f1","l1",date1,medications1,allergies1);
+	private PersonRequest r1 = new PersonRequest("Roger", "AAAA");
 
 	@Test
 	public void givenMedicalRecord_whenPostMedicalRecordEndpoint_thenReturnsStatusCreated() throws Exception {	
@@ -72,7 +74,7 @@ public class MedicalRecordEndpointIT {
 	@Test
 	public void givenMedicalRecord_whenDeleteMedicalRecordEndpoint_thenReturnsStatusAccepted() throws Exception {	
 		// GIVEN
-		String j1 = objectMapper.writeValueAsString(m1);
+		String j1 = objectMapper.writeValueAsString(r1);
 		// WHEN & THEN
 		
 		mockMvc.perform(MockMvcRequestBuilders

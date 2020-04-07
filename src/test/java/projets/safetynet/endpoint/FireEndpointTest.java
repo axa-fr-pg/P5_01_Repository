@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import projets.safetynet.dao.FireStationNotFoundException;
 import projets.safetynet.model.url.FireResponse;
 import projets.safetynet.service.DataReadService;
+import projets.safetynet.service.ServerDataCorruptedException;
 
 @SpringBootTest
 public class FireEndpointTest {
@@ -21,7 +23,7 @@ public class FireEndpointTest {
     private DataReadService readService;
 
     @Test
-    public void givenResponse_whenGetFireResponse_thenReturnsExpectedResponse()
+    public void givenResponse_whenGetFireResponse_thenReturnsExpectedResponse() throws Exception
     {
     	// GIVEN
     	FireResponse expected = new FireResponse();

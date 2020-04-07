@@ -9,12 +9,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.ResponseEntity;
 
+import projets.safetynet.dao.MedicalRecordNotFoundException;
 import projets.safetynet.model.core.MedicalRecord;
 import projets.safetynet.model.core.Person;
 import projets.safetynet.model.url.PersonRequest;
 import projets.safetynet.service.DataCreateService;
 import projets.safetynet.service.DataDeleteService;
 import projets.safetynet.service.DataUpdateService;
+import projets.safetynet.service.ServerDataCorruptedException;
 
 @SpringBootTest
 public class MedicalRecordEndpointTest {
@@ -32,7 +34,7 @@ public class MedicalRecordEndpointTest {
     private DataDeleteService deleteService;
 
     @Test
-    public void givenNewMedicalRecord_whenPostMedicalRecordRequest_thenMedicalRecordIsCreated()
+    public void givenNewMedicalRecord_whenPostMedicalRecordRequest_thenMedicalRecordIsCreated() throws Exception
     {
     	// GIVEN
     	MedicalRecord mNew = new MedicalRecord();
@@ -44,7 +46,7 @@ public class MedicalRecordEndpointTest {
     }
     
     @Test
-    public void givenExistingMedicalRecord_whenMedicalRecordPersonRequest_thenMedicalRecordIsUpdated()
+    public void givenExistingMedicalRecord_whenMedicalRecordPersonRequest_thenMedicalRecordIsUpdated() throws Exception
     {
     	MedicalRecord mExpected = new MedicalRecord();
     	// GIVEN
@@ -56,7 +58,7 @@ public class MedicalRecordEndpointTest {
     }
 
     @Test
-    public void givenExistingMedicalRecord_whenDeleteMedicalRecordRequest_thenMedicalRecordIsDeleted()
+    public void givenExistingMedicalRecord_whenDeleteMedicalRecordRequest_thenMedicalRecordIsDeleted() throws Exception
     {
 		PersonRequest r = new PersonRequest();
     	// GIVEN

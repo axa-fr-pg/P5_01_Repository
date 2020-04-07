@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import projets.safetynet.model.core.Person;
+import projets.safetynet.model.url.PersonRequest;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -27,6 +28,7 @@ public class PersonEndpointIT {
 	private ObjectMapper objectMapper;
 
 	private Person p1 = new Person("f1", "l1", "a1", "c1", 11111L, "t1", "e1");
+	private PersonRequest r1 = new PersonRequest("Roger", "AAAA");
 	
 	@Test
 	public void givenPerson_whenPostPersonEndpoint_thenReturnsStatusCreated() throws Exception {	
@@ -65,7 +67,7 @@ public class PersonEndpointIT {
 	@Test
 	public void givenPerson_whenDeletePersonEndpoint_thenReturnsStatusAccepted() throws Exception {	
 		// GIVEN
-		String j1 = objectMapper.writeValueAsString(p1);
+		String j1 = objectMapper.writeValueAsString(r1);
 		// WHEN & THEN
 		
 		mockMvc.perform(MockMvcRequestBuilders

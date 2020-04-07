@@ -17,7 +17,7 @@ public class FileServiceTest {
 	private FileService service;
 	
 	@Test
-	void givenTestFile_getDataFromFile_returnsTestData()
+	void givenTestFile_getDataFromFile_returnsTestData() throws Exception
 	{
 		// GIVEN
 		String file = "src/test/resources/test.json";

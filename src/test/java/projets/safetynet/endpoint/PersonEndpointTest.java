@@ -9,11 +9,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.ResponseEntity;
 
+import projets.safetynet.dao.MultiplePersonWithSameNameException;
+import projets.safetynet.dao.PersonNotFoundException;
 import projets.safetynet.model.core.Person;
 import projets.safetynet.model.url.PersonRequest;
 import projets.safetynet.service.DataCreateService;
 import projets.safetynet.service.DataDeleteService;
 import projets.safetynet.service.DataUpdateService;
+import projets.safetynet.service.ServerDataCorruptedException;
 
 @SpringBootTest
 public class PersonEndpointTest {
@@ -31,7 +34,7 @@ public class PersonEndpointTest {
     private DataDeleteService deleteService;
 
     @Test
-    public void givenNewPerson_whenPostPersonRequest_thenPersonIsCreated()
+    public void givenNewPerson_whenPostPersonRequest_thenPersonIsCreated() throws Exception
     {
     	// GIVEN
 		Person pNew = new Person();
@@ -43,7 +46,7 @@ public class PersonEndpointTest {
     }
 
     @Test
-    public void givenExistingPerson_whenPutPersonRequest_thenPersonIsUpdated()
+    public void givenExistingPerson_whenPutPersonRequest_thenPersonIsUpdated() throws Exception
     {
 		Person pExpected = new Person();
     	// GIVEN
@@ -55,7 +58,7 @@ public class PersonEndpointTest {
     }
 
     @Test
-    public void givenExistingPerson_whenDeletePersonRequest_thenPersonIsDeleted()
+    public void givenExistingPerson_whenDeletePersonRequest_thenPersonIsDeleted() throws Exception
     {
 		PersonRequest r = new PersonRequest();
     	// GIVEN

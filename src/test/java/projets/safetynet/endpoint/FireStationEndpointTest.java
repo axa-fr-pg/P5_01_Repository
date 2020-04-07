@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
+import projets.safetynet.dao.FireStationNotFoundException;
 import projets.safetynet.model.core.FireStation;
 import projets.safetynet.model.url.FireStationResponse;
 import projets.safetynet.service.DataCreateService;
@@ -19,6 +20,7 @@ import projets.safetynet.service.DataDeleteService;
 import projets.safetynet.service.DataReadService;
 import projets.safetynet.service.DataUpdateService;
 import projets.safetynet.service.InvalidDeleteFireStationRequestException;
+import projets.safetynet.service.ServerDataCorruptedException;
 
 @SpringBootTest
 public class FireStationEndpointTest {
@@ -39,7 +41,7 @@ public class FireStationEndpointTest {
     private DataDeleteService deleteService;
 
     @Test
-    public void givenResponse_whenGetFireStationResponse_thenReturnsExpectedResponse()
+    public void givenResponse_whenGetFireStationResponse_thenReturnsExpectedResponse() throws Exception
     {
     	// GIVEN
     	FireStationResponse expected = new FireStationResponse();
@@ -51,7 +53,7 @@ public class FireStationEndpointTest {
     }
 
     @Test
-    public void givenNewFireStation_whenPostFireStationRequest_thenFireStationIsCreated()
+    public void givenNewFireStation_whenPostFireStationRequest_thenFireStationIsCreated() throws Exception
     {
     	// GIVEN
 		FireStation sNew = new FireStation();
@@ -63,7 +65,7 @@ public class FireStationEndpointTest {
     }
 
     @Test
-    public void givenExistingFireStation_whenPutFireStationRequest_thenFireStationIsUpdated()
+    public void givenExistingFireStation_whenPutFireStationRequest_thenFireStationIsUpdated() throws Exception
     {
     	// GIVEN
 		FireStation sNew = new FireStation();

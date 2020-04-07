@@ -263,7 +263,7 @@ public class PersonDaoTest {
 	}
 
 	@Test
-	void givenNewP1_saveP1_addsP1()
+	void givenNewP1_saveP1_addsP1() throws Exception
 	{
 		// GIVEN
 		// Empty list
@@ -288,13 +288,13 @@ public class PersonDaoTest {
 	}
 
 	@Test
-	void givenExistingPersonsWithSameName_saveP1_throwsMultiplePersonWithSameNameException()
+	void givenExistingPersonsWithSameName_saveP1_throwsDuplicatePersonCreationException()
 	{
 		// GIVEN
 		ArrayList<Person> listGiven = new ArrayList<Person>(Arrays.asList(p2));
 		dao.set(listGiven);
 		// WHEN
-		assertThrows(MultiplePersonWithSameNameException.class, () -> {
+		assertThrows(DuplicatePersonCreationException.class, () -> {
 			dao.save(p2);
 		});
 	}
@@ -352,7 +352,7 @@ public class PersonDaoTest {
 	}
 
 	@Test
-	void givenP2_deleteP2_returnsTrue()
+	void givenP2_deleteP2_returnsTrue() throws Exception
 	{
 		// GIVEN
 		ArrayList<Person> listGiven = new ArrayList<Person>(Arrays.asList(p1, p2, p3));
@@ -368,16 +368,14 @@ public class PersonDaoTest {
 	}
 
 	@Test
-	void givenMissingPerson_delete_returnsFalse()
+	void givenMissingPerson_delete_throwsPersonNotFoundException() 
 	{
 		// GIVEN
 		// Empty list
 		// WHEN
-		boolean result = dao.delete("does not", "exist");
-		ArrayList<Person> listResult = dao.getAll();
-		// THEN
-		assertEquals(false, result);
-		assertEquals(0, listResult.size());
+		assertThrows(PersonNotFoundException.class, () -> {
+			dao.delete("does not", "exist");
+		});
 	}
 
 }
