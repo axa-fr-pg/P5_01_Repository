@@ -37,7 +37,7 @@ public class DataReadService {
 
 	public FireStationResponse getFireStationResponse(long station) {
 	
-        LogService.logger.info("getFireStationResponse() " + station);
+        LogService.logger.debug("getFireStationResponse() " + station);
         ArrayList<FireStationPersonResponse> responsePersons = new ArrayList<FireStationPersonResponse>();
 		long adults = 0;
 		long children = 0;
@@ -64,13 +64,13 @@ public class DataReadService {
 		}
 
 		FireStationResponse response = new FireStationResponse(responsePersons, adults, children);
-        LogService.logger.info("getFireStationResponse() returns " + responsePersons.size() + " persons, " 
+        LogService.logger.debug("getFireStationResponse() returns " + responsePersons.size() + " persons, " 
                 + adults + " adults, " + children + " children");
 		return response;
 	}
 
     public ArrayList<ChildAlertResponse> getChildAlertResponse(String address) {
-        LogService.logger.info("getChildAlertResponse() " + address);
+        LogService.logger.debug("getChildAlertResponse() " + address);
         ArrayList<ChildAlertResponse> response = new ArrayList<ChildAlertResponse>();
         ArrayList<Person> persons = personDao.getByAddress(address);
         for (Person p : persons) {
@@ -90,12 +90,12 @@ public class DataReadService {
 		        LogService.logger.error("getChildAlertResponse() throws MedicalRecordNotFoundException");
 			}
         }
-        LogService.logger.info("getChildAlertResponse() returns " + response.size() + " children");
+        LogService.logger.debug("getChildAlertResponse() returns " + response.size() + " children");
         return response;
     }
 
 	public ArrayList<String> getPhoneAlertResponse(long station) {
-        LogService.logger.info("getPhoneAlertResponse() " + station);
+        LogService.logger.debug("getPhoneAlertResponse() " + station);
         ArrayList<String> response = new ArrayList<String>();
 
 		ArrayList<FireStation> stations = stationDao.getByStation(station);
@@ -103,12 +103,12 @@ public class DataReadService {
 			ArrayList<Person> persons = personDao.getByAddress(s.getAddress());
 			for (Person p : persons) response.add(p.getPhone());
 		}
-        LogService.logger.info("getPhoneAlertResponse() returns " + response.size() + " phone numbers");
+        LogService.logger.debug("getPhoneAlertResponse() returns " + response.size() + " phone numbers");
 		return response;
 	}
 
 	public FireResponse getFireResponse(String address) {
-        LogService.logger.info("getFireResponse() " + address);
+        LogService.logger.debug("getFireResponse() " + address);
         FireResponse response = new FireResponse();
         try {
             FireStation station = stationDao.getByAddress(address);
@@ -130,12 +130,12 @@ public class DataReadService {
 			}
         }
         response.setInhabitants(inhabitants);
-        LogService.logger.info("getFireResponse() returns " + inhabitants.size() + " inhabitants station " + response.getStation());
+        LogService.logger.debug("getFireResponse() returns " + inhabitants.size() + " inhabitants station " + response.getStation());
         return response;
 	}
 
 	public ArrayList<FloodAddressResponse> getFloodByStationResponse(ArrayList<Long> stations) {
-        LogService.logger.info("getFloodByStationResponse() " + stations.size() + " stations");
+        LogService.logger.debug("getFloodByStationResponse() " + stations.size() + " stations");
         ArrayList<FloodAddressResponse> response = new ArrayList<FloodAddressResponse>();
 		for (long s : stations) {
 			ArrayList<FireStation> stationMapList = stationDao.getByStation(s);
@@ -145,13 +145,13 @@ public class DataReadService {
 				response.add(floodAddress);
 			}
 		}
-        LogService.logger.info("getFloodByStationResponse() returns " + response.size() + " addresses");
+        LogService.logger.debug("getFloodByStationResponse() returns " + response.size() + " addresses");
         return response;
 	}
 
 	public ArrayList<PersonInfoResponse> getPersonInfoResponse(String firstName, String lastName) {
 		
-		LogService.logger.info("getPersonInfoResponse() FirstName=" + firstName + " LastName=" + lastName);
+		LogService.logger.debug("getPersonInfoResponse() FirstName=" + firstName + " LastName=" + lastName);
         ArrayList<Person> persons = null;
 		if (firstName == null) {
 			persons = personDao.getByLastName(lastName);
@@ -183,18 +183,18 @@ public class DataReadService {
     		       LogService.logger.error("getPersonInfoResponse() throws MedicalRecordNotFoundException"); 
     		}
         }
-        LogService.logger.info("getPersonInfoResponse() successful");
+        LogService.logger.debug("getPersonInfoResponse() successful");
 		return responsePersons;
 	}
 	
     public ArrayList<String> getCommunityEmailResponse(String city) {
-        LogService.logger.info("getCommunityEmailResponse() " + city);
+        LogService.logger.debug("getCommunityEmailResponse() " + city);
         ArrayList<String> response = new ArrayList<String>();
         ArrayList<Person> persons = personDao.getByCity(city);
         for (Person p : persons) {
         	response.add(p.getEmail());
         }
-        LogService.logger.info("getCommunityEmailResponse() returns " + response.size() + " emails");
+        LogService.logger.debug("getCommunityEmailResponse() returns " + response.size() + " emails");
         return response;
     }
 

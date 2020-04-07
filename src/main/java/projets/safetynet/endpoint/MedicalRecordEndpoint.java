@@ -33,21 +33,21 @@ public class MedicalRecordEndpoint {
 
 	@PostMapping("")
 	public ResponseEntity<MedicalRecord> postMedicalRecordRequest(@RequestBody MedicalRecord mNew) {
-        LogService.logger.info("postMedicalRecordRequest() " + mNew.getFirstName() +" & " + mNew.getLastName());
+        LogService.logger.debug("postMedicalRecordRequest() " + mNew.getFirstName() +" & " + mNew.getLastName());
         MedicalRecord response = createService.postMedicalRecordRequest(mNew);
 	    return new ResponseEntity<MedicalRecord>(response, HttpStatus.CREATED);
 	}
 
 	@PutMapping("")
 	public ResponseEntity<MedicalRecord> putMedicalRecordRequest(@RequestBody MedicalRecord mExpected) {
-        LogService.logger.info("putMedicalRecordRequest() " + mExpected.getFirstName() +" & " + mExpected.getLastName());
+        LogService.logger.debug("putMedicalRecordRequest() " + mExpected.getFirstName() +" & " + mExpected.getLastName());
         MedicalRecord response = updateService.putMedicalRecordRequest(mExpected);
 	    return new ResponseEntity<MedicalRecord>(response, HttpStatus.OK);
 	}
 
 	@DeleteMapping("")
 	public ResponseEntity<Boolean> deleteMedicalRecordRequest(@RequestBody PersonRequest r) {
-        LogService.logger.info("deleteMedicalRecordRequest() " + r.getFirstName() +" & " + r.getLastName());
+        LogService.logger.debug("deleteMedicalRecordRequest() " + r.getFirstName() +" & " + r.getLastName());
 		boolean response = deleteService.deleteMedicalRecordRequest(r);
 	    return new ResponseEntity<Boolean>(response, HttpStatus.ACCEPTED);
 	}

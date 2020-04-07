@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import projets.safetynet.model.url.ChildAlertResponse;
 import projets.safetynet.service.DataReadService;
+import projets.safetynet.service.LogService;
 
 @RestController
 @RequestMapping("/communityEmail")
@@ -20,6 +21,7 @@ public class CommunityEmailEndpoint {
 
 	@GetMapping("")
 	public ArrayList<String> getCommunityEmailResponse(@RequestParam(value = "city") String city) {
+	    LogService.logger.debug("getCommunityEmailResponse() " + city);
 		ArrayList<String> response = service.getCommunityEmailResponse(city);
 		return response;
 	}

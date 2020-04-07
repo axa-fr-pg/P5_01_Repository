@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import projets.safetynet.model.url.FireResponse;
 import projets.safetynet.service.DataReadService;
+import projets.safetynet.service.LogService;
 
 @RestController
 @RequestMapping("/fire")
@@ -18,6 +19,7 @@ public class FireEndpoint {
 
 	@GetMapping("")
 	public FireResponse getFireResponse(@RequestParam(value = "address") String address) {
+	    LogService.logger.debug("getFireResponse() " + address);
 		FireResponse response = service.getFireResponse(address);
 		return response;
 	}

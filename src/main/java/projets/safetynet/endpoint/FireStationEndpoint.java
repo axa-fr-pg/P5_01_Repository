@@ -41,27 +41,28 @@ public class FireStationEndpoint {
 
 	@GetMapping("")
 	public FireStationResponse getFireStationResponse(@RequestParam(value = "stationNumber") long id) {
+	    LogService.logger.debug("getFireStationResponse() " + id);
 		FireStationResponse response = readService.getFireStationResponse(id);
 		return response;
 	}
 
 	@PostMapping("")
 	public ResponseEntity<FireStation> postFireStationRequest(@RequestBody FireStation sNew) {
-        LogService.logger.info("postFireStationRequest() " + sNew.getAddress() +" & " + sNew.getStation());
+        LogService.logger.debug("postFireStationRequest() " + sNew.getAddress() +" & " + sNew.getStation());
         FireStation response = createService.postFireStationRequest(sNew);
 	    return new ResponseEntity<FireStation>(response, HttpStatus.CREATED);
 	}
 
 	@PutMapping("")
 	public ResponseEntity<FireStation> putFireStationRequest(@RequestBody FireStation sNew) {
-        LogService.logger.info("putFireStationRequest() " + sNew.getAddress() +" & " + sNew.getStation());
+        LogService.logger.debug("putFireStationRequest() " + sNew.getAddress() +" & " + sNew.getStation());
         FireStation response = updateService.putFireStationRequest(sNew);
 	    return new ResponseEntity<FireStation>(response, HttpStatus.OK);
 	}
 
 	@DeleteMapping("")
 	public ResponseEntity<Boolean> deleteFireStationRequest(@RequestBody String request) {
-        LogService.logger.info("deleteFireStationRequest() " + request);
+        LogService.logger.debug("deleteFireStationRequest() " + request);
         boolean response = false;
 		try {
 			response = deleteService.deleteFireStationRequest(request);

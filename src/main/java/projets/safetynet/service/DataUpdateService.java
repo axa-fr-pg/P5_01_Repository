@@ -26,10 +26,10 @@ public class DataUpdateService {
 	private MedicalRecordDao recordDao;
 
 	public Person putPersonRequest(Person pExpected) {
-        LogService.logger.info("putPersonRequest() " + pExpected.getFirstName() + " " + pExpected.getLastName());
+        LogService.logger.debug("putPersonRequest() " + pExpected.getFirstName() + " " + pExpected.getLastName());
 		try {
 			Person pChanged = personDao.update(pExpected);
-	        LogService.logger.info("putPersonRequest() successful");
+	        LogService.logger.debug("putPersonRequest() successful");
 			return pChanged;
 		} catch (PersonNotFoundException e) {
 	        LogService.logger.error("putPersonRequest() throws PersonNotFoundException");
@@ -38,10 +38,10 @@ public class DataUpdateService {
 	}
 
 	public FireStation putFireStationRequest(FireStation sExpected) {
-        LogService.logger.info("putFireStationRequest() " + sExpected.getAddress() + " " + sExpected.getStation());
+        LogService.logger.debug("putFireStationRequest() " + sExpected.getAddress() + " " + sExpected.getStation());
 		try {
 			FireStation sChanged = stationDao.updateByAddress(sExpected);
-	        LogService.logger.info("putFireStationRequest() successful");
+	        LogService.logger.debug("putFireStationRequest() successful");
 			return sChanged;
 		} catch (FireStationNotFoundException e) {
 	        LogService.logger.error("putFireStationRequest() throws FireStationNotFoundException");
@@ -50,10 +50,10 @@ public class DataUpdateService {
 	}
 
 	public MedicalRecord putMedicalRecordRequest(MedicalRecord mExpected) {
-        LogService.logger.info("putMedicalRecordRequest() " + mExpected.getFirstName() + " " + mExpected.getLastName());
+        LogService.logger.debug("putMedicalRecordRequest() " + mExpected.getFirstName() + " " + mExpected.getLastName());
 		try {
 			MedicalRecord mChanged = recordDao.update(mExpected);
-	        LogService.logger.info("putMedicalRecordRequest() successful");
+	        LogService.logger.debug("putMedicalRecordRequest() successful");
 			return mChanged;
 		} catch (MedicalRecordNotFoundException e) {
 	        LogService.logger.error("putMedicalRecordRequest() throws MedicalRecordNotFoundException");

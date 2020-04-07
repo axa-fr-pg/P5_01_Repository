@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import projets.safetynet.model.url.FloodAddressResponse;
 import projets.safetynet.service.DataReadService;
+import projets.safetynet.service.LogService;
 
 @RestController
 @RequestMapping("/flood")
@@ -20,6 +21,7 @@ public class FloodEndpoint {
 
 	@GetMapping("/stations")
 	public ArrayList<FloodAddressResponse> getFloodByStationResponse(@RequestParam(value = "stations") ArrayList<Long> stations) {
+        LogService.logger.debug("getFloodByStationResponse() list size " + stations.size());
 		ArrayList<FloodAddressResponse> response = service.getFloodByStationResponse(stations);
 		return response;
 	}

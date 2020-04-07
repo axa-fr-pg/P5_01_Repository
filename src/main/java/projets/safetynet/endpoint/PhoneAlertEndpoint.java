@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import projets.safetynet.service.DataReadService;
+import projets.safetynet.service.LogService;
 
 @RestController
 @RequestMapping("/phoneAlert")
@@ -19,6 +20,7 @@ public class PhoneAlertEndpoint {
 
 	@GetMapping("")
 	public ArrayList<String> getPhoneAlertResponse(@RequestParam(value = "firestation") long station) {
+        LogService.logger.debug("getPhoneAlertResponse() " + station);
 		ArrayList<String> response = service.getPhoneAlertResponse(station);
 		return response;
 	}

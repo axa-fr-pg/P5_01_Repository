@@ -32,21 +32,21 @@ public class PersonEndpoint {
 	@PostMapping("")
 	public ResponseEntity<Person> postPersonRequest( @RequestBody Person pNew )
 	{
-        LogService.logger.info("postPersonRequest() " + pNew.getFirstName() +" & " + pNew.getLastName());
+        LogService.logger.debug("postPersonRequest() " + pNew.getFirstName() +" & " + pNew.getLastName());
 		Person response = createService.postPersonRequest(pNew);
 	    return new ResponseEntity<Person>(response, HttpStatus.CREATED);
 	}
 
 	@PutMapping("")
 	public ResponseEntity<Person> putPersonRequest( @RequestBody Person pExpected ) {
-        LogService.logger.info("putPersonRequest() " + pExpected.getFirstName() +" & " + pExpected.getLastName());
+        LogService.logger.debug("putPersonRequest() " + pExpected.getFirstName() +" & " + pExpected.getLastName());
 		Person response = updateService.putPersonRequest(pExpected);
 	    return new ResponseEntity<Person>(response, HttpStatus.OK);
 	}
 
 	@DeleteMapping("")
 	public ResponseEntity<Boolean> deletePersonRequest(@RequestBody PersonRequest r) {
-        LogService.logger.info("deletePersonRequest() " + r.getFirstName() +" & " + r.getLastName());
+        LogService.logger.debug("deletePersonRequest() " + r.getFirstName() +" & " + r.getLastName());
 		boolean response = deleteService.deletePersonRequest(r);
 	    return new ResponseEntity<Boolean>(response, HttpStatus.ACCEPTED);
 	}

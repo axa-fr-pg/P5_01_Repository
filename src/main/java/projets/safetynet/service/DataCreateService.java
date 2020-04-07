@@ -27,10 +27,10 @@ public class DataCreateService {
 	private MedicalRecordDao recordDao;
 	
 	public Person postPersonRequest(Person pNew) {
-        LogService.logger.info("postPersonRequest() " + pNew.getFirstName() + " " + pNew.getLastName());
+        LogService.logger.debug("postPersonRequest() " + pNew.getFirstName() + " " + pNew.getLastName());
 		try {
 			Person pSaved = personDao.save(pNew);
-	        LogService.logger.info("postPersonRequest() successful");
+	        LogService.logger.debug("postPersonRequest() successful");
 			return pSaved;
 		} catch (MultiplePersonWithSameNameException e) {
 	        LogService.logger.error("postPersonRequest() throws MultiplePersonWithSameNameException");
@@ -39,10 +39,10 @@ public class DataCreateService {
 	}
 
 	public FireStation postFireStationRequest(FireStation sNew) {
-        LogService.logger.info("postFireStationRequest() " + sNew.getAddress() + " " + sNew.getStation());
+        LogService.logger.debug("postFireStationRequest() " + sNew.getAddress() + " " + sNew.getStation());
 		try {
 			FireStation sSaved = stationDao.save(sNew);
-	        LogService.logger.info("postFireStationRequest() successful");
+	        LogService.logger.debug("postFireStationRequest() successful");
 			return sSaved;
 		} catch (MultipleFireStationWithSameValuesException e) {
 	        LogService.logger.error("postFireStationRequest() throws MultipleFireStationWithSameValuesException");
@@ -51,10 +51,10 @@ public class DataCreateService {
 	}
 
 	public MedicalRecord postMedicalRecordRequest(MedicalRecord mNew) {
-        LogService.logger.info("postMedicalRecordRequest() " + mNew.getFirstName() + " " + mNew.getLastName());
+        LogService.logger.debug("postMedicalRecordRequest() " + mNew.getFirstName() + " " + mNew.getLastName());
 		try {
 			MedicalRecord mSaved = recordDao.save(mNew);
-	        LogService.logger.info("postMedicalRecordRequest() successful");
+	        LogService.logger.debug("postMedicalRecordRequest() successful");
 			return mSaved;
 		} catch (MultipleMedicalRecordWithSameNameException e) {
 	        LogService.logger.error("postMedicalRecordRequest() throws MultipleMedicalRecordWithSameValuesException");

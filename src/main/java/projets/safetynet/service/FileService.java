@@ -41,7 +41,7 @@ public class FileService {
 		personDao.set(data.getPersons());
 		fireStationDao.set(data.getFirestations());
 		medicalRecordDao.set(data.getMedicalrecords());
-		LogService.logger.info("loadData() stored data into DAO");
+		LogService.logger.debug("loadData() stored data into DAO");
 	}
 
 	private String getJsonFileName() {
@@ -58,7 +58,7 @@ public class FileService {
 		LogService.logger.info("getDataFromFile() " + file);
 		try {
 			data = objectMapper.readValue(new File(file), Data.class);
-			LogService.logger.info("getDataFromFile() successful");
+			LogService.logger.debug("getDataFromFile() successful");
 		} catch (Exception e) {
 			LogService.logger.error("getDataFromFile() could not read file : " + e);
 		}

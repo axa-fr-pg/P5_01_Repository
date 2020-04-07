@@ -31,7 +31,7 @@ public class DataDeleteService {
 	private ObjectMapper objectMapper;
 
 	public boolean deletePersonRequest(PersonRequest request) {
-        LogService.logger.info("deletePersonRequest() " + request.getFirstName() + " " + request.getLastName());
+        LogService.logger.debug("deletePersonRequest() " + request.getFirstName() + " " + request.getLastName());
 		boolean result = personDao.delete(request.getFirstName(), request.getLastName());
 		return result;
 	}
@@ -39,7 +39,7 @@ public class DataDeleteService {
 	public boolean deleteFireStationRequest(String request) throws JsonMappingException,
 			JsonProcessingException, InvalidDeleteFireStationRequestException 
 	{
-        LogService.logger.info("deleteFireStationRequest() " + request);
+        LogService.logger.debug("deleteFireStationRequest() " + request);
         JsonNode givenValues = objectMapper.readTree(request);
         JsonNode givenAddress = givenValues.get("address");
         JsonNode givenStation = givenValues.get("station");
@@ -58,7 +58,7 @@ public class DataDeleteService {
 	}
 
 	public boolean deleteMedicalRecordRequest(PersonRequest request) {
-        LogService.logger.info("deleteMedicalRecordRequest() " + request.getFirstName() + " " + request.getLastName());
+        LogService.logger.debug("deleteMedicalRecordRequest() " + request.getFirstName() + " " + request.getLastName());
 		boolean result = recordDao.delete(request.getFirstName(), request.getLastName());
 		return result;
 	}
