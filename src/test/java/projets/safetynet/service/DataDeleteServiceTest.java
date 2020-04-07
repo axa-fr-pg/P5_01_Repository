@@ -1,12 +1,10 @@
 package projets.safetynet.service;
 
-import static org.hamcrest.CoreMatchers.any;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.sql.Date;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,13 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import projets.safetynet.dao.FireStationDao;
-import projets.safetynet.dao.FireStationNotFoundException;
+import projets.safetynet.dao.MedicalRecordDao;
 import projets.safetynet.dao.PersonDao;
 import projets.safetynet.model.core.FireStation;
+import projets.safetynet.model.core.MedicalRecord;
 import projets.safetynet.model.core.Person;
 import projets.safetynet.model.url.PersonRequest;
 
@@ -39,8 +37,15 @@ public class DataDeleteServiceTest {
 	@MockBean
 	private FireStationDao stationDao;
 
+	@MockBean
+	private MedicalRecordDao recordDao;
+
 	private Person p1 = new Person("f1", "l1", "a1", "c1", 11111L, "t1", "e1");
 	private FireStation s1 = new FireStation("a1", 1);
+	String[] medications1 = new String[] {};
+	String[] allergies1 = new String[] {"allergy 1 a", "allergy 1 b", "allergy 1 c", "allergy 1 d"};
+	Date date1 = Date.valueOf("1001-01-01");
+	private MedicalRecord m1 = new MedicalRecord ("f1","l1",date1,medications1,allergies1);
 
 	@BeforeEach
 	private void initTestData() throws Exception
@@ -49,6 +54,7 @@ public class DataDeleteServiceTest {
 		when(stationDao.delete("a1", 1)).thenReturn(true);
 		when(stationDao.deleteByAddress("a1")).thenReturn(true);
 		when(stationDao.deleteByStation(1)).thenReturn(true);
+		when(recordDao.delete("f1", "l1")).thenReturn(true);
 }
 
 	@Test

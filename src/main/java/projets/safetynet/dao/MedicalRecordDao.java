@@ -72,10 +72,12 @@ public class MedicalRecordDao {
     	throw new MedicalRecordNotFoundException();
 	}
 
-	public void delete(MedicalRecord m) {
-		LogService.logger.debug("delete() " + m.getFirstName() + " & " + m.getLastName());
-		records.removeIf( record -> record.getFirstName().equals(m.getFirstName()) &&
-    			record.getLastName().equals(m.getLastName()) );
+	public boolean delete(String firstName, String lastName) {
+		LogService.logger.debug("delete() " + firstName + " & " + lastName);
+		boolean result = records.removeIf( record -> record.getFirstName().equals(firstName) &&
+				record.getLastName().equals(lastName) );
+		LogService.logger.debug("delete() "+result);
+		return result;
 	}
 
 }

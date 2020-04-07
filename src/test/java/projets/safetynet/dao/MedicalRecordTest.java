@@ -13,8 +13,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import projets.safetynet.model.core.FireStation;
 import projets.safetynet.model.core.MedicalRecord;
+import projets.safetynet.model.core.Person;
 
 @SpringBootTest
 public class MedicalRecordTest {
@@ -163,18 +163,32 @@ public class MedicalRecordTest {
 	}
 
 	@Test
-	void givenM2_deleteM2_suppressesM2()
+	void givenM2_deleteM2_returnsTrue()
 	{
 		// GIVEN
 		ArrayList<MedicalRecord> listGiven = new ArrayList<MedicalRecord>(Arrays.asList(m1, m2, m3));
 		dao.set(listGiven);
 		// WHEN
-		dao.delete(m2);
+		boolean result = dao.delete("firstName2", "lastName2");
 		ArrayList<MedicalRecord> listResult = dao.getAll();
 		// THEN
+		assertEquals(true, result);
 		assertEquals(2, listResult.size());
 		assertEquals("firstName1", listResult.get(0).getFirstName());
 		assertEquals("firstName3", listResult.get(1).getFirstName());
 	}
 
+	@Test
+	void givenMissingMedicalRecord_delete_returnsFalse()
+	{
+		// GIVEN
+		// Empty list
+		// WHEN
+		boolean result = dao.delete("does not", "exist");
+		ArrayList<MedicalRecord> listResult = dao.getAll();
+		// THEN
+		assertEquals(false, result);
+		assertEquals(0, listResult.size());
+	}
+	
 }
