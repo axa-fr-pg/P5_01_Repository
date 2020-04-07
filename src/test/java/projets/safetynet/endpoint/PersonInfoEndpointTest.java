@@ -26,10 +26,10 @@ public class PersonInfoEndpointTest {
     public void givenResponse_whenGetPersonInfoResponse_thenReturnsExpectedResponse()
     {
     	// GIVEN
-    	PersonInfoResponse expected = new PersonInfoResponse();
+    	ArrayList<PersonInfoResponse> expected = new ArrayList<PersonInfoResponse>();
     	when(service.getPersonInfoResponse("firstname", "lastname")).thenReturn(expected);
     	// WHEN
-    	PersonInfoResponse response = endpoint.getPersonInfoResponse("firstname", "lastname");
+    	ArrayList<PersonInfoResponse> response = endpoint.getPersonInfoResponse("firstname", "lastname");
     	// THEN
     	assertEquals(expected, response);
     }

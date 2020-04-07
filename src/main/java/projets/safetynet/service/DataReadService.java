@@ -149,29 +149,42 @@ public class DataReadService {
         return response;
 	}
 
-	public PersonInfoResponse getPersonInfoResponse(String firstName, String lastName) {
-        LogService.logger.info("getPersonInfoResponse() " + firstName + " " + lastName);
-        PersonInfoResponse response = new PersonInfoResponse(firstName + " " + lastName, "", 0, "",
-        		new String[] {}, new String[] {});
-		try {
-			Person p = personDao.get(firstName, lastName);
-			response.setAddress(p.getAddress());
-			response.setEmail(p.getEmail());
-		} catch (PersonNotFoundException e) {
-	        LogService.logger.error("getPersonInfoResponse() throws PersonNotFoundException");
-		} catch (MultiplePersonWithSameNameException e) {
-	        LogService.logger.error("getPersonInfoResponse() throws MultiplePersonWithSameNameException");
+	public ArrayList<PersonInfoResponse> getPersonInfoResponse(String firstName, String lastName) {
+		
+		LogService.logger.info("getPersonInfoResponse() FirstName=" + firstName + " LastName=" + lastName);
+        ArrayList<Person> persons = null;
+		if (firstName == null) {
+			persons = personDao.getByLastName(lastName);
 		}
-		try {
-			MedicalRecord r = recordDao.get(firstName, lastName);
-			response.setAge(r.getAge());
-			response.setMedications(r.getMedications());
-			response.setAllergies(r.getAllergies());
-		} catch (MedicalRecordNotFoundException e) {
-		       LogService.logger.error("getPersonInfoResponse() throws MedicalRecordNotFoundException"); 
+		if (lastName == null) {
+			persons = personDao.getByFirstName(firstName);
 		}
+		if (persons == null) {
+			try {
+				persons = new ArrayList<Person>();
+				Person p = personDao.get(firstName, lastName);
+				persons.add(p);
+			} catch (PersonNotFoundException e) {
+		        LogService.logger.error("getPersonInfoResponse() throws PersonNotFoundException");
+			} catch (MultiplePersonWithSameNameException e) {
+		        LogService.logger.error("getPersonInfoResponse() throws MultiplePersonWithSameNameException");
+			}
+		}
+		
+        ArrayList<PersonInfoResponse> responsePersons = new ArrayList<PersonInfoResponse>();
+        for (Person p : persons) {
+        	MedicalRecord r = null;
+    		try {
+    			r = recordDao.get(p.getFirstName(), p.getLastName());
+        		PersonInfoResponse rp = new PersonInfoResponse(p.getFirstName() + " " + p.getLastName(),
+        				p.getAddress(), r.getAge(), p.getEmail(), r.getMedications(), r.getAllergies());
+                responsePersons.add(rp);
+    		} catch (MedicalRecordNotFoundException e) {
+    		       LogService.logger.error("getPersonInfoResponse() throws MedicalRecordNotFoundException"); 
+    		}
+        }
         LogService.logger.info("getPersonInfoResponse() successful");
-		return response;
+		return responsePersons;
 	}
 	
     public ArrayList<String> getCommunityEmailResponse(String city) {
@@ -184,6 +197,5 @@ public class DataReadService {
         LogService.logger.info("getCommunityEmailResponse() returns " + response.size() + " emails");
         return response;
     }
-
 
 }

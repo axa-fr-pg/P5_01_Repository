@@ -66,6 +66,26 @@ public class PersonDao {
 		return result;
 	}
 
+	public ArrayList<Person> getByFirstName(String firstName) {
+		LogService.logger.debug("getByFirstName() " + firstName);
+		ArrayList<Person> result = new ArrayList<Person>();
+		for (Person p: persons) {
+			if (p.getFirstName().equals(firstName)) result.add(p);
+		}
+		LogService.logger.debug("getByFirstName() returns size = " + result.size());
+		return result;
+	}
+
+	public ArrayList<Person> getByLastName(String lastName) {
+		LogService.logger.debug("getByLastName() " + lastName);
+		ArrayList<Person> result = new ArrayList<Person>();
+		for (Person p: persons) {
+			if (p.getLastName().equals(lastName)) result.add(p);
+		}
+		LogService.logger.debug("getByLastName() returns size = " + result.size());
+		return result;
+	}
+
 	public Person save(Person p) throws MultiplePersonWithSameNameException
     {
 		LogService.logger.debug("save() " + p.getFirstName() + " & " + p.getLastName());

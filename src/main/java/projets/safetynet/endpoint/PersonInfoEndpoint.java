@@ -19,10 +19,11 @@ public class PersonInfoEndpoint {
 	private DataReadService service;
 
 	@GetMapping("")
-	public PersonInfoResponse getPersonInfoResponse(@RequestParam(value = "firstName") String firstName,
-			@RequestParam(value = "lastName") String lastName) 
+	public ArrayList<PersonInfoResponse> getPersonInfoResponse(
+			@RequestParam(value = "firstName", required = false) String firstName,
+			@RequestParam(value = "lastName", required = false) String lastName) 
 	{
-		PersonInfoResponse response = service.getPersonInfoResponse(firstName, lastName);
+		ArrayList<PersonInfoResponse> response = service.getPersonInfoResponse(firstName, lastName);
 		return response;
 	}
 

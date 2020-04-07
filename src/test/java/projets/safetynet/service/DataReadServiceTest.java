@@ -42,7 +42,10 @@ public class DataReadServiceTest {
 	private Person p6 = new Person("f6", "l6", "a6", "c6", 66666L, "t6", "e6");
 	private Person p7 = new Person("f7", "l7", "a7", "c7", 77777L, "t7", "e7");
 	private Person p8 = new Person("f8", "l8", "a8", "c8", 88888L, "t8", "e8");
-	private Person p9 = new Person("f9", "l9", "a9", "c9", 99999L, "t9", "e9");
+	private Person p11 = new Person("firstname", "l11", "a11", "c11", 11011L, "t11", "e11");
+	private Person p12 = new Person("f12", "lastname", "a12", "c12", 12012L, "t12", "e12");
+	private Person p13 = new Person("firstname", "l13", "a13", "c13", 13013L, "t13", "e13");
+	private Person p14 = new Person("f14", "lastname", "a14", "c14", 14014L, "t14", "e14");
 	private FireStation f1 = new FireStation("a1", 1);
 	private FireStation f2 = new FireStation("a2", 2);
 	private FireStation f3 = new FireStation("a3", 3);
@@ -96,6 +99,8 @@ public class DataReadServiceTest {
 		when(personDao.getByCity("city")).thenReturn(new ArrayList<Person> (Arrays.asList(p1, p3, p5)));
 		try {
 			when(personDao.get("f4", "l4")).thenReturn(p4);
+			when(personDao.getByFirstName("firstname")).thenReturn(new ArrayList<Person> (Arrays.asList(p11, p13)));
+			when(personDao.getByLastName("lastname")).thenReturn(new ArrayList<Person> (Arrays.asList(p12, p14)));
 		} catch (Exception e2) {
 			e2.printStackTrace();
 		}
@@ -133,6 +138,10 @@ public class DataReadServiceTest {
 			when(recordDao.get("f6", "l6")).thenReturn(adultRecord2);
 			when(recordDao.get("f7", "l7")).thenReturn(adultRecord3);
 			when(recordDao.get("f8", "l8")).thenReturn(childRecord2);
+			when(recordDao.get("firstname", "l11")).thenReturn(adultRecord1);
+			when(recordDao.get("f12", "lastname")).thenReturn(adultRecord2);
+			when(recordDao.get("firstname", "l13")).thenReturn(adultRecord3);
+			when(recordDao.get("f14", "lastname")).thenReturn(childRecord1);
 		} catch (MedicalRecordNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -248,19 +257,69 @@ public class DataReadServiceTest {
 	}
 
 	@Test
-	void givenTestData_getPersonInfoResponse_returnsCorrectValues()
+	void givenFirstNameAndLastName_getPersonInfoResponse_returnsTheRightPerson()
 	{
 		// GIVEN
 		// Test data prepared in initTestData
 		// WHEN
-		PersonInfoResponse r = service.getPersonInfoResponse("f4", "l4");
+		ArrayList<PersonInfoResponse> r = service.getPersonInfoResponse("f4", "l4");
 		// THEN
-		assertEquals("f4 l4", r.getName());
-		assertEquals("a4", r.getAddress());
-		assertEquals(18, r.getAge());
-		assertEquals("e4", r.getEmail());
-		assertTrue(Arrays.equals(m2, r.getMedications()));
-		assertTrue(Arrays.equals(a2, r.getAllergies()));
+		assertNotNull(r);
+		assertEquals(1, r.size());
+		assertEquals("f4 l4", r.get(0).getName());
+		assertEquals("a4", r.get(0).getAddress());
+		assertEquals(18, r.get(0).getAge());
+		assertEquals("e4", r.get(0).getEmail());
+		assertTrue(Arrays.equals(m2, r.get(0).getMedications()));
+		assertTrue(Arrays.equals(a2, r.get(0).getAllergies()));
+	}
+
+	@Test
+	void givenLastName_getPersonInfoResponse_returnsCorrectPersons()
+	{
+		// GIVEN
+		// Test data prepared in initTestData
+		// WHEN
+		ArrayList<PersonInfoResponse> r = service.getPersonInfoResponse(null, "lastname");
+		// THEN
+		assertNotNull(r);
+		assertEquals(2, r.size());
+		assertEquals("f12 lastname", r.get(0).getName());
+		assertEquals("a12", r.get(0).getAddress());
+		assertEquals(60, r.get(0).getAge());
+		assertEquals("e12", r.get(0).getEmail());
+		assertTrue(Arrays.equals(m3, r.get(0).getMedications()));
+		assertTrue(Arrays.equals(a3, r.get(0).getAllergies()));
+		assertEquals("f14 lastname", r.get(1).getName());
+		assertEquals("a14", r.get(1).getAddress());
+		assertEquals(18, r.get(1).getAge());
+		assertEquals("e14", r.get(1).getEmail());
+		assertTrue(Arrays.equals(m2, r.get(1).getMedications()));
+		assertTrue(Arrays.equals(a2, r.get(1).getAllergies()));	
+	}
+
+	@Test
+	void givenFirstName_getPersonInfoResponse_returnsCorrectPersons() 
+	{
+		// GIVEN
+		// Test data prepared in initTestData
+		// WHEN
+		ArrayList<PersonInfoResponse> r = service.getPersonInfoResponse("firstname", null);
+		// THEN
+		assertNotNull(r);
+		assertEquals(2, r.size());
+		assertEquals("firstname l11", r.get(0).getName());
+		assertEquals("a11", r.get(0).getAddress());
+		assertEquals(55, r.get(0).getAge());
+		assertEquals("e11", r.get(0).getEmail());
+		assertTrue(Arrays.equals(m1, r.get(0).getMedications()));
+		assertTrue(Arrays.equals(a1, r.get(0).getAllergies()));
+		assertEquals("firstname l13", r.get(1).getName());
+		assertEquals("a13", r.get(1).getAddress());
+		assertEquals(70, r.get(1).getAge());
+		assertEquals("e13", r.get(1).getEmail());
+		assertTrue(Arrays.equals(m5, r.get(1).getMedications()));
+		assertTrue(Arrays.equals(a5, r.get(1).getAllergies()));	
 	}
 
 	@Test

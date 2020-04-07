@@ -21,20 +21,46 @@ public class PersonInfoEndpointIT {
 	
 	@Autowired
 	private MockMvc mockMvc;
-	
+
 	@Autowired
 	private ObjectMapper objectMapper;
 
 	@Test
-	public void givenAddress_whenGetPersonInfoEndpoint_thenReturnsExpectedResponse() throws Exception {
+	public void givenFirstNameAndLastName_whenGetPersonInfoEndpoint_thenReturnsExpectedResponse() throws Exception {
 		// GIVEN
 		// Test data provided by test.json 
 		// WHEN & THEN
 		String responseString = mockMvc.perform(get("/personInfo?firstName=Sophia&lastName=ZZZZZZZZZ"))
 				.andReturn().getResponse().getContentAsString();
-		PersonInfoResponse response = objectMapper.readValue(responseString, PersonInfoResponse.class);
+		ArrayList response = (ArrayList<PersonInfoResponse>) objectMapper.readValue(responseString, ArrayList.class);
 		// THEN
-		assertEquals("Sophia ZZZZZZZZZ", response.getName());
+		assertEquals(1, response.size());
+	}
+
+	@Test
+	public void givenFirstName_whenGetPersonInfoEndpoint_thenReturnsExpectedResponse() throws Exception {
+		// GIVEN
+		// Test data provided by test.json 
+		// WHEN & THEN
+		String responseString = mockMvc.perform(get("/personInfo?firstName=John"))
+				.andReturn().getResponse().getContentAsString();
+		ArrayList<PersonInfoResponse> response = (ArrayList<PersonInfoResponse>) 
+				objectMapper.readValue(responseString, ArrayList.class);
+		// THEN
+		assertEquals(2, response.size());
+	}
+
+	@Test
+	public void givenLastName_whenGetPersonInfoEndpoint_thenReturnsExpectedResponse() throws Exception {
+		// GIVEN
+		// Test data provided by test.json 
+		// WHEN & THEN
+		String responseString = mockMvc.perform(get("/personInfo?lastName=AAAA"))
+				.andReturn().getResponse().getContentAsString();
+		ArrayList<PersonInfoResponse> response = (ArrayList<PersonInfoResponse>) 
+				objectMapper.readValue(responseString, ArrayList.class);
+		// THEN
+		assertEquals(6, response.size());
 	}
 
 }
