@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.springframework.stereotype.Repository;
 
 import projets.safetynet.model.core.MedicalRecord;
+import projets.safetynet.model.core.Person;
 import projets.safetynet.service.LogService;
 
 @Repository
@@ -25,12 +26,21 @@ public class MedicalRecordDao {
 		this.records = (ArrayList<MedicalRecord>) records.clone();
 	}
 	
-    void save(MedicalRecord m)
+    public MedicalRecord save(MedicalRecord m) throws MultipleMedicalRecordWithSameNameException
     {
 		LogService.logger.debug("save() " + m.getFirstName() + " & " + m.getLastName());
-    	MedicalRecord mNew = new MedicalRecord(m.getFirstName(), m.getLastName(), m.getBirthdate(),
-    			m.getMedications().clone(), m.getAllergies().clone());
-    	records.add(mNew);
+		try {
+			get(m.getFirstName(), m.getLastName());
+		} catch (MedicalRecordNotFoundException e) {
+			MedicalRecord mNew = new MedicalRecord(m.getFirstName(), m.getLastName(), m.getBirthdate(),
+	    			m.getMedications(), m.getAllergies());
+	    	records.add(mNew);
+			LogService.logger.debug("save() successful");
+	    	return mNew;
+		}
+		LogService.logger.error("save() returns MultipleMedicalRecordWithSameNameException");
+		throw new MultipleMedicalRecordWithSameNameException();
+
     }
 
 	public ArrayList<MedicalRecord> getAll() {

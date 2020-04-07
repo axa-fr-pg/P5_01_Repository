@@ -68,7 +68,7 @@ public class PersonDao {
 
 	public Person save(Person p) throws MultiplePersonWithSameNameException
     {
-		LogService.logger.debug("save() " + p.getFirstName() + " " + p.getLastName());
+		LogService.logger.debug("save() " + p.getFirstName() + " & " + p.getLastName());
 		try {
 			get(p.getFirstName(), p.getLastName());
 		} catch (PersonNotFoundException e) {

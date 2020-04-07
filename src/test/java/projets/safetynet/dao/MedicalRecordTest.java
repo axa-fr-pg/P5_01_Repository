@@ -106,7 +106,11 @@ public class MedicalRecordTest {
 		// GIVEN
 		// Empty list
 		// WHEN
-		dao.save(m2);
+		try {
+			dao.save(m2);
+		} catch (MultipleMedicalRecordWithSameNameException e) {
+			e.printStackTrace();
+		}
 		ArrayList<MedicalRecord> listResult = dao.getAll();
 		// THEN
 		assertEquals(1, listResult.size());
