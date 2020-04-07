@@ -10,6 +10,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.ResponseEntity;
 
 import projets.safetynet.model.core.MedicalRecord;
+import projets.safetynet.model.core.Person;
 import projets.safetynet.service.DataCreateService;
 import projets.safetynet.service.DataDeleteService;
 import projets.safetynet.service.DataUpdateService;
@@ -40,4 +41,18 @@ public class MedicalRecordEndpointTest {
     	// THEN
     	assertEquals(mNew, response.getBody());
     }
+    
+    @Test
+    public void givenExistingMedicalRecord_whenMedicalRecordPersonRequest_thenMedicalRecordIsUpdated()
+    {
+    	MedicalRecord mExpected = new MedicalRecord();
+    	// GIVEN
+    	when(updateService.putMedicalRecordRequest(mExpected)).thenReturn(mExpected);
+    	// WHEN
+    	ResponseEntity<MedicalRecord> response = endpoint.putMedicalRecordRequest(mExpected);
+    	// THEN
+    	assertEquals(mExpected, response.getBody());
+    }
+
+
 }

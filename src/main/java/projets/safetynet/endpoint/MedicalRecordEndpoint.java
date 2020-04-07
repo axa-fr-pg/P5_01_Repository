@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,5 +35,13 @@ public class MedicalRecordEndpoint {
         MedicalRecord response = createService.postMedicalRecordRequest(mNew);
 	    return new ResponseEntity<MedicalRecord>(response, HttpStatus.CREATED);
 	}
+
+	@PutMapping("")
+	public ResponseEntity<MedicalRecord> putMedicalRecordRequest(@RequestBody MedicalRecord mExpected) {
+        LogService.logger.info("putMedicalRecordRequest() " + mExpected.getFirstName() +" & " + mExpected.getLastName());
+        MedicalRecord response = updateService.putMedicalRecordRequest(mExpected);
+	    return new ResponseEntity<MedicalRecord>(response, HttpStatus.OK);
+	}
+
 
 }

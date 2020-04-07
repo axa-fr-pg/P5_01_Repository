@@ -52,4 +52,21 @@ public class MedicalRecordEndpointIT {
 		          .andDo(MockMvcResultHandlers.print());
 	}
 
+	@Test
+	public void givenMedicalRecord_whenPutMedicalRecordEndpoint_thenReturnsStatusOk() throws Exception {	
+		// GIVEN
+		String j1 = objectMapper.writeValueAsString(m1);
+		// WHEN & THEN
+		
+		mockMvc.perform(MockMvcRequestBuilders
+				.put("/medicalRecord")
+				.contentType(MediaType.APPLICATION_JSON)
+		        .content(j1)
+		        .accept(MediaType.APPLICATION_JSON))
+		        .andExpect(status().isOk())
+		        .andExpect(jsonPath("$.firstName").value("f1")) 
+		        .andExpect(jsonPath("$.lastName").value("l1"))
+				.andDo(MockMvcResultHandlers.print());
+	}
+
 }
