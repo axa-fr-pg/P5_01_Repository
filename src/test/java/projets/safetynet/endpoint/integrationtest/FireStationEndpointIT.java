@@ -5,6 +5,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -18,6 +19,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import projets.safetynet.model.core.FireStation;
 import projets.safetynet.model.url.FireStationResponse;
+import projets.safetynet.service.FileService;
+import projets.safetynet.service.exception.ServerDataCorruptedException;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -29,7 +32,17 @@ public class FireStationEndpointIT {
 	@Autowired
 	private ObjectMapper objectMapper;
 	
-	private FireStation s1 = new FireStation("a1", 1);
+	private FireStation s1 = new FireStation("testaddress", 1);
+	private FireStation s2 = new FireStation("testaddress", 2);
+
+	@Autowired
+	FileService fileService;
+	
+	@BeforeEach
+	private void refreshData() throws ServerDataCorruptedException
+	{
+		fileService.loadData();
+	}
 
 	@Test
 	public void givenStation1_whenGetFireStationEndpoint_thenReturnsExpectedResponse() throws Exception {
@@ -55,7 +68,7 @@ public class FireStationEndpointIT {
 		          .content(j1)
 		          .accept(MediaType.APPLICATION_JSON))
 		          .andExpect(status().isCreated())
-		          .andExpect(jsonPath("$.address").value("a1")) 
+		          .andExpect(jsonPath("$.address").value("testaddress")) 
 		          .andExpect(jsonPath("$.station").value(1))
 		          .andDo(MockMvcResultHandlers.print());
 	}
@@ -72,7 +85,7 @@ public class FireStationEndpointIT {
 		          .content(j1)
 		          .accept(MediaType.APPLICATION_JSON))
 		          .andExpect(status().isOk())
-		          .andExpect(jsonPath("$.address").value("a1")) 
+		          .andExpect(jsonPath("$.address").value("testaddress")) 
 		          .andExpect(jsonPath("$.station").value(1))
 		          .andDo(MockMvcResultHandlers.print());
 	}
@@ -80,7 +93,7 @@ public class FireStationEndpointIT {
 	@Test
 	public void givenFireStation_whenDeleteFireStationEndpoint_thenReturnsStatusAccepted() throws Exception {	
 		// GIVEN
-		String j1 = objectMapper.writeValueAsString(s1);
+		String j1 = objectMapper.writeValueAsString(s2);
 		// WHEN & THEN
 		
 		mockMvc.perform(MockMvcRequestBuilders

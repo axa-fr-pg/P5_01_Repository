@@ -3,6 +3,7 @@ package projets.safetynet.endpoint.integrationtest;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -16,6 +17,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import projets.safetynet.model.core.Person;
 import projets.safetynet.model.url.PersonRequest;
+import projets.safetynet.service.FileService;
+import projets.safetynet.service.exception.ServerDataCorruptedException;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -28,8 +31,18 @@ public class PersonEndpointIT {
 	private ObjectMapper objectMapper;
 
 	private Person p1 = new Person("f1", "l1", "a1", "c1", 11111L, "t1", "e1");
+	private Person p2 = new Person("Roger", "AAAA", "a1", "c1", 11111L, "t1", "e1");
 	private PersonRequest r1 = new PersonRequest("Roger", "AAAA");
 	
+	@Autowired
+	FileService fileService;
+	
+	@BeforeEach
+	private void refreshData() throws ServerDataCorruptedException
+	{
+		fileService.loadData();
+	}
+
 	@Test
 	public void givenPerson_whenPostPersonEndpoint_thenReturnsStatusCreated() throws Exception {	
 		// GIVEN
@@ -50,7 +63,7 @@ public class PersonEndpointIT {
 	@Test
 	public void givenPerson_whenPutPersonEndpoint_thenReturnsStatusOk() throws Exception {	
 		// GIVEN
-		String j1 = objectMapper.writeValueAsString(p1);
+		String j1 = objectMapper.writeValueAsString(p2);
 		// WHEN & THEN
 		
 		mockMvc.perform(MockMvcRequestBuilders
@@ -59,8 +72,8 @@ public class PersonEndpointIT {
 		        .content(j1)
 		        .accept(MediaType.APPLICATION_JSON))
 		        .andExpect(status().isOk())
-		        .andExpect(jsonPath("$.firstName").value("f1")) 
-		        .andExpect(jsonPath("$.lastName").value("l1"))
+		        .andExpect(jsonPath("$.firstName").value("Roger")) 
+		        .andExpect(jsonPath("$.lastName").value("AAAA"))
 				.andDo(MockMvcResultHandlers.print());
 	}
 
