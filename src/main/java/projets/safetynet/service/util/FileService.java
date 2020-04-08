@@ -1,4 +1,4 @@
-package projets.safetynet.service;
+package projets.safetynet.service.util;
 
 import java.io.File;
 import java.io.IOException;

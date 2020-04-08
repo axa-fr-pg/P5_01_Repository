@@ -1,4 +1,4 @@
-package projets.safetynet.service;
+package projets.safetynet.service.data;
 
 import java.util.ArrayList;
 
@@ -24,9 +24,10 @@ import projets.safetynet.model.url.FireStationResponse;
 import projets.safetynet.model.url.FloodAddressResponse;
 import projets.safetynet.model.url.PersonInfoResponse;
 import projets.safetynet.service.exception.ServerDataCorruptedException;
+import projets.safetynet.service.util.LogService;
 
 @Service
-public class DataReadService {
+public class DataReadServiceImpl implements DataReadService {
 
 	@Autowired
 	private PersonDao personDao;
@@ -37,6 +38,7 @@ public class DataReadService {
 	@Autowired
 	private MedicalRecordDao recordDao;
 
+	@Override
 	public FireStationResponse getFireStationResponse(long station) throws ServerDataCorruptedException {
 	
         LogService.logger.debug("getFireStationResponse() " + station);
@@ -72,7 +74,8 @@ public class DataReadService {
 		return response;
 	}
 
-    public ArrayList<ChildAlertResponse> getChildAlertResponse(String address) throws ServerDataCorruptedException {
+    @Override
+	public ArrayList<ChildAlertResponse> getChildAlertResponse(String address) throws ServerDataCorruptedException {
         LogService.logger.debug("getChildAlertResponse() " + address);
         ArrayList<ChildAlertResponse> response = new ArrayList<ChildAlertResponse>();
         ArrayList<Person> persons = personDao.getByAddress(address);
@@ -98,6 +101,7 @@ public class DataReadService {
         return response;
     }
 
+	@Override
 	public ArrayList<String> getPhoneAlertResponse(long station) {
         LogService.logger.debug("getPhoneAlertResponse() " + station);
         ArrayList<String> response = new ArrayList<String>();
@@ -111,6 +115,7 @@ public class DataReadService {
 		return response;
 	}
 
+	@Override
 	public FireResponse getFireResponse(String address) throws FireStationNotFoundException, ServerDataCorruptedException {
         LogService.logger.debug("getFireResponse() " + address);
         FireResponse response = new FireResponse();
@@ -134,6 +139,7 @@ public class DataReadService {
         return response;
 	}
 
+	@Override
 	public ArrayList<FloodAddressResponse> getFloodByStationResponse(ArrayList<Long> stations) throws FireStationNotFoundException, ServerDataCorruptedException {
         LogService.logger.debug("getFloodByStationResponse() " + stations.size() + " stations");
         ArrayList<FloodAddressResponse> response = new ArrayList<FloodAddressResponse>();
@@ -149,6 +155,7 @@ public class DataReadService {
         return response;
 	}
 
+	@Override
 	public ArrayList<PersonInfoResponse> getPersonInfoResponse(String firstName, String lastName) throws PersonNotFoundException, ServerDataCorruptedException {
 		
 		LogService.logger.debug("getPersonInfoResponse() FirstName=" + firstName + " LastName=" + lastName);
@@ -187,7 +194,8 @@ public class DataReadService {
 		return responsePersons;
 	}
 	
-    public ArrayList<String> getCommunityEmailResponse(String city) {
+    @Override
+	public ArrayList<String> getCommunityEmailResponse(String city) {
         LogService.logger.debug("getCommunityEmailResponse() " + city);
         ArrayList<String> response = new ArrayList<String>();
         ArrayList<Person> persons = personDao.getByCity(city);

@@ -21,13 +21,13 @@ import projets.safetynet.dao.exception.FireStationNotFoundException;
 import projets.safetynet.dao.exception.MultipleFireStationWithSameValuesException;
 import projets.safetynet.model.core.FireStation;
 import projets.safetynet.model.url.FireStationResponse;
-import projets.safetynet.service.DataCreateService;
-import projets.safetynet.service.DataDeleteService;
-import projets.safetynet.service.DataReadService;
-import projets.safetynet.service.DataUpdateService;
-import projets.safetynet.service.LogService;
+import projets.safetynet.service.data.DataCreateService;
+import projets.safetynet.service.data.DataDeleteService;
+import projets.safetynet.service.data.DataReadService;
+import projets.safetynet.service.data.DataUpdateService;
 import projets.safetynet.service.exception.InvalidDeleteFireStationRequestException;
 import projets.safetynet.service.exception.ServerDataCorruptedException;
+import projets.safetynet.service.util.LogService;
 
 @RestController
 @RequestMapping("/firestation")

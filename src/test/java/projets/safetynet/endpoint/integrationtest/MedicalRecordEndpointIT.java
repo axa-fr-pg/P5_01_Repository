@@ -21,8 +21,8 @@ import projets.safetynet.model.core.FireStation;
 import projets.safetynet.model.core.MedicalRecord;
 import projets.safetynet.model.core.Person;
 import projets.safetynet.model.url.PersonRequest;
-import projets.safetynet.service.FileService;
 import projets.safetynet.service.exception.ServerDataCorruptedException;
+import projets.safetynet.service.util.FileService;
 
 @SpringBootTest
 @AutoConfigureMockMvc

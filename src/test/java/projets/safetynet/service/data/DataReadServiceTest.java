@@ -1,4 +1,4 @@
-package projets.safetynet.service;
+package projets.safetynet.service.data;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;

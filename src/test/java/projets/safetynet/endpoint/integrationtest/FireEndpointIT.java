@@ -15,8 +15,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import projets.safetynet.model.url.FireResponse;
-import projets.safetynet.service.FileService;
 import projets.safetynet.service.exception.ServerDataCorruptedException;
+import projets.safetynet.service.util.FileService;
 
 @SpringBootTest
 @AutoConfigureMockMvc

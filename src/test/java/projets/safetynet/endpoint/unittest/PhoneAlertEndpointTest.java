@@ -11,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import projets.safetynet.endpoint.PhoneAlertEndpoint;
-import projets.safetynet.service.DataReadService;
+import projets.safetynet.service.data.DataReadService;
 
 @SpringBootTest
 public class PhoneAlertEndpointTest {

@@ -1,4 +1,4 @@
-package projets.safetynet.service;
+package projets.safetynet.service.data;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,9 +20,10 @@ import projets.safetynet.dao.exception.PersonNotFoundException;
 import projets.safetynet.model.url.PersonRequest;
 import projets.safetynet.service.exception.InvalidDeleteFireStationRequestException;
 import projets.safetynet.service.exception.ServerDataCorruptedException;
+import projets.safetynet.service.util.LogService;
 
 @Service
-public class DataDeleteService {
+public class DataDeleteServiceImpl implements DataDeleteService {
 
 	@Autowired
 	private PersonDao personDao;
@@ -36,6 +37,7 @@ public class DataDeleteService {
 	@Autowired
 	private ObjectMapper objectMapper;
 
+	@Override
 	public boolean deletePersonRequest(PersonRequest request) throws PersonNotFoundException, ServerDataCorruptedException {
         LogService.logger.debug("deletePersonRequest() " + request.getFirstName() + " " + request.getLastName());
 		boolean result;
@@ -48,6 +50,7 @@ public class DataDeleteService {
 		return result;
 	}
 
+	@Override
 	public boolean deleteFireStationRequest(String request) throws JsonMappingException,
 			JsonProcessingException, InvalidDeleteFireStationRequestException, FireStationNotFoundException, ServerDataCorruptedException 
 	{
@@ -74,6 +77,7 @@ public class DataDeleteService {
        	throw new InvalidDeleteFireStationRequestException();
 	}
 
+	@Override
 	public boolean deleteMedicalRecordRequest(PersonRequest request) 
 			throws MedicalRecordNotFoundException, ServerDataCorruptedException {
         LogService.logger.debug("deleteMedicalRecordRequest() " + request.getFirstName() + " " + request.getLastName());

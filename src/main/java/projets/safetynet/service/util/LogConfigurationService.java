@@ -1,4 +1,4 @@
-package projets.safetynet.service;
+package projets.safetynet.service.util;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

@@ -12,7 +12,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import projets.safetynet.endpoint.CommunityEmailEndpoint;
 import projets.safetynet.model.url.ChildAlertResponse;
-import projets.safetynet.service.DataReadService;
+import projets.safetynet.service.data.DataReadService;
 
 @SpringBootTest
 public class CommunityEmailEndpointTest {

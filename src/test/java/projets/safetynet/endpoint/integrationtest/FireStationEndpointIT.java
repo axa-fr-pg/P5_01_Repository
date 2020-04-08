@@ -19,8 +19,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import projets.safetynet.model.core.FireStation;
 import projets.safetynet.model.url.FireStationResponse;
-import projets.safetynet.service.FileService;
 import projets.safetynet.service.exception.ServerDataCorruptedException;
+import projets.safetynet.service.util.FileService;
 
 @SpringBootTest
 @AutoConfigureMockMvc

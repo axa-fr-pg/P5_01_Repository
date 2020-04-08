@@ -1,4 +1,4 @@
-package projets.safetynet.service;
+package projets.safetynet.service.data;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,14 +12,14 @@ import projets.safetynet.dao.exception.DuplicatePersonCreationException;
 import projets.safetynet.dao.exception.MultipleFireStationWithSameValuesException;
 import projets.safetynet.dao.exception.MultipleMedicalRecordWithSameNameException;
 import projets.safetynet.dao.exception.MultiplePersonWithSameNameException;
-import projets.safetynet.dao.exception.PersonNotFoundException;
 import projets.safetynet.model.core.FireStation;
 import projets.safetynet.model.core.MedicalRecord;
 import projets.safetynet.model.core.Person;
 import projets.safetynet.service.exception.ServerDataCorruptedException;
+import projets.safetynet.service.util.LogService;
 
 @Service
-public class DataCreateService {
+public class DataCreateServiceImpl implements DataCreateService {
 
 	@Autowired
 	private PersonDao personDao;
@@ -30,6 +30,7 @@ public class DataCreateService {
 	@Autowired
 	private MedicalRecordDao recordDao;
 	
+	@Override
 	public Person postPersonRequest(Person pNew) 
 			throws ServerDataCorruptedException, DuplicatePersonCreationException {
         LogService.logger.debug("postPersonRequest() " + pNew.getFirstName() + " " + pNew.getLastName());
@@ -43,6 +44,7 @@ public class DataCreateService {
 		}
 	}
 
+	@Override
 	public FireStation postFireStationRequest(FireStation sNew) 
 			throws ServerDataCorruptedException, DuplicateFireStationCreationException {
         LogService.logger.debug("postFireStationRequest() " + sNew.getAddress() + " " + sNew.getStation());
@@ -56,6 +58,7 @@ public class DataCreateService {
 		}
 	}
 
+	@Override
 	public MedicalRecord postMedicalRecordRequest(MedicalRecord mNew) 
 			throws ServerDataCorruptedException, DuplicateMedicalRecordCreationException {
         LogService.logger.debug("postMedicalRecordRequest() " + mNew.getFirstName() + " " + mNew.getLastName());

@@ -15,7 +15,7 @@ import projets.safetynet.dao.exception.FireStationNotFoundException;
 import projets.safetynet.endpoint.FloodEndpoint;
 import projets.safetynet.model.url.FireResponse;
 import projets.safetynet.model.url.FloodAddressResponse;
-import projets.safetynet.service.DataReadService;
+import projets.safetynet.service.data.DataReadService;
 import projets.safetynet.service.exception.ServerDataCorruptedException;
 
 @SpringBootTest

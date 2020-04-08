@@ -1,4 +1,4 @@
-package projets.safetynet.service;
+package projets.safetynet.service.data;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
@@ -14,15 +14,12 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import projets.safetynet.dao.FireStationDao;
 import projets.safetynet.dao.MedicalRecordDao;
 import projets.safetynet.dao.PersonDao;
-import projets.safetynet.dao.exception.FireStationNotFoundException;
-import projets.safetynet.dao.exception.MedicalRecordNotFoundException;
-import projets.safetynet.dao.exception.PersonNotFoundException;
 import projets.safetynet.model.core.FireStation;
 import projets.safetynet.model.core.MedicalRecord;
 import projets.safetynet.model.core.Person;
 
 @SpringBootTest
-public class DataUpdateServiceTest {
+public class DataCreateServiceTest {
 
 	private Person p1 = new Person("f1", "l1", "a1", "c1", 11111L, "t1", "e1");
 	private FireStation s1 = new FireStation( "a1", 1 );
@@ -32,7 +29,7 @@ public class DataUpdateServiceTest {
 	private MedicalRecord m1 = new MedicalRecord ("f1","l1",date1,medications1,allergies1);
 
 	@Autowired
-	private DataUpdateService service;
+	private DataCreateService service;
 	
 	@MockBean
 	private PersonDao personDao;
@@ -47,48 +44,49 @@ public class DataUpdateServiceTest {
 	private void initTestData()
 	{
 		try {
-			when(personDao.update(p1)).thenReturn(p1);
-			when(stationDao.updateByAddress(s1)).thenReturn(s1);
-			when(recordDao.update(m1)).thenReturn(m1);
+			when(personDao.save(p1)).thenReturn(p1);
+			when(stationDao.save(s1)).thenReturn(s1);
+			when(recordDao.save(m1)).thenReturn(m1);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	@Test
-	void givenExistingP1_putPersonRequest_updatesP1() throws Exception
+	void givenNewP1_postPersonRequest_savesP1() throws Exception
 	{
 		// GIVEN
 		// Test data prepared in initTestData
 		// WHEN
-		Person response = service.putPersonRequest(p1);
+		Person response = service.postPersonRequest(p1);
 		// THEN
 		assertEquals("f1", response.getFirstName());
 		assertEquals("l1", response.getLastName());
 	}
 
 	@Test
-	void givenExistingS1_putFireStationRequest_updatesS1() throws Exception
+	void givenNewS1_postFireStationRequest_savesS1() throws Exception
 	{
 		// GIVEN
 		// Test data prepared in initTestData
 		// WHEN
-		FireStation response = service.putFireStationRequest(s1);
+		FireStation response = service.postFireStationRequest(s1);
 		// THEN
 		assertEquals("a1", response.getAddress());
 		assertEquals(1, response.getStation());
 	}
 
 	@Test
-	void givenExistingM1_putMedicalRecordRequest_updatesM1() throws Exception
+	void givenNewM1_postMedicalRecordRequest_savesM1() throws Exception
 	{
 		// GIVEN
 		// Test data prepared in initTestData
 		// WHEN
-		MedicalRecord response = service.putMedicalRecordRequest(m1);
+		MedicalRecord response = service.postMedicalRecordRequest(m1);
 		// THEN
 		assertEquals("f1", response.getFirstName());
 		assertEquals("l1", response.getLastName());
+		assertEquals(date1, response.getBirthdate());
 	}
 
 }

@@ -17,8 +17,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import projets.safetynet.model.core.Person;
 import projets.safetynet.model.url.PersonRequest;
-import projets.safetynet.service.FileService;
 import projets.safetynet.service.exception.ServerDataCorruptedException;
+import projets.safetynet.service.util.FileService;
 
 @SpringBootTest
 @AutoConfigureMockMvc

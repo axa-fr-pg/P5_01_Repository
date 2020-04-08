@@ -1,4 +1,4 @@
-package projets.safetynet.service;
+package projets.safetynet.service.data;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,9 +12,10 @@ import projets.safetynet.dao.exception.PersonNotFoundException;
 import projets.safetynet.model.core.FireStation;
 import projets.safetynet.model.core.MedicalRecord;
 import projets.safetynet.model.core.Person;
+import projets.safetynet.service.util.LogService;
 
 @Service
-public class DataUpdateService {
+public class DataUpdateServiceImpl implements DataUpdateService {
 
 	@Autowired
 	private PersonDao personDao;
@@ -25,6 +26,7 @@ public class DataUpdateService {
 	@Autowired
 	private MedicalRecordDao recordDao;
 
+	@Override
 	public Person putPersonRequest(Person pExpected) throws PersonNotFoundException {
         LogService.logger.debug("putPersonRequest() " + pExpected.getFirstName() + " " + pExpected.getLastName());
 		Person pChanged = personDao.update(pExpected);
@@ -32,6 +34,7 @@ public class DataUpdateService {
 		return pChanged;
 	}
 
+	@Override
 	public FireStation putFireStationRequest(FireStation sExpected) throws FireStationNotFoundException {
         LogService.logger.debug("putFireStationRequest() " + sExpected.getAddress() + " " + sExpected.getStation());
 		FireStation sChanged = stationDao.updateByAddress(sExpected);
@@ -39,6 +42,7 @@ public class DataUpdateService {
 		return sChanged;
 	}
 
+	@Override
 	public MedicalRecord putMedicalRecordRequest(MedicalRecord mExpected) throws MedicalRecordNotFoundException {
         LogService.logger.debug("putMedicalRecordRequest() " + mExpected.getFirstName() + " " + mExpected.getLastName());
 		MedicalRecord mChanged = recordDao.update(mExpected);

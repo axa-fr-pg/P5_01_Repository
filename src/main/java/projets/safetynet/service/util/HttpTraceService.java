@@ -1,4 +1,4 @@
-package projets.safetynet.service;
+package projets.safetynet.service.util;
 
 import org.springframework.boot.actuate.trace.http.HttpTraceRepository;
 import org.springframework.boot.actuate.trace.http.InMemoryHttpTraceRepository;
