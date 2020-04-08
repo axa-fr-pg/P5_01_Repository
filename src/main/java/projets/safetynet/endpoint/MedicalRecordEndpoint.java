@@ -1,8 +1,10 @@
 package projets.safetynet.endpoint;
 
+import org.springframework.beans.TypeMismatchException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -61,6 +63,18 @@ public class MedicalRecordEndpoint {
 	    return new ResponseEntity<Boolean>(response, HttpStatus.ACCEPTED);
 	}
 
+	@ResponseStatus(value=HttpStatus.BAD_REQUEST, reason="Wrong request !")
+	@ExceptionHandler(ServletRequestBindingException.class)	 
+	public void badRequest() {
+		return;
+	}
+
+	@ResponseStatus(value=HttpStatus.BAD_REQUEST, reason="Wrong request !")
+	@ExceptionHandler(TypeMismatchException.class)
+	public void badParameterType() {
+		return;
+	}
+	
 	@ResponseStatus(value=HttpStatus.FORBIDDEN, 
 		reason="MedicalRecord already exists !")
 	@ExceptionHandler(DuplicateMedicalRecordCreationException.class)
