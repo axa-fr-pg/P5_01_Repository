@@ -3,19 +3,20 @@ package projets.safetynet.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import projets.safetynet.dao.DuplicateFireStationCreationException;
-import projets.safetynet.dao.DuplicateMedicalRecordCreationException;
-import projets.safetynet.dao.DuplicatePersonCreationException;
 import projets.safetynet.dao.FireStationDao;
 import projets.safetynet.dao.MedicalRecordDao;
-import projets.safetynet.dao.MultipleFireStationWithSameValuesException;
-import projets.safetynet.dao.MultipleMedicalRecordWithSameNameException;
-import projets.safetynet.dao.MultiplePersonWithSameNameException;
 import projets.safetynet.dao.PersonDao;
-import projets.safetynet.dao.PersonNotFoundException;
+import projets.safetynet.dao.exception.DuplicateFireStationCreationException;
+import projets.safetynet.dao.exception.DuplicateMedicalRecordCreationException;
+import projets.safetynet.dao.exception.DuplicatePersonCreationException;
+import projets.safetynet.dao.exception.MultipleFireStationWithSameValuesException;
+import projets.safetynet.dao.exception.MultipleMedicalRecordWithSameNameException;
+import projets.safetynet.dao.exception.MultiplePersonWithSameNameException;
+import projets.safetynet.dao.exception.PersonNotFoundException;
 import projets.safetynet.model.core.FireStation;
 import projets.safetynet.model.core.MedicalRecord;
 import projets.safetynet.model.core.Person;
+import projets.safetynet.service.exception.ServerDataCorruptedException;
 
 @Service
 public class DataCreateService {

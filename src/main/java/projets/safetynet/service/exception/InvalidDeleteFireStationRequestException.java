@@ -1,4 +1,4 @@
-package projets.safetynet.service;
+package projets.safetynet.service.exception;
 
 public class InvalidDeleteFireStationRequestException extends Exception {
 

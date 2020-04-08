@@ -4,11 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import projets.safetynet.dao.FireStationDao;
-import projets.safetynet.dao.FireStationNotFoundException;
 import projets.safetynet.dao.MedicalRecordDao;
-import projets.safetynet.dao.MedicalRecordNotFoundException;
 import projets.safetynet.dao.PersonDao;
-import projets.safetynet.dao.PersonNotFoundException;
+import projets.safetynet.dao.exception.FireStationNotFoundException;
+import projets.safetynet.dao.exception.MedicalRecordNotFoundException;
+import projets.safetynet.dao.exception.PersonNotFoundException;
 import projets.safetynet.model.core.FireStation;
 import projets.safetynet.model.core.MedicalRecord;
 import projets.safetynet.model.core.Person;

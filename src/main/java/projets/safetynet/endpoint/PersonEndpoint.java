@@ -12,18 +12,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import projets.safetynet.dao.DuplicateFireStationCreationException;
-import projets.safetynet.dao.DuplicatePersonCreationException;
-import projets.safetynet.dao.FireStationNotFoundException;
-import projets.safetynet.dao.MultiplePersonWithSameNameException;
-import projets.safetynet.dao.PersonNotFoundException;
+import projets.safetynet.dao.exception.DuplicateFireStationCreationException;
+import projets.safetynet.dao.exception.DuplicatePersonCreationException;
+import projets.safetynet.dao.exception.FireStationNotFoundException;
+import projets.safetynet.dao.exception.MultiplePersonWithSameNameException;
+import projets.safetynet.dao.exception.PersonNotFoundException;
 import projets.safetynet.model.core.Person;
 import projets.safetynet.model.url.PersonRequest;
 import projets.safetynet.service.DataCreateService;
 import projets.safetynet.service.DataDeleteService;
 import projets.safetynet.service.DataUpdateService;
 import projets.safetynet.service.LogService;
-import projets.safetynet.service.ServerDataCorruptedException;
+import projets.safetynet.service.exception.ServerDataCorruptedException;
 
 @RestController
 @RequestMapping("/person")

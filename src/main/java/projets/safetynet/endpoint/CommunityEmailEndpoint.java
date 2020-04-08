@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import projets.safetynet.model.url.ChildAlertResponse;
 import projets.safetynet.service.DataReadService;
 import projets.safetynet.service.LogService;
-import projets.safetynet.service.ServerDataCorruptedException;
+import projets.safetynet.service.exception.ServerDataCorruptedException;
 
 @RestController
 @RequestMapping("/communityEmail")

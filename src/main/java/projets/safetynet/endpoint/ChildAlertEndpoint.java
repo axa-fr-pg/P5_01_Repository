@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import projets.safetynet.dao.FireStationNotFoundException;
+import projets.safetynet.dao.exception.FireStationNotFoundException;
 import projets.safetynet.model.url.ChildAlertResponse;
 import projets.safetynet.model.url.FireStationResponse;
 import projets.safetynet.service.DataReadService;
 import projets.safetynet.service.LogService;
-import projets.safetynet.service.ServerDataCorruptedException;
+import projets.safetynet.service.exception.ServerDataCorruptedException;
 
 @RestController
 @RequestMapping("/childAlert")

@@ -1,4 +1,4 @@
-package projets.safetynet.endpoint;
+package projets.safetynet.endpoint.integrationtest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -14,22 +14,23 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import projets.safetynet.model.url.FloodAddressResponse;
 import projets.safetynet.service.FileService;
-import projets.safetynet.service.ServerDataCorruptedException;
+import projets.safetynet.service.exception.ServerDataCorruptedException;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class PhoneAlertEndpointIT {
+public class FloodEndpointIT {
 
 	@Autowired
 	private MockMvc mockMvc;
 	
 	@Autowired
 	private ObjectMapper objectMapper;
-
+	
 	@Autowired
 	FileService fileService;
-
+	
 	@BeforeEach
 	private void refreshData() throws ServerDataCorruptedException
 	{
@@ -37,15 +38,15 @@ public class PhoneAlertEndpointIT {
 	}
 
 	@Test
-	public void givenAddress_whenGetPhoneAlertEndpoint_thenReturnsExpectedResponse() throws Exception {
+	public void givenAddress_whenGetFloodByStationEndpoint_thenReturnsExpectedResponse() throws Exception {
 		// GIVEN
 		// Test data provided by test.json 
 		// WHEN & THEN
-		String responseString = mockMvc.perform(get("/phoneAlert?firestation=3"))
+		String responseString = mockMvc.perform(get("/flood/stations?stations=1,3"))
 				.andReturn().getResponse().getContentAsString();
-		ArrayList<String> response = (ArrayList<String>) objectMapper.readValue(responseString, ArrayList.class);
+		ArrayList<FloodAddressResponse> response = objectMapper.readValue(responseString, ArrayList.class);
 		// THEN
-		assertEquals(8, response.size());
+		assertEquals(6, response.size());
 	}
 
 }

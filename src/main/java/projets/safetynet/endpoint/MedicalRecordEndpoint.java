@@ -12,17 +12,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import projets.safetynet.dao.DuplicateFireStationCreationException;
-import projets.safetynet.dao.DuplicateMedicalRecordCreationException;
-import projets.safetynet.dao.FireStationNotFoundException;
-import projets.safetynet.dao.MedicalRecordNotFoundException;
+import projets.safetynet.dao.exception.DuplicateFireStationCreationException;
+import projets.safetynet.dao.exception.DuplicateMedicalRecordCreationException;
+import projets.safetynet.dao.exception.FireStationNotFoundException;
+import projets.safetynet.dao.exception.MedicalRecordNotFoundException;
 import projets.safetynet.model.core.MedicalRecord;
 import projets.safetynet.model.url.PersonRequest;
 import projets.safetynet.service.DataCreateService;
 import projets.safetynet.service.DataDeleteService;
 import projets.safetynet.service.DataUpdateService;
 import projets.safetynet.service.LogService;
-import projets.safetynet.service.ServerDataCorruptedException;
+import projets.safetynet.service.exception.ServerDataCorruptedException;
 
 @RestController
 @RequestMapping("/medicalRecord")

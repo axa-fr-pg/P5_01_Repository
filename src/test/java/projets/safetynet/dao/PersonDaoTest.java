@@ -12,6 +12,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import projets.safetynet.dao.exception.DuplicatePersonCreationException;
+import projets.safetynet.dao.exception.MultiplePersonWithSameNameException;
+import projets.safetynet.dao.exception.PersonNotFoundException;
 import projets.safetynet.model.core.Person;
 
 @SpringBootTest

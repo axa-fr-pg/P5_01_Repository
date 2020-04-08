@@ -13,6 +13,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import projets.safetynet.dao.exception.DuplicateMedicalRecordCreationException;
+import projets.safetynet.dao.exception.MedicalRecordNotFoundException;
 import projets.safetynet.model.core.MedicalRecord;
 import projets.safetynet.model.core.Person;
 

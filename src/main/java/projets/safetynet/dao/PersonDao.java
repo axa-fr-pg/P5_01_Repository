@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 import org.springframework.stereotype.Repository;
 
+import projets.safetynet.dao.exception.DuplicatePersonCreationException;
+import projets.safetynet.dao.exception.MultiplePersonWithSameNameException;
+import projets.safetynet.dao.exception.PersonNotFoundException;
 import projets.safetynet.model.core.Person;
 import projets.safetynet.service.LogService;
 

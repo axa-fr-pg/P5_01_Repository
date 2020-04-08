@@ -16,18 +16,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import projets.safetynet.dao.DuplicateFireStationCreationException;
-import projets.safetynet.dao.FireStationNotFoundException;
-import projets.safetynet.dao.MultipleFireStationWithSameValuesException;
+import projets.safetynet.dao.exception.DuplicateFireStationCreationException;
+import projets.safetynet.dao.exception.FireStationNotFoundException;
+import projets.safetynet.dao.exception.MultipleFireStationWithSameValuesException;
 import projets.safetynet.model.core.FireStation;
 import projets.safetynet.model.url.FireStationResponse;
 import projets.safetynet.service.DataCreateService;
 import projets.safetynet.service.DataDeleteService;
 import projets.safetynet.service.DataReadService;
 import projets.safetynet.service.DataUpdateService;
-import projets.safetynet.service.InvalidDeleteFireStationRequestException;
 import projets.safetynet.service.LogService;
-import projets.safetynet.service.ServerDataCorruptedException;
+import projets.safetynet.service.exception.InvalidDeleteFireStationRequestException;
+import projets.safetynet.service.exception.ServerDataCorruptedException;
 
 @RestController
 @RequestMapping("/firestation")

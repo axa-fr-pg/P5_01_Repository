@@ -14,6 +14,7 @@ import projets.safetynet.dao.FireStationDao;
 import projets.safetynet.dao.MedicalRecordDao;
 import projets.safetynet.dao.PersonDao;
 import projets.safetynet.model.core.Data;
+import projets.safetynet.service.exception.ServerDataCorruptedException;
 
 @Service
 public class FileService {

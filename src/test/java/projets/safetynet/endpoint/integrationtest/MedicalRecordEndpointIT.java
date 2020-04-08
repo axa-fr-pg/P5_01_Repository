@@ -1,4 +1,4 @@
-package projets.safetynet.endpoint;
+package projets.safetynet.endpoint.integrationtest;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;

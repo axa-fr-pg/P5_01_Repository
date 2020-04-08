@@ -16,14 +16,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import projets.safetynet.dao.FireStationDao;
 import projets.safetynet.dao.MedicalRecordDao;
-import projets.safetynet.dao.MedicalRecordNotFoundException;
-import projets.safetynet.dao.MultiplePersonWithSameNameException;
 import projets.safetynet.dao.PersonDao;
-import projets.safetynet.dao.PersonNotFoundException;
+import projets.safetynet.dao.exception.MedicalRecordNotFoundException;
+import projets.safetynet.dao.exception.MultiplePersonWithSameNameException;
+import projets.safetynet.dao.exception.PersonNotFoundException;
 import projets.safetynet.model.core.FireStation;
 import projets.safetynet.model.core.MedicalRecord;
 import projets.safetynet.model.core.Person;
 import projets.safetynet.model.url.PersonRequest;
+import projets.safetynet.service.exception.InvalidDeleteFireStationRequestException;
 
 @SpringBootTest
 public class DataDeleteServiceTest {

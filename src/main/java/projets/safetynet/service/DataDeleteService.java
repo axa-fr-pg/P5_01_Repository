@@ -9,15 +9,17 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import projets.safetynet.dao.FireStationDao;
-import projets.safetynet.dao.FireStationNotFoundException;
 import projets.safetynet.dao.MedicalRecordDao;
-import projets.safetynet.dao.MedicalRecordNotFoundException;
-import projets.safetynet.dao.MultipleFireStationWithSameValuesException;
-import projets.safetynet.dao.MultipleMedicalRecordWithSameNameException;
-import projets.safetynet.dao.MultiplePersonWithSameNameException;
 import projets.safetynet.dao.PersonDao;
-import projets.safetynet.dao.PersonNotFoundException;
+import projets.safetynet.dao.exception.FireStationNotFoundException;
+import projets.safetynet.dao.exception.MedicalRecordNotFoundException;
+import projets.safetynet.dao.exception.MultipleFireStationWithSameValuesException;
+import projets.safetynet.dao.exception.MultipleMedicalRecordWithSameNameException;
+import projets.safetynet.dao.exception.MultiplePersonWithSameNameException;
+import projets.safetynet.dao.exception.PersonNotFoundException;
 import projets.safetynet.model.url.PersonRequest;
+import projets.safetynet.service.exception.InvalidDeleteFireStationRequestException;
+import projets.safetynet.service.exception.ServerDataCorruptedException;
 
 @Service
 public class DataDeleteService {

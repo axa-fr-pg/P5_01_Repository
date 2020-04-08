@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import projets.safetynet.dao.PersonNotFoundException;
+import projets.safetynet.dao.exception.PersonNotFoundException;
 import projets.safetynet.model.url.PersonInfoResponse;
 import projets.safetynet.service.DataReadService;
 import projets.safetynet.service.LogService;
-import projets.safetynet.service.ServerDataCorruptedException;
+import projets.safetynet.service.exception.ServerDataCorruptedException;
 
 @RestController
 @RequestMapping("/personInfo")

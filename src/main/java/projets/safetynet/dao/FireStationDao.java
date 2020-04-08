@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 import org.springframework.stereotype.Repository;
 
+import projets.safetynet.dao.exception.DuplicateFireStationCreationException;
+import projets.safetynet.dao.exception.FireStationNotFoundException;
+import projets.safetynet.dao.exception.MultipleFireStationWithSameValuesException;
 import projets.safetynet.model.core.FireStation;
 import projets.safetynet.service.LogService;
 

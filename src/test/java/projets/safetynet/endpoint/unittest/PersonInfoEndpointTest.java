@@ -1,4 +1,4 @@
-package projets.safetynet.endpoint;
+package projets.safetynet.endpoint.unittest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
@@ -10,10 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import projets.safetynet.dao.PersonNotFoundException;
+import projets.safetynet.dao.exception.PersonNotFoundException;
+import projets.safetynet.endpoint.PersonInfoEndpoint;
 import projets.safetynet.model.url.PersonInfoResponse;
 import projets.safetynet.service.DataReadService;
-import projets.safetynet.service.ServerDataCorruptedException;
+import projets.safetynet.service.exception.ServerDataCorruptedException;
 
 @SpringBootTest
 public class PersonInfoEndpointTest {

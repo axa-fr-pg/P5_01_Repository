@@ -1,4 +1,4 @@
-package projets.safetynet.endpoint;
+package projets.safetynet.endpoint.unittest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
@@ -10,26 +10,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import projets.safetynet.endpoint.ChildAlertEndpoint;
 import projets.safetynet.model.url.ChildAlertResponse;
 import projets.safetynet.service.DataReadService;
+import projets.safetynet.service.exception.ServerDataCorruptedException;
 
 @SpringBootTest
-public class CommunityEmailEndpointTest {
+public class ChildAlertEndpointTest {
 
 	@Autowired
-    private CommunityEmailEndpoint endpoint;
+    private ChildAlertEndpoint endpoint;
 
     @MockBean
     private DataReadService service;
     
     @Test
-    public void givenResponse_whenCommunityEmailResponse_thenReturnsExpectedResponse()
+    public void givenResponse_whenGetChildAlertResponse_thenReturnsExpectedResponse() throws ServerDataCorruptedException
     {
     	// GIVEN
-    	ArrayList<String> expected = new ArrayList<String>();
-    	when(service.getCommunityEmailResponse("my city")).thenReturn(expected);
+    	ArrayList<ChildAlertResponse> expected = new ArrayList<ChildAlertResponse>();
+    	when(service.getChildAlertResponse("12345")).thenReturn(expected);
     	// WHEN
-    	ArrayList<String> response = endpoint.getCommunityEmailResponse("my city");
+    	ArrayList<ChildAlertResponse> response = endpoint.getChildAlertResponse("12345");
     	// THEN
     	assertEquals(expected, response);
     }
