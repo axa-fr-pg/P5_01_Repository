@@ -11,7 +11,8 @@ public class HttpTraceService {
 	@Bean
 	public HttpTraceRepository htttpTraceRepository()
 	{
-	  return new InMemoryHttpTraceRepository();
+		LogService.logger.debug( "htttpTraceRepository()" );
+		return new InMemoryHttpTraceRepository();
 	}
 	
 }
