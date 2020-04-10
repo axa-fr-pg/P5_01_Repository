@@ -57,7 +57,7 @@ public class FileService {
 
 	public Data getDataFromFile(String file) throws ServerDataCorruptedException {
 		Data data = null;
-		LogService.logger.info("getDataFromFile() " + file);
+		LogService.logger.debug("getDataFromFile() " + file);
 		try {
 			data = objectMapper.readValue(new File(file), Data.class);
 			LogService.logger.debug("getDataFromFile() successful");

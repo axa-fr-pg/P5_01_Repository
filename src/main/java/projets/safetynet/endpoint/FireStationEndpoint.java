@@ -20,7 +20,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 import projets.safetynet.dao.exception.DuplicateFireStationCreationException;
 import projets.safetynet.dao.exception.FireStationNotFoundException;
-import projets.safetynet.dao.exception.MultipleFireStationWithSameValuesException;
 import projets.safetynet.model.core.FireStation;
 import projets.safetynet.model.url.FireStationResponse;
 import projets.safetynet.service.data.DataCreateService;
@@ -90,32 +89,36 @@ public class FireStationEndpoint {
 	@ResponseStatus(value=HttpStatus.BAD_REQUEST, reason="Wrong request !")
 	@ExceptionHandler(ServletRequestBindingException.class)	 
 	public void badRequest() {
+		LogService.logger.error("badRequest() ServletRequestBindingException");
 		return;
 	}
 
 	@ResponseStatus(value=HttpStatus.BAD_REQUEST, reason="Wrong request !")
 	@ExceptionHandler(TypeMismatchException.class)
 	public void badParameterType() {
+		LogService.logger.error("badParameterType() TypeMismatchException");
 		return;
 	}
 
-	@ResponseStatus(value=HttpStatus.FORBIDDEN, 
-		reason="FireStation already exists !")
+	@ResponseStatus(value=HttpStatus.FORBIDDEN, reason="FireStation already exists !")
 	@ExceptionHandler(DuplicateFireStationCreationException.class)
 	public void duplicate() {
+		LogService.logger.error("duplicate() DuplicateFireStationCreationException");
 		return;
 	}
-	
+
 	@ResponseStatus(value=HttpStatus.INTERNAL_SERVER_ERROR, 
 			reason="Data corrupted : fix input file and restart server !")
 	@ExceptionHandler(ServerDataCorruptedException.class)
-	public void internalServerError() {
+	public void dataCorrupted() {
+		LogService.logger.error("dataCorrupted() ServerDataCorruptedException");
 		return;
 	}
 
 	@ResponseStatus(value=HttpStatus.NOT_FOUND, reason="FireStation not found !")
 	@ExceptionHandler(FireStationNotFoundException.class)
 	public void notFound() {
+		LogService.logger.error("notFound() FireStationNotFoundException");
 		return;
 	}
 
@@ -123,6 +126,7 @@ public class FireStationEndpoint {
 			reason="Unknown error : revert to IT for investigation !")
 	@ExceptionHandler(Exception.class)
 	public void unknownError() {
+		LogService.logger.error("unknownError() Exception");
 		return;
 	}
 	

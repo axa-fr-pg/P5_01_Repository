@@ -36,19 +36,22 @@ public class ChildAlertEndpoint {
 	@ResponseStatus(value=HttpStatus.BAD_REQUEST, reason="Wrong request !")
 	@ExceptionHandler(ServletRequestBindingException.class)	 
 	public void badRequest() {
+		LogService.logger.error("badRequest() ServletRequestBindingException");
 		return;
 	}
 
 	@ResponseStatus(value=HttpStatus.BAD_REQUEST, reason="Wrong request !")
 	@ExceptionHandler(TypeMismatchException.class)
 	public void badParameterType() {
+		LogService.logger.error("badParameterType() TypeMismatchException");
 		return;
 	}
-	
+
 	@ResponseStatus(value=HttpStatus.INTERNAL_SERVER_ERROR, 
 			reason="Data corrupted : fix input file and restart server !")
 	@ExceptionHandler(ServerDataCorruptedException.class)
-	public void internalServerError() {
+	public void dataCorrupted() {
+		LogService.logger.error("dataCorrupted() ServerException");
 		return;
 	}
 
@@ -56,6 +59,7 @@ public class ChildAlertEndpoint {
 			reason="Unknown error : revert to IT for investigation !")
 	@ExceptionHandler(Exception.class)
 	public void unknownError() {
+		LogService.logger.error("unknownError() Exception");
 		return;
 	}
 

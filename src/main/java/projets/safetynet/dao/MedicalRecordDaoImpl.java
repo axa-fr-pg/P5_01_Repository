@@ -44,7 +44,7 @@ public class MedicalRecordDaoImpl implements MedicalRecordDao {
 			LogService.logger.debug("save() successful");
 	    	return mNew;
 		}
-		LogService.logger.error("save() returns DuplicateMedicalRecordCreationException");
+		LogService.logger.error("save() throws DuplicateMedicalRecordCreationException");
 		throw new DuplicateMedicalRecordCreationException();
 
     }
@@ -70,13 +70,13 @@ public class MedicalRecordDaoImpl implements MedicalRecordDao {
 		}
 		switch (count) {
 		case 0:
-			LogService.logger.error("get() returns MedicalRecordNotFoundException");
+			LogService.logger.error("get() throws MedicalRecordNotFoundException");
 			throw new MedicalRecordNotFoundException();
 		case 1 :
 			LogService.logger.debug("get() successful");
 			return result;
 		default :
-			LogService.logger.error("get() returns MultipleMedicalRecordWithSameNameException");
+			LogService.logger.error("get() throws MultipleMedicalRecordWithSameNameException");
 			throw new MultipleMedicalRecordWithSameNameException();
 		}
 	}
@@ -92,7 +92,7 @@ public class MedicalRecordDaoImpl implements MedicalRecordDao {
 				return mNew;
 			}
 		}
-		LogService.logger.error("update() returns MedicalRecordNotFoundException");
+		LogService.logger.error("update() throws MedicalRecordNotFoundException");
     	throw new MedicalRecordNotFoundException();
 	}
 

@@ -44,13 +44,13 @@ public class PersonDaoImpl implements PersonDao {
 		}
 		switch (count) {
 		case 0:
-			LogService.logger.error("get() returns PersonNotFoundException");
+			LogService.logger.error("get() throws PersonNotFoundException");
 			throw new PersonNotFoundException();
 		case 1 :
 			LogService.logger.debug("get() successful");
 			return result;
 		default :
-			LogService.logger.error("get() returns MultiplePersonWithSameNameException");
+			LogService.logger.error("get() throws MultiplePersonWithSameNameException");
 			throw new MultiplePersonWithSameNameException();
 		}
     }
@@ -108,7 +108,7 @@ public class PersonDaoImpl implements PersonDao {
 			LogService.logger.debug("save() successful");
 	    	return pNew;
 		}
-		LogService.logger.error("save() returns DuplicatePersonCreationException");
+		LogService.logger.error("save() throws DuplicatePersonCreationException");
 		throw new DuplicatePersonCreationException();
     }
 
@@ -127,7 +127,7 @@ public class PersonDaoImpl implements PersonDao {
 				return p;
 			}
 		}
-		LogService.logger.error("update() returns PersonNotFoundException");
+		LogService.logger.error("update() throws PersonNotFoundException");
     	throw new PersonNotFoundException();
     }
 

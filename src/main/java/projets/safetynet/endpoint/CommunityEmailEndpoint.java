@@ -13,9 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import projets.safetynet.model.url.ChildAlertResponse;
 import projets.safetynet.service.data.DataReadService;
-import projets.safetynet.service.exception.ServerDataCorruptedException;
 import projets.safetynet.service.util.LogService;
 
 @RestController
@@ -35,19 +33,22 @@ public class CommunityEmailEndpoint {
 	@ResponseStatus(value=HttpStatus.BAD_REQUEST, reason="Wrong request !")
 	@ExceptionHandler(ServletRequestBindingException.class)	 
 	public void badRequest() {
+		LogService.logger.error("badRequest() ServletRequestBindingException");
 		return;
 	}
 
 	@ResponseStatus(value=HttpStatus.BAD_REQUEST, reason="Wrong request !")
 	@ExceptionHandler(TypeMismatchException.class)
 	public void badParameterType() {
+		LogService.logger.error("badParameterType() TypeMismatchException");
 		return;
 	}
-	
+
 	@ResponseStatus(value=HttpStatus.INTERNAL_SERVER_ERROR, 
 			reason="Unknown error : revert to IT for investigation !")
 	@ExceptionHandler(Exception.class)
 	public void unknownError() {
+		LogService.logger.error("unknownError() Exception");
 		return;
 	}
 

@@ -68,7 +68,7 @@ public class FireStationDaoImpl implements FireStationDao {
 			LogService.logger.debug("save() successful");
 	    	return sNew;
 		}
-		LogService.logger.error("save() returns DuplicateFireStationCreationException");
+		LogService.logger.error("save() throws DuplicateFireStationCreationException");
 		throw new DuplicateFireStationCreationException();
     }
 
@@ -84,7 +84,7 @@ public class FireStationDaoImpl implements FireStationDao {
 		for (FireStation s: stations) {
 			if (s.getAddress().equals(address)) return s;
 		}
-		LogService.logger.error("getByAddress() returns FireStationNotFoundException");
+		LogService.logger.error("getByAddress() throws FireStationNotFoundException");
 		throw new FireStationNotFoundException();
 	}
 
@@ -108,7 +108,7 @@ public class FireStationDaoImpl implements FireStationDao {
 				return sNew;
 			}
 		}
-		LogService.logger.error("updateByAddress() returns FireStationNotFoundException");
+		LogService.logger.error("updateByAddress() throws FireStationNotFoundException");
     	throw new FireStationNotFoundException();
 	}
 

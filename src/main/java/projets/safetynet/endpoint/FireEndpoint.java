@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import projets.safetynet.dao.exception.DuplicateFireStationCreationException;
 import projets.safetynet.dao.exception.FireStationNotFoundException;
 import projets.safetynet.model.url.FireResponse;
 import projets.safetynet.service.data.DataReadService;
@@ -36,25 +35,29 @@ public class FireEndpoint {
 	@ResponseStatus(value=HttpStatus.BAD_REQUEST, reason="Wrong request !")
 	@ExceptionHandler(ServletRequestBindingException.class)	 
 	public void badRequest() {
+		LogService.logger.error("badRequest() ServletRequestBindingException");
 		return;
 	}
 
 	@ResponseStatus(value=HttpStatus.BAD_REQUEST, reason="Wrong request !")
 	@ExceptionHandler(TypeMismatchException.class)
 	public void badParameterType() {
+		LogService.logger.error("badParameterType() TypeMismatchException");
 		return;
 	}
 	
 	@ResponseStatus(value=HttpStatus.INTERNAL_SERVER_ERROR, 
 			reason="Data corrupted : fix input file and restart server !")
 	@ExceptionHandler(ServerDataCorruptedException.class)
-	public void internalServerError() {
+	public void dataCorrupted() {
+		LogService.logger.error("dataCorrupted() ServerDataCorruptedException");
 		return;
 	}
 
 	@ResponseStatus(value=HttpStatus.NOT_FOUND, reason="No FireStation defined for the given address !")
 	@ExceptionHandler(FireStationNotFoundException.class)
 	public void notFound() {
+		LogService.logger.error("notFound() FireStationNotFoundException");
 		return;
 	}
 
@@ -62,6 +65,7 @@ public class FireEndpoint {
 			reason="Unknown error : revert to IT for investigation !")
 	@ExceptionHandler(Exception.class)
 	public void unknownError() {
+		LogService.logger.error("unknownError() Exception");
 		return;
 	}
 }
