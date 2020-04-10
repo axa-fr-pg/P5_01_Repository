@@ -29,7 +29,7 @@ public class FloodEndpoint {
 	@GetMapping("/stations")
 	public ArrayList<FloodAddressResponse> getFloodByStationResponse(@RequestParam(value = "stations") ArrayList<Long> stations) 
 			throws FireStationNotFoundException, ServerDataCorruptedException {
-        LogService.logger.debug("getFloodByStationResponse() list size " + stations.size());
+        LogService.logger.debug("getFloodByStationResponse() elements:" + stations.size());
 		ArrayList<FloodAddressResponse> response = service.getFloodByStationResponse(stations);
 		return response;
 	}

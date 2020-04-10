@@ -20,13 +20,13 @@ public class MedicalRecordDaoImpl implements MedicalRecordDao {
 	}
 
 	public MedicalRecordDaoImpl(ArrayList<MedicalRecord> records) {
-		LogService.logger.debug("MedicalRecordDao() size = " + records.size());
+		LogService.logger.debug("MedicalRecordDao() elements:" + records.size());
 		this.records = (ArrayList<MedicalRecord>) records.clone();
 	}
 	
 	@Override
 	public void set(ArrayList<MedicalRecord> records) {
-		LogService.logger.debug("set() size = " + records.size());
+		LogService.logger.debug("set() elements:" + records.size());
 		this.records = (ArrayList<MedicalRecord>) records.clone();
 	}
 	
@@ -51,7 +51,7 @@ public class MedicalRecordDaoImpl implements MedicalRecordDao {
 
 	@Override
 	public ArrayList<MedicalRecord> getAll() {
-		LogService.logger.debug("getAll() size = " + records.size());
+		LogService.logger.debug("getAll() elements:" + records.size());
     	return records;
 	}
 

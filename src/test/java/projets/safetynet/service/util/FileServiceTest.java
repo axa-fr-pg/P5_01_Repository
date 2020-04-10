@@ -2,12 +2,15 @@ package projets.safetynet.service.util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import projets.safetynet.model.core.Data;
+import projets.safetynet.service.exception.InvalidDeleteFireStationRequestException;
+import projets.safetynet.service.exception.ServerDataCorruptedException;
 
 @SpringBootTest
 public class FileServiceTest {
@@ -28,4 +31,16 @@ public class FileServiceTest {
 		assertEquals(11, data.getFirestations().size());
 		assertEquals(23, data.getMedicalrecords().size());
 	}
+	
+	@Test
+	void givenMissingFile_getDataFromFile_throwsServerDataCorruptedException() throws Exception
+	{
+		// GIVEN
+		String file = "does not exist";
+		// WHEN & THEN
+		assertThrows(ServerDataCorruptedException.class, () -> {
+			service.getDataFromFile(file);
+		});
+	}
+	
 }

@@ -19,14 +19,14 @@ public class PersonDaoImpl implements PersonDao {
 	}
 
 	public PersonDaoImpl(ArrayList<Person> persons) {
-		LogService.logger.debug("PersonDao() size = " + persons.size());
+		LogService.logger.debug("PersonDao() elements:" + persons.size());
 		this.persons = (ArrayList<Person>) persons.clone();
 	}
 
 	@Override
 	public void set(ArrayList<Person> persons)
 	{
-		LogService.logger.debug("set() size = " + persons.size());
+		LogService.logger.debug("set() elements:" + persons.size());
 		this.persons = (ArrayList<Person>) persons.clone();
 	}
 	
@@ -58,7 +58,7 @@ public class PersonDaoImpl implements PersonDao {
     @Override
 	public ArrayList<Person> getAll()
     {
-		LogService.logger.debug("getAll() size = " + persons.size());
+		LogService.logger.debug("getAll() elements:" + persons.size());
     	return persons;
     }
      
@@ -69,7 +69,7 @@ public class PersonDaoImpl implements PersonDao {
 		for (Person p: persons) {
 			if (p.getAddress().equals(address)) result.add(p);
 		}
-		LogService.logger.debug("getByAddress() returns size = " + result.size());
+		LogService.logger.debug("getByAddress() returns elements:" + result.size());
 		return result;
 	}
 
@@ -80,7 +80,7 @@ public class PersonDaoImpl implements PersonDao {
 		for (Person p: persons) {
 			if (p.getFirstName().equals(firstName)) result.add(p);
 		}
-		LogService.logger.debug("getByFirstName() returns size = " + result.size());
+		LogService.logger.debug("getByFirstName() returns elements:" + result.size());
 		return result;
 	}
 
@@ -91,7 +91,7 @@ public class PersonDaoImpl implements PersonDao {
 		for (Person p: persons) {
 			if (p.getLastName().equals(lastName)) result.add(p);
 		}
-		LogService.logger.debug("getByLastName() returns size = " + result.size());
+		LogService.logger.debug("getByLastName() returns elements:" + result.size());
 		return result;
 	}
 
@@ -149,7 +149,7 @@ public class PersonDaoImpl implements PersonDao {
 		for (Person p: persons) {
 			if (p.getCity().equals(city)) result.add(p);
 		}
-		LogService.logger.debug("getByCity() returns size = " + result.size());
+		LogService.logger.debug("getByCity() returns elements:" + result.size());
 		return result;
 	}
 

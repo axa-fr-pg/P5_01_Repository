@@ -19,13 +19,13 @@ public class FireStationDaoImpl implements FireStationDao {
 	}
 
 	public FireStationDaoImpl(ArrayList<FireStation> stations) {
-		LogService.logger.debug("FireStationDao() size = " + stations.size());
+		LogService.logger.debug("FireStationDao() elements:" + stations.size());
 		this.stations = (ArrayList<FireStation>) stations.clone();
 	}
 
 	@Override
 	public void set(ArrayList<FireStation> stations) {
-		LogService.logger.debug("set() size = " + stations.size());
+		LogService.logger.debug("set() elements:" + stations.size());
 		this.stations = (ArrayList<FireStation>) stations.clone();
 	}
 
@@ -74,7 +74,7 @@ public class FireStationDaoImpl implements FireStationDao {
 
 	@Override
 	public ArrayList<FireStation> getAll() {
-		LogService.logger.debug("getAll() size = " + stations.size());
+		LogService.logger.debug("getAll() elements:" + stations.size());
     	return stations;
 	}
 
@@ -95,7 +95,7 @@ public class FireStationDaoImpl implements FireStationDao {
 		for (FireStation s: stations) {
 			if (s.getStation() == station) result.add(s);
 		}
-		LogService.logger.debug("getByStation() size = " + result.size());
+		LogService.logger.debug("getByStation() elements:" + result.size());
 		return result;
 	}
 
