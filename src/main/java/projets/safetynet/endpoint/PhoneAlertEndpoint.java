@@ -29,27 +29,5 @@ public class PhoneAlertEndpoint {
 		ArrayList<String> response = service.getPhoneAlertResponse(station);
 		return response;
 	}
-
-	@ResponseStatus(value=HttpStatus.BAD_REQUEST, reason="Wrong request !")
-	@ExceptionHandler(ServletRequestBindingException.class)	 
-	public void badRequest() {
-		LogService.logger.error("badRequest() ServletRequestBindingException");
-		return;
-	}
-
-	@ResponseStatus(value=HttpStatus.BAD_REQUEST, reason="Wrong request !")
-	@ExceptionHandler(TypeMismatchException.class)
-	public void badParameterType() {
-		LogService.logger.error("badParameterType() TypeMismatchException");
-		return;
-	}
-	
-	@ResponseStatus(value=HttpStatus.INTERNAL_SERVER_ERROR, 
-			reason="Unknown error : revert to IT for investigation !")
-	@ExceptionHandler(Exception.class)
-	public void unknownError() {
-		LogService.logger.error("unknownError() Exception");
-		return;
-	}
 	
 }

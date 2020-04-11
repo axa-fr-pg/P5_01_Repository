@@ -62,40 +62,10 @@ public class PersonEndpoint {
 	    return new ResponseEntity<Boolean>(response, HttpStatus.ACCEPTED);
 	}
 
-	@ResponseStatus(value=HttpStatus.BAD_REQUEST, reason="Wrong request !")
-	@ExceptionHandler(ServletRequestBindingException.class)	 
-	public void badRequest() {
-		LogService.logger.error("badRequest() ServletRequestBindingException");
-		return;
-	}
-
-	@ResponseStatus(value=HttpStatus.BAD_REQUEST, reason="Wrong request !")
-	@ExceptionHandler(TypeMismatchException.class)
-	public void badParameterType() {
-		LogService.logger.error("badParameterType() TypeMismatchException");
-		return;
-	}
-	
-	@ResponseStatus(value=HttpStatus.FORBIDDEN, 
-		reason="Person already exists !")
+	@ResponseStatus(value=HttpStatus.FORBIDDEN, reason="Person already exists !")
 	@ExceptionHandler(DuplicatePersonCreationException.class)
 	public void duplicate() {
 		LogService.logger.error("duplicate() DuplicatePersonCreationException");
-		return;
-	}
-	
-	@ResponseStatus(value=HttpStatus.INTERNAL_SERVER_ERROR, 
-			reason="Data corrupted : fix input file and restart server !")
-	@ExceptionHandler(ServerDataCorruptedException.class)
-	public void dataCorrupted() {
-		LogService.logger.error("dataCorrupted() ServerDataCorruptedException");
-		return;
-	}
-
-	@ResponseStatus(value=HttpStatus.NOT_FOUND, reason="Person not found !")
-	@ExceptionHandler(PersonNotFoundException.class)
-	public void notFound() {
-		LogService.logger.error("notFound() PersonNotFoundException");
 		return;
 	}
 
@@ -106,4 +76,5 @@ public class PersonEndpoint {
 		LogService.logger.error("unknownError() Exception");
 		return;
 	}
+	
 }
