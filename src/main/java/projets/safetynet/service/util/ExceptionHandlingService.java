@@ -8,6 +8,7 @@ import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import projets.safetynet.dao.exception.FireStationNotFoundException;
@@ -40,6 +41,14 @@ public class ExceptionHandlingService extends ResponseEntityExceptionHandler {
 	}
 	
 	@Override
+	protected final ResponseEntity<Object> handleNoHandlerFoundException(
+			NoHandlerFoundException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+
+		LogService.logger.error("handleNoHandlerFoundException() BAD_REQUEST");
+		return new ResponseEntity<>("Wrong URL requested !", HttpStatus.BAD_REQUEST);
+	}
+	
+	@Override
 	protected final ResponseEntity<Object> handleServletRequestBindingException(
 			ServletRequestBindingException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
 
@@ -63,6 +72,7 @@ public class ExceptionHandlingService extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<>("Data corrupted : fix input file and restart server !",
 			HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+	
 /*
 	@ExceptionHandler(Exception.class)
 	public final ResponseEntity<String> unknownError(Exception exception, WebRequest request) {

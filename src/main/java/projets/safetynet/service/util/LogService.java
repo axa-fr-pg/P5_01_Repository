@@ -1,7 +1,5 @@
 package projets.safetynet.service.util;
 
-import java.io.IOException;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -11,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -24,11 +23,23 @@ public class LogService extends HandlerInterceptorAdapter {
     
     @Override
     public boolean preHandle( HttpServletRequest request, HttpServletResponse response,
-    		Object handler) throws IOException {
-
-    	String flatBody = ((CacheRequestService) request).toString();
-        JsonNode nodeBody = objectMapper.readTree(flatBody);
-        String indentedBody = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(nodeBody);
+    		Object handler) {
+    	
+    	String flatBody = "";
+    	try {
+    		flatBody = ((CacheRequestService) request).toString();
+    	}
+    	catch (ClassCastException e) {
+	    	LogService.logger.error( "preHandle() throws ClassCastException" );   		
+    	}
+        JsonNode nodeBody;
+        String indentedBody = "Could not be read due to JsonProcessingException";
+		try {
+			nodeBody = objectMapper.readTree(flatBody);
+	        indentedBody = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(nodeBody);
+		} catch (JsonProcessingException e) {
+	    	LogService.logger.error( "preHandle() throws JsonProcessingException" );
+		}
 
     	LogService.logger.info( "Request method:" + request.getMethod() + " URL:"
 					+ request.getRequestURL() + " query:" + request.getQueryString()
@@ -38,11 +49,23 @@ public class LogService extends HandlerInterceptorAdapter {
  
     @Override
     public void afterCompletion( HttpServletRequest request, HttpServletResponse response,
-    		Object handler, Exception ex) throws IOException {
+    		Object handler, Exception ex)  {
     	
-    	String flatBody = ((CacheResponseService) response).toString();
-        JsonNode nodeBody = objectMapper.readTree(flatBody);
-        String indentedBody = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(nodeBody);
+    	String flatBody = "";
+    	try {
+    		flatBody = ((CacheResponseService) request).toString();
+    	}
+    	catch (ClassCastException e) {
+	    	LogService.logger.error( "afterCompletion() throws ClassCastException" );   		
+    	}
+        JsonNode nodeBody;
+        String indentedBody = "Could not be read due to JsonProcessingException";
+		try {
+			nodeBody = objectMapper.readTree(flatBody);
+	        indentedBody = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(nodeBody);
+		} catch (JsonProcessingException e) {
+	    	LogService.logger.error( "afterCompletion() throws JsonProcessingException" );
+		}
 
 		LogService.logger.info( "Response method:" + request.getMethod() + " URL:"
 				+ request.getRequestURL() + " status:" + response.getStatus()
