@@ -1,10 +1,8 @@
 package projets.safetynet.endpoint;
 
-import org.springframework.beans.TypeMismatchException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
 import projets.safetynet.dao.exception.DuplicateFireStationCreationException;
 import projets.safetynet.dao.exception.FireStationNotFoundException;
@@ -72,24 +71,24 @@ public class FireStationEndpoint {
 
 	@DeleteMapping("")
 	public ResponseEntity<Boolean> deleteFireStationRequest(@RequestBody String request) 
-			throws FireStationNotFoundException, ServerDataCorruptedException {
+			throws FireStationNotFoundException, ServerDataCorruptedException, JsonMappingException, JsonProcessingException, InvalidDeleteFireStationRequestException {
         LogService.logger.debug("deleteFireStationRequest() " + request);
-        HttpStatus status = HttpStatus.ACCEPTED;
-        boolean response = false;
-		try {
-			response = deleteService.deleteFireStationRequest(request);
-			if (! response) status = HttpStatus.NOT_FOUND;
-		} catch (JsonProcessingException | InvalidDeleteFireStationRequestException e) {
-	        LogService.logger.error("deleteFireStationRequest() bad request " + request);
-			status = HttpStatus.BAD_REQUEST;
-		}
-	    return new ResponseEntity<Boolean>(response, status);
+        boolean response = deleteService.deleteFireStationRequest(request);
+	    return new ResponseEntity<Boolean>(response, HttpStatus.ACCEPTED);
 	}
 
 	@ResponseStatus(value=HttpStatus.FORBIDDEN, reason="FireStation already exists !")
 	@ExceptionHandler(DuplicateFireStationCreationException.class)
 	public void duplicate() {
 		LogService.logger.error("duplicate() DuplicateFireStationCreationException");
+		return;
+	}
+
+	@ResponseStatus(value=HttpStatus.BAD_REQUEST, 
+			reason="Wrong request : parameters are address or/and station number !")
+	@ExceptionHandler(InvalidDeleteFireStationRequestException.class)
+	public void wrongRequest() {
+		LogService.logger.error("wrongRequest() InvalidDeleteFireStationRequestException");
 		return;
 	}
 

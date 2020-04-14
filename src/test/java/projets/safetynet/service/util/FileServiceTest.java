@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import projets.safetynet.model.core.Data;
-import projets.safetynet.service.exception.InvalidDeleteFireStationRequestException;
 import projets.safetynet.service.exception.ServerDataCorruptedException;
 
 @SpringBootTest

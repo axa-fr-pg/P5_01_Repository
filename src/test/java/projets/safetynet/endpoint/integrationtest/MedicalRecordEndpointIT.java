@@ -17,9 +17,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import projets.safetynet.model.core.FireStation;
 import projets.safetynet.model.core.MedicalRecord;
-import projets.safetynet.model.core.Person;
 import projets.safetynet.model.url.PersonRequest;
 import projets.safetynet.service.exception.ServerDataCorruptedException;
 import projets.safetynet.service.util.FileService;

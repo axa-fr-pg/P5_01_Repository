@@ -66,13 +66,5 @@ public class PersonEndpoint {
 		LogService.logger.error("duplicate() DuplicatePersonCreationException");
 		return;
 	}
-
-	@ResponseStatus(value=HttpStatus.INTERNAL_SERVER_ERROR, 
-			reason="Unknown error : revert to IT for investigation !")
-	@ExceptionHandler(Exception.class)
-	public void unknownError() {
-		LogService.logger.error("unknownError() Exception");
-		return;
-	}
 	
 }

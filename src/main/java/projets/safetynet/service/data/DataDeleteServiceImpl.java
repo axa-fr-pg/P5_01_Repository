@@ -1,5 +1,8 @@
 package projets.safetynet.service.data;
 
+import java.util.Iterator;
+import java.util.Map.Entry;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,10 +55,21 @@ public class DataDeleteServiceImpl implements DataDeleteService {
 
 	@Override
 	public boolean deleteFireStationRequest(String request) throws JsonMappingException,
-			JsonProcessingException, InvalidDeleteFireStationRequestException, FireStationNotFoundException, ServerDataCorruptedException 
+			JsonProcessingException, InvalidDeleteFireStationRequestException, 
+			FireStationNotFoundException, ServerDataCorruptedException 
 	{
         LogService.logger.debug("deleteFireStationRequest() " + request);
         JsonNode givenValues = objectMapper.readTree(request);
+
+        for ( Iterator<Entry<String, JsonNode>> parameter = givenValues.fields(); parameter.hasNext(); ) { 
+        	String key = parameter.next().getKey();
+        	if ( (! key.equals("address")) && (! key.equals("station")) ) {
+				LogService.logger.error("deleteFireStationRequest() unexpected parameter name "
+						+ key + " throws InvalidDeleteFireStationRequestException");
+        		throw new InvalidDeleteFireStationRequestException();
+        	}
+        }
+        
         JsonNode givenAddress = givenValues.get("address");
         JsonNode givenStation = givenValues.get("station");
         if (givenAddress != null) {

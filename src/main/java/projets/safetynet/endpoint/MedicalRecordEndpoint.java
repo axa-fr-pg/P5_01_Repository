@@ -1,10 +1,8 @@
 package projets.safetynet.endpoint;
 
-import org.springframework.beans.TypeMismatchException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -60,5 +58,12 @@ public class MedicalRecordEndpoint {
 		boolean response = deleteService.deleteMedicalRecordRequest(r);
 	    return new ResponseEntity<Boolean>(response, HttpStatus.ACCEPTED);
 	}
-		
+
+	@ResponseStatus(value=HttpStatus.FORBIDDEN, reason="MedicalRecord already exists !")
+	@ExceptionHandler(DuplicateMedicalRecordCreationException.class)
+	public void duplicate() {
+		LogService.logger.error("duplicate() DuplicateMedicalRecordCreationException");
+		return;
+	}
+
 }

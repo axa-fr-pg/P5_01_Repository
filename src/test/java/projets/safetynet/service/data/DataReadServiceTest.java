@@ -18,9 +18,6 @@ import projets.safetynet.dao.FireStationDao;
 import projets.safetynet.dao.MedicalRecordDao;
 import projets.safetynet.dao.PersonDao;
 import projets.safetynet.dao.exception.FireStationNotFoundException;
-import projets.safetynet.dao.exception.MedicalRecordNotFoundException;
-import projets.safetynet.dao.exception.MultipleMedicalRecordWithSameNameException;
-import projets.safetynet.dao.exception.PersonNotFoundException;
 import projets.safetynet.model.core.FireStation;
 import projets.safetynet.model.core.MedicalRecord;
 import projets.safetynet.model.core.Person;
@@ -51,7 +48,6 @@ public class DataReadServiceTest {
 	private FireStation f2 = new FireStation("a2", 2);
 	private FireStation f3 = new FireStation("a3", 3);
 	private FireStation f4 = new FireStation("a4", 4);
-	private FireStation f5 = new FireStation("a5", 5);
 	private String[] m1 = new String[] {"m1a"};
 	private String[] m2 = new String[] {"m2a", "m2b"};
 	private String[] m3 = new String[] {"m3a", "m3b", "m3c"};

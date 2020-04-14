@@ -9,15 +9,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.ResponseEntity;
 
-import projets.safetynet.dao.exception.MedicalRecordNotFoundException;
 import projets.safetynet.endpoint.MedicalRecordEndpoint;
 import projets.safetynet.model.core.MedicalRecord;
-import projets.safetynet.model.core.Person;
 import projets.safetynet.model.url.PersonRequest;
 import projets.safetynet.service.data.DataCreateService;
 import projets.safetynet.service.data.DataDeleteService;
 import projets.safetynet.service.data.DataUpdateService;
-import projets.safetynet.service.exception.ServerDataCorruptedException;
 
 @SpringBootTest
 public class MedicalRecordEndpointTest {

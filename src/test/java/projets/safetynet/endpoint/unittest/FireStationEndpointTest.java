@@ -8,9 +8,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+
+import projets.safetynet.dao.exception.FireStationNotFoundException;
 import projets.safetynet.endpoint.FireStationEndpoint;
 import projets.safetynet.model.core.FireStation;
 import projets.safetynet.model.url.FireStationResponse;
@@ -19,6 +22,7 @@ import projets.safetynet.service.data.DataDeleteService;
 import projets.safetynet.service.data.DataReadService;
 import projets.safetynet.service.data.DataUpdateService;
 import projets.safetynet.service.exception.InvalidDeleteFireStationRequestException;
+import projets.safetynet.service.exception.ServerDataCorruptedException;
 
 @SpringBootTest
 public class FireStationEndpointTest {
@@ -86,15 +90,16 @@ public class FireStationEndpointTest {
     }
 
     @Test
-    public void givenInvalidRequest_whenDeleteFireStationRequest_thenReturnsBadRequest() throws Exception
+    public void givenInvalidRequest_whenDeleteFireStationRequest_thenThrowsException() throws JsonMappingException, JsonProcessingException, InvalidDeleteFireStationRequestException, FireStationNotFoundException, ServerDataCorruptedException
     {
     	// GIVEN
     	when(deleteService.deleteFireStationRequest("invalid request")).thenThrow(
     			new InvalidDeleteFireStationRequestException() );
-    	// WHEN
-    	ResponseEntity<Boolean> response = endpoint.deleteFireStationRequest("invalid request");
-    	// THEN
-    	assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+    	// WHEN & THEN
+		assertThrows(InvalidDeleteFireStationRequestException.class, () -> {
+			endpoint.deleteFireStationRequest("invalid request");
+		});
+
     }
 
 }

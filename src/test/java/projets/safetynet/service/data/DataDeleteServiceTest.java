@@ -17,12 +17,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import projets.safetynet.dao.FireStationDao;
 import projets.safetynet.dao.MedicalRecordDao;
 import projets.safetynet.dao.PersonDao;
-import projets.safetynet.dao.exception.MedicalRecordNotFoundException;
-import projets.safetynet.dao.exception.MultiplePersonWithSameNameException;
-import projets.safetynet.dao.exception.PersonNotFoundException;
 import projets.safetynet.model.core.FireStation;
-import projets.safetynet.model.core.MedicalRecord;
-import projets.safetynet.model.core.Person;
 import projets.safetynet.model.url.PersonRequest;
 import projets.safetynet.service.exception.InvalidDeleteFireStationRequestException;
 
@@ -44,12 +39,10 @@ public class DataDeleteServiceTest {
 	@MockBean
 	private MedicalRecordDao recordDao;
 
-	private Person p1 = new Person("f1", "l1", "a1", "c1", 11111L, "t1", "e1");
 	private FireStation s1 = new FireStation("a1", 1);
 	String[] medications1 = new String[] {};
 	String[] allergies1 = new String[] {"allergy 1 a", "allergy 1 b", "allergy 1 c", "allergy 1 d"};
 	Date date1 = Date.valueOf("1001-01-01");
-	private MedicalRecord m1 = new MedicalRecord ("f1","l1",date1,medications1,allergies1);
 
 	@BeforeEach
 	private void initTestData() throws Exception
