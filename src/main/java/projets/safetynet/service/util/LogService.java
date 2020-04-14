@@ -53,7 +53,7 @@ public class LogService extends HandlerInterceptorAdapter {
     	
     	String flatBody = "";
     	try {
-    		flatBody = ((CacheResponseService) request).toString();
+    		flatBody = ((CacheResponseService) response).toString();
     	}
     	catch (ClassCastException e) {
 	    	LogService.logger.error( "afterCompletion() throws ClassCastException" );   		
